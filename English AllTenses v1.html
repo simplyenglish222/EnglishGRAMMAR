@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>English Tenses Trainer — Complete</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{--bg:#0d2c54;--panel:#153b6d;--panel2:#0b2440;--accent:#4fc3f7;--accent2:#2196f3;--ok:#22c55e;--bad:#ef4444;--text:#ffffff;}
+  *{box-sizing:border-box} body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  header{padding:22px 16px;text-align:center;background:linear-gradient(180deg,#0f2b52,#133761);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  header h1{margin:0;font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:.5px}
+  .page{display:none;padding:clamp(14px,2.5vw,24px)} .active{display:block}
+  .tenses{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;max-width:1100px;margin:0 auto}
+  .tense{background:var(--panel);border:2px solid #2b558a;border-radius:12px;padding:18px 16px;cursor:pointer;text-align:center;transition:.15s}
+  .tense:hover{transform:translateY(-2px);background:#1a447d} .difficulty{margin-top:6px;font-size:.9rem;color:#facc15}
+  .trainer h2{margin:0 0 12px 0;font-size:clamp(1.4rem,2.5vw,2rem)} .quote{background:var(--panel2);border-left:5px solid var(--accent);padding:10px 14px;margin:10px 0 18px;font-style:italic;max-width:980px}
+  .explain{background:#1a4077;padding:14px;border-radius:10px;border:1px solid #2e5d96;max-width:980px}
+  .exercise{background:var(--panel);border:1px solid #2e5d96;border-radius:12px;padding:16px;margin:18px 0;max-width:980px}
+  .russian{font-size:1.15rem;margin-bottom:8px} .instruction{color:#e5e7eb;font-style:italic;margin:6px 0 10px}
+  .wordbank,.output{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;background:#0f2f59;border:2px dashed #315c91;border-radius:8px;padding:10px;margin:8px 0}
+  .output{background:#0b2a50} .placeholder{opacity:.65;font-size:.9rem}
+  .tile{background:#24508a;border:2px solid var(--accent);border-radius:7px;padding:10px 12px;cursor:pointer;user-select:none;touch-action:none}
+  .tile.dragging{opacity:.55} .btn{background:var(--accent2);color:#fff;border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer;display:inline-block;margin-top:8px}
+  .btn.secondary{background:#2b558a} .result{margin-top:10px;padding:10px;border-radius:8px;display:none}
+  .ok{background:#1f7a39;border:1px solid #a7f3d0} .bad{background:#7a1f1f;border:1px solid #fecaca}
+  .milestone{background:var(--ok);color:#062a12;padding:12px;border-radius:12px;margin:14px 0;font-weight:700;max-width:980px}
+  nav{margin-top:14px} .ruleTip{background:#0b2440;border-left:4px solid #93c5fd;color:#e0f2fe;padding:10px 12px;border-radius:8px;margin:10px 0;display:none}
+  .examples{margin:10px 0;padding:10px;background:#1a447d;border-radius:8px;font-size:0.9rem;}
+  .examples div{margin:4px 0;}
+</style>
+</head>
+<body>
+<header><h1>Тренажёр английских времён</h1></header>
+
+<div id="front" class="page active">
+  <div class="tenses">
+    <div class="tense" data-tense="presentSimple">Present Simple<div class="difficulty">Легко</div></div>
+    <div class="tense" data-tense="presentContinuous">Present Continuous<div class="difficulty">Легко</div></div>
+    <div class="tense" data-tense="pastSimple">Past Simple<div class="difficulty">Средне</div></div>
+    <div class="tense" data-tense="futureSimple">Future Simple<div class="difficulty">Легко</div></div>
+    <div class="tense" data-tense="pastContinuous">Past Continuous<div class="difficulty">Средне</div></div>
+    <div class="tense" data-tense="futureContinuous">Future Continuous<div class="difficulty">Средне</div></div>
+    <div class="tense" data-tense="presentPerfect">Present Perfect<div class="difficulty">Средне</div></div>
+    <div class="tense" data-tense="pastPerfect">Past Perfect<div class="difficulty">Сложно</div></div>
+    <div class="tense" data-tense="futurePerfect">Future Perfect<div class="difficulty">Сложно</div></div>
+    <div class="tense" data-tense="presentPerfectContinuous">Present Perfect Continuous<div class="difficulty">Сложно</div></div>
+    <div class="tense" data-tense="pastPerfectContinuous">Past Perfect Continuous<div class="difficulty">Сложно</div></div>
+    <div class="tense" data-tense="futurePerfectContinuous">Future Perfect Continuous<div class="difficulty">Сложно</div></div>
+  </div>
+</div>
+
+<div id="trainer" class="page trainer">
+  <h2 id="tenseTitle"></h2>
+  <div id="quoteTop" class="quote"></div>
+  <div id="explain" class="explain"></div>
+  <div id="exercises"></div>
+  <nav><button class="btn secondary" id="backBtn">⟵ Вернуться к списку времён</button></nav>
+</div>
+
+<script>
+const freqWords=["always","usually","often","sometimes","seldom","rarely","hardly","ever","never","normally","generally","regularly","frequently"];
+
+const tenses={
+  presentSimple:{
+    title:"Present Simple",
+    explanation:"Факты, привычки, расписания. Для he/she/it добавляем -s. Отрицания и вопросы с do/does.",
+    examples: [
+      "Утверждение: I live in Moscow",
+      "Утверждение: He works in a bank", 
+      "Отрицание: They do not watch TV",
+      "Вопрос: Do you like chocolate?",
+      "Вопрос: Does she live near the station?"
+    ],
+    startQuote: "The limits of my language are the limits of my world. — Ludwig Wittgenstein",
+    endQuote: "To have another language is to possess a second soul. — Charlemagne",
+    items:[
+      {"ru": "Я живу в Москве", "en": "I live in Moscow"},
+      {"ru": "Он работает в банке", "en": "He works in a bank"},
+      {"ru": "Она говорит по-английски", "en": "She speaks English"},
+      {"ru": "Они не смотрят телевизор", "en": "They do not watch TV"},
+      {"ru": "Мы ходим в школу каждый день", "en": "We go to school every day"},
+      {"ru": "Солнце встаёт на востоке", "en": "The sun rises in the east"},
+      {"ru": "Пингвины не летают", "en": "Penguins do not fly"},
+      {"ru": "Она часто читает книги", "en": "She often reads books"},
+      {"ru": "Вода замерзает при нуле градусов", "en": "Water freezes at 0 degrees"},
+      {"ru": "Мой сын играет на гитаре когда у него есть время", "en": "My son plays the guitar when he has time"},
+      {"ru": "Ты внимателен на уроках?", "en": "Are you attentive in class?"},
+      {"ru": "Тебе нравится шоколад?", "en": "Do you like chocolate?"},
+      {"ru": "Твои родители говорят по-английски?", "en": "Do your parents speak English?"},
+      {"ru": "Она живёт рядом со станцией?", "en": "Does she live near the station?"},
+      {"ru": "Вы сортируете бумагу пластик и стекло?", "en": "Do you recycle paper plastic and glass?"},
+      {"ru": "Мой брат не любит рыбу", "en": "My brother does not like fish"},
+      {"ru": "Я не часто пью кофе", "en": "I do not often drink coffee"},
+      {"ru": "Они не понимают что ты говоришь", "en": "They do not understand what you are saying"},
+      {"ru": "Мы совсем не пользуемся общественным транспортом", "en": "We do not use public transport at all"},
+      {"ru": "Рис не растёт в Британии", "en": "Rice does not grow in Britain"},
+      {"ru": "Таня хорошо говорит по-немецки", "en": "Tanya speaks German very well"},
+      {"ru": "Плохое вождение вызывает много аварий", "en": "Bad driving causes many accidents"},
+      {"ru": "Панамский канал соединяет Атлантический и Тихий океаны", "en": "The Panama Canal connects the Atlantic and Pacific oceans"},
+      {"ru": "Река Амазонка впадает в Атлантический океан", "en": "The River Amazon flows into the Atlantic Ocean"},
+      {"ru": "Атеист не верит в Бога", "en": "An atheist does not believe in God"},
+      {"ru": "Пчёлы делают мёд", "en": "Bees make honey"},
+      {"ru": "Вегетарианцы не едят мясо", "en": "Vegetarians do not eat meat"},
+      {"ru": "Бассейн открывается в 7:30 каждое утро", "en": "The swimming pool opens at 7 30 every morning"},
+      {"ru": "Журналисты задают простые вопросы", "en": "Journalists ask simple questions"},
+      {"ru": "Пингвины используют свои крылья для плавания", "en": "Penguins use their wings for swimming"},
+      {"ru": "В Москве много достопримечательностей", "en": "Moscow has many places of interest"},
+      {"ru": "Люди в России отмечают Рождество 7 января", "en": "People in Russia celebrate Christmas on January 7"},
+      {"ru": "Его рабочий день начинается в семь утра", "en": "His working day begins at 7 a m"},
+      {"ru": "Эти озёра никогда не замерзают зимой", "en": "These lakes never freeze in winter"},
+      {"ru": "Я просматриваю десяток газет каждое утро", "en": "I look through a dozen newspapers every morning"},
+      {"ru": "Обычно ему нужно пять минут чтобы выучить стихотворение", "en": "It usually takes him five minutes to learn a poem by heart"},
+      {"ru": "Невозможно добраться до этой деревни на машине", "en": "It is impossible to reach this village by car"},
+      {"ru": "Эти таблетки очень эффективны", "en": "These pills are very effective"},
+      {"ru": "Бетти делает прекрасные портреты друзей", "en": "Betty makes wonderful portraits of her friends"},
+      {"ru": "Торговый центр закрывается на ремонт", "en": "The mall closes for renovation"},
+      {"ru": "Температура в тени поднимается до сорока", "en": "Temperatures rise up to forty in the shade"},
+      {"ru": "Этот спортсмен выигрывает каждую гонку", "en": "This sportsman wins every race he takes part in"},
+      {"ru": "Дети в США идут в школу в пять лет", "en": "Kids go to school at the age of five in the USA"},
+      {"ru": "Билл охотно помогает вам", "en": "Bill is eager to help you"},
+      {"ru": "Эмили говорит на французском английском и немецком", "en": "Emily speaks French English and German"},
+      {"ru": "Семья Уайтов получает письма каждый месяц", "en": "The Whites receive letters from their children every month"},
+      {"ru": "Мой сосед уходит из дома в восемь каждый день", "en": "My neighbor leaves home at 8 a m every day"},
+      {"ru": "Сосновые деревья хорошо растут в этом климате", "en": "Pine trees grow well in this climate"},
+      {"ru": "Мой друг часто проводит отпуск у моря", "en": "My friend often spends his holidays by the sea"},
+      {"ru": "Я никогда не пью кофе вечером", "en": "I never drink coffee in the evening"},
+      {"ru": "У Мэри две дочери", "en": "Mary has two daughters"},
+      {"ru": "Мой отец юрист", "en": "My father is a lawyer"},
+      {"ru": "Я всегда счастлив когда мои друзья рядом", "en": "I always feel happy when my friends are around"},
+      {"ru": "Ты постоянно критикуешь его работу", "en": "You criticize his work all the time"},
+      {"ru": "Мы видим этого человека в парке каждую субботу", "en": "We see this man in the park every Saturday"},
+      {"ru": "Его мама учит его играть на пианино", "en": "His mother teaches him to play the piano"},
+      {"ru": "Нам нужно двадцать минут чтобы добраться до офиса на автобусе", "en": "It takes us twenty minutes to get to the office by bus"},
+      {"ru": "Мои родители хотят увидеть это представление", "en": "My parents are eager to see this performance"},
+      {"ru": "Самолёт вылетает через два часа", "en": "The plane leaves in two hours"}
+    ]
+  },
+  presentContinuous:{
+    title:"Present Continuous",
+    explanation:"Действия прямо сейчас или временные ситуации. am/is/are + V‑ing.",
+    examples: [
+      "Утверждение: He is studying for his exams",
+      "Утверждение: They are watching TV",
+      "Отрицание: I am not drinking coffee today", 
+      "Вопрос: Are you feeling OK?",
+      "Вопрос: Is it raining?"
+    ],
+    startQuote: "Do you know what a foreign accent is? It's a sign of bravery. — Amy Chua",
+    endQuote: "Learning another language is like becoming another person. — Haruki Murakami",
+    items:[
+      {"ru": "Ты в порядке?", "en": "Are you feeling OK?"},
+      {"ru": "Идёт дождь?", "en": "Is it raining?"},
+      {"ru": "Почему ты в пальто?", "en": "Why are you wearing a coat?"},
+      {"ru": "Что делает Пол?", "en": "What is Paul doing?"},
+      {"ru": "Он готовится к экзаменам", "en": "He is studying for his exams"},
+      {"ru": "Что делают дети?", "en": "What are the children doing?"},
+      {"ru": "Они смотрят телевизор", "en": "They are watching TV"},
+      {"ru": "Куда она идёт?", "en": "Where is she going?"},
+      {"ru": "Кого ты ждёшь?", "en": "Who are you waiting for?"},
+      {"ru": "Ты ждёшь Сью?", "en": "Are you waiting for Sue?"},
+      {"ru": "Бен сегодня работает?", "en": "Is Ben working today?"},
+      {"ru": "Ты меня слушаешь?", "en": "Are you listening to me?"},
+      {"ru": "Куда идут твои друзья?", "en": "Where are your friends going?"},
+      {"ru": "Твои родители смотрят телевизор?", "en": "Are your parents watching TV?"},
+      {"ru": "Что готовит Джессика?", "en": "What is Jessica cooking?"},
+      {"ru": "Почему ты на меня смотришь?", "en": "Why are you looking at me?"},
+      {"ru": "Автобус идёт?", "en": "Is the bus coming?"},
+      {"ru": "Пожалуйста, не шумите. Я пытаюсь работать", "en": "Please do not make so much noise I am trying to work"},
+      {"ru": "Дождь больше не идёт", "en": "It is not raining any more"},
+      {"ru": "Можешь выключить радио. Я его не слушаю", "en": "You can turn off the radio I am not listening to it"},
+      {"ru": "Она отлично проводит время и не хочет возвращаться", "en": "She is having a great time and does not want to come back"},
+      {"ru": "На этой неделе я не обедаю", "en": "I am not eating lunch this week"},
+      {"ru": "Он учит японский", "en": "He is learning Japanese"},
+      {"ru": "Они не разговаривают друг с другом", "en": "They are not speaking to each other"},
+      {"ru": "Я устаю. Мне нужен отдых", "en": "I am getting tired I need a rest"},
+      {"ru": "Тим сегодня не работает", "en": "Tim is not working today"},
+      {"ru": "Я ищу Софи. Ты знаешь, где она?", "en": "I am looking for Sophie do you know where she is"},
+      {"ru": "Что он делает в эти дни?", "en": "What is he doing these days?"},
+      {"ru": "Что он изучает?", "en": "What is he studying?"},
+      {"ru": "Ему это нравится?", "en": "Is he enjoying it?"},
+      {"ru": "Как идёт твоя новая работа?", "en": "How is your new job going?"},
+      {"ru": "Ему сейчас не нравится его работа", "en": "He is not enjoying his work right now"},
+      {"ru": "Ему начинает надоедать это", "en": "He is beginning to get bored with it"},
+      {"ru": "Становится поздно", "en": "It is getting late"},
+      {"ru": "Они лгут", "en": "They are lying"},
+      {"ru": "Начинается дождь", "en": "It is starting to rain"},
+      {"ru": "Они пытаются продать это", "en": "They are trying to sell it"},
+      {"ru": "Я проголодался", "en": "I am getting hungry"},
+      {"ru": "Я пытаюсь работать", "en": "I am trying to work"},
+      {"ru": "Я ищу квартиру", "en": "I am looking for an apartment"},
+      {"ru": "Компания теряет деньги", "en": "The company is losing money"},
+      {"ru": "Мы промокнем. Начинается дождь", "en": "We are going to get wet It is starting to rain"},
+      {"ru": "Погода улучшается", "en": "The weather is getting better"},
+      {"ru": "Люди становятся более независимыми в наши дни", "en": "People are becoming more independent these days"},
+      {"ru": "Она учится на врача", "en": "She is studying to become a doctor"},
+      {"ru": "Они строят новый отель в центре города", "en": "They are building a new hotel in the city centre"},
+      {"ru": "Население мира быстро растёт", "en": "The population of the world is increasing very fast"},
+      {"ru": "Всё быстро меняется", "en": "Things are changing quickly"},
+      {"ru": "Я иду сегодня в кино", "en": "I am going to the cinema tonight"},
+      {"ru": "Из‑за глобального потепления климат Земли меняется", "en": "Due to global warming the climate of the Earth is changing"},
+      {"ru": "Ты поёшь на концерте в следующую пятницу?", "en": "Are you singing at the concert next Friday?"},
+      {"ru": "Джек и Мэгги всё ещё ищут идеальный дом", "en": "Jack and Maggie are still looking for a perfect house"},
+      {"ru": "Мэри на море. Она хорошо проводит время", "en": "Mary is at the seaside She is having a good time there"},
+      {"ru": "Я пробую молоко, чтобы посмотреть, всё ли в порядке", "en": "I am tasting the milk to see if it is OK"},
+      {"ru": "Мы встречаемся с Джеком сегодня днём", "en": "We are meeting Jack this afternoon"},
+      {"ru": "Том постоянно болтает по телефону часами", "en": "Tom is always speaking on the phone for hours"},
+      {"ru": "Сьюзи очень усердно работает", "en": "Susie is working very hard"},
+      {"ru": "Она изучает искусство сейчас", "en": "She is studying art now"},
+      {"ru": "Сейчас идёт снег", "en": "It is snowing here at the moment"},
+      {"ru": "Он сейчас принимает душ", "en": "He is having a shower right now"}
+    ]
+  },
+  pastSimple:{
+    title:"Past Simple",
+    explanation:"Завершённые действия в прошлом. Обычно с указанием времени. V2/did + V1.",
+    examples: [
+      "Утверждение: I cleaned my teeth yesterday",
+      "Утверждение: She went to Madrid", 
+      "Отрицание: We did not enjoy it",
+      "Вопрос: Did it rain yesterday?",
+      "Вопрос: Did you phone Chris this morning?"
+    ],
+    startQuote: "The past is a foreign country; they do things differently there. — L.P. Hartley",
+    endQuote: "What's done is done. — William Shakespeare",
+    items:[
+      {"ru": "Я почистил зубы три раза вчера", "en": "I cleaned my teeth three times yesterday"},
+      {"ru": "В комнате было жарко, поэтому я открыл окно", "en": "It was hot in the room, so I opened the window"},
+      {"ru": "Когда я был ребёнком, я хотел быть врачом", "en": "When I was a child, I wanted to be a doctor"},
+      {"ru": "Несчастный случай произошёл в прошлое воскресенье", "en": "The accident happened last Sunday afternoon"},
+      {"ru": "Дед Анны умер когда ему было 90 лет", "en": "Anna's grandfather died when he was 90 years old"},
+      {"ru": "Джеймс упал с лестницы и повредил ногу", "en": "James fell down the stairs and hurt his leg"},
+      {"ru": "Нам нужны были деньги поэтому мы продали дачу", "en": "We needed some money so we sold our summer house"},
+      {"ru": "Мальчик бросил мяч собаке и собака поймала его", "en": "The boy threw the ball to the dog and the dog caught it"},
+      {"ru": "Мы начали этот эксперимент на прошлой неделе", "en": "We started this experiment last week"},
+      {"ru": "Вчера я встретил Стива в библиотеке", "en": "Yesterday I met Steve in the library"},
+      {"ru": "Вчера шёл дождь?", "en": "Did it rain yesterday?"},
+      {"ru": "Ты звонил Крису сегодня утром?", "en": "Did you phone Chris this morning?"},
+      {"ru": "Куда ты ходил?", "en": "What place did you go to?"},
+      {"ru": "Погода была хорошей?", "en": "Was the weather fine?"},
+      {"ru": "Как долго ты там оставался?", "en": "How long did you stay there?"},
+      {"ru": "Ты ходил один?", "en": "Did you go alone?"},
+      {"ru": "Как ты путешествовал?", "en": "How did you travel?"},
+      {"ru": "Еда была хорошей?", "en": "Was the food good?"},
+      {"ru": "Что ты делал вечерами?", "en": "What did you do in the evenings?"},
+      {"ru": "Ты завёл там друзей?", "en": "Did you make any friends there?"},
+      {"ru": "Мы не наслаждались этим", "en": "We did not enjoy it"},
+      {"ru": "Я не завтракал сегодня утром потому что у меня не было времени", "en": "I did not have breakfast this morning because I did not have time"},
+      {"ru": "Мы ничего не купили потому что у нас не было денег", "en": "We did not buy anything because we did not have any money"},
+      {"ru": "Я не спал потому что не хотел спать", "en": "I did not sleep because I did not feel sleepy"},
+      {"ru": "Она не была заинтересована в книге потому что не понимала её", "en": "She was not interested in the book because she did not understand it"},
+      {"ru": "Фильм был очень длинным. Он начался в 7:15 и закончился в 10 часов", "en": "The film was very long. It started at 7.15 and finished at 10 o'clock"},
+      {"ru": "Погода сегодня хорошая, но вчера шёл дождь весь день", "en": "The weather is nice today, but yesterday it rained all day"},
+      {"ru": "Мы наслаждались отпуском в прошлом году. Мы останавливались в очень хорошем месте", "en": "We enjoyed our holiday last year. We stayed at a very nice place"},
+      {"ru": "В прошлый вторник Лиза летела из Лондона в Мадрид", "en": "Last Tuesday Lisa flew from London to Madrid"},
+      {"ru": "Она встала в 6 часов утра и выпила чашку кофе", "en": "She got up at 6 o'clock in the morning and drank a cup of coffee"},
+      {"ru": "В 6:30 она ушла из дома и поехала в аэропорт", "en": "At 6.30 she left home and went to the airport"},
+      {"ru": "Когда она приехала туда, она припарковала машину, вошла в здание аэропорта и зарегистрировалась", "en": "When she arrived there, she parked the car, entered the airport building, and checked in"},
+      {"ru": "Потом она позавтракала в кафе и ждала свой рейс", "en": "Then she had breakfast at a cafe and waited for her flight"},
+      {"ru": "Самолёт вылетел вовремя и приземлился в Мадриде два часа спустя", "en": "The plane took off on time and landed in Madrid two hours later"},
+      {"ru": "Наконец она взяла такси из аэропорта в свой отель в центре Мадрида", "en": "Finally she took a taxi from the airport to her hotel in the centre of Madrid"},
+      {"ru": "Джеймс всегда ездит на работу на машине. Вчера он поехал на работу на машине", "en": "James always goes to work by car. Yesterday he went to work by car"},
+      {"ru": "Рейчел часто теряет ключи. Она потеряла ключи на прошлой неделе", "en": "Rachel often loses her keys. She lost her keys last week"},
+      {"ru": "Кейт встречает друзей каждый вечер. Она встретила друзей вчера вечером", "en": "Kate meets her friends every evening. She met her friends yesterday evening"},
+      {"ru": "Я покупаю газету каждый день. Вчера я купил газету", "en": "I buy a newspaper every day. Yesterday I bought a newspaper"},
+      {"ru": "Мы часто ходим в кино по выходным. В прошлое воскресенье мы ходили в кино", "en": "We often go to the cinema at weekends. Last Sunday we went to the cinema"},
+      {"ru": "Я ем апельсин каждый день. Вчера я съел апельсин", "en": "I eat an orange every day. Yesterday I ate an orange"},
+      {"ru": "Том всегда принимает душ утром. Сегодня утром он принял душ", "en": "Tom always has a shower in the morning. This morning he had a shower"},
+      {"ru": "Наши друзья часто приходят к нам. Они пришли к нам в прошлую пятницу", "en": "Our friends often come to see us. They came to see us last Friday"},
+      {"ru": "Бабушка встала в 6:30 вчера утром", "en": "Granny got up at 6.30 yesterday morning"},
+      {"ru": "Бабушка гуляла в саду вчера", "en": "Granny walked in the garden yesterday"},
+      {"ru": "Бабушка съела сэндвич на обед вчера", "en": "Granny had a sandwich for lunch yesterday"},
+      {"ru": "Бабушка вышла вечером вчера", "en": "Granny went out in the evening yesterday"},
+      {"ru": "Бабушка спала очень хорошо вчера", "en": "Granny slept very well yesterday"},
+      {"ru": "Мой отец научил меня водить когда мне было 17", "en": "My father taught me how to drive when I was 17"},
+      {"ru": "Они потратили много денег вчера. Они купили посудомоечную машину которая стоила 10000 рублей", "en": "They spent a lot of money yesterday. They bought a dishwasher which cost 10000 roubles"},
+      {"ru": "Мы решили отправить это письмо вчера", "en": "We decided to send this letter yesterday"},
+      {"ru": "Кому ты отдал эти журналы?", "en": "Who did you give these magazines to?"},
+      {"ru": "Когда ты видел его в последний раз?", "en": "When did you see him last time?"},
+      {"ru": "В прошлом году я не изучал французский. Мы изучали английский", "en": "Last year I did not study French. We studied English"},
+      {"ru": "Во сколько ты начал работать вчера?", "en": "What time did you start work yesterday?"},
+      {"ru": "После обеда. У нас было мало работы", "en": "After lunch. We had little work"},
+      {"ru": "Вчера было хорошо, и мы пошли в парк с друзьями", "en": "It was nice yesterday, and we went to the park with friends"}
+    ]
+  },
+  futureSimple:{
+    title:"Future Simple",
+    explanation:"Спонтанные решения, предсказания, обещания. will + V1.",
+    examples: [
+      "Утверждение: I will call you tomorrow",
+      "Утверждение: She will be here at 6 p.m.",
+      "Отрицание: I will not tell anyone", 
+      "Вопрос: Will you be able to come?",
+      "Вопрос: Will we get cheap tickets?"
+    ],
+    startQuote: "The future belongs to those who believe in the beauty of their dreams. — Eleanor Roosevelt",
+    endQuote: "Tomorrow is the first blank page of a 365-page book. Write a good one. — Brad Paisley",
+    items:[
+      {"ru": "Я позвоню тебе завтра", "en": "I will call you tomorrow"},
+      {"ru": "Она будет здесь в 6 вечера", "en": "She will be here at 6 p.m."},
+      {"ru": "Они приедут на следующей неделе", "en": "They will arrive next week"},
+      {"ru": "Он закончит свой проект к пятнице", "en": "He will finish his project by Friday"},
+      {"ru": "Мы пойдём в кино сегодня вечером", "en": "We will go to the cinema tonight"},
+      {"ru": "Тебе понравится этот фильм", "en": "You will love this movie"},
+      {"ru": "Завтра будет дождь", "en": "It will rain tomorrow"},
+      {"ru": "Поезд отправится в 8 утра", "en": "The train will leave at 8 a.m."},
+      {"ru": "Она станет врачом", "en": "She will become a doctor"},
+      {"ru": "Они выиграют матч", "en": "They will win the match"},
+      {"ru": "Я отправлю тебе документы", "en": "I will send you the documents"},
+      {"ru": "Он начнёт свою новую работу в следующем месяце", "en": "He will start his new job next month"},
+      {"ru": "Мы будем ужинать в 7 часов", "en": "We will have dinner at 7 o'clock"},
+      {"ru": "Ты скоро поймёшь это", "en": "You will understand it soon"},
+      {"ru": "В эти выходные будет солнечно", "en": "It will be sunny this weekend"},
+      {"ru": "Она навестит своих бабушку и дедушку", "en": "She will visit her grandparents"},
+      {"ru": "Они купят новую машину", "en": "They will buy a new car"},
+      {"ru": "Я помогу тебе с домашним заданием", "en": "I will help you with your homework"},
+      {"ru": "Он будет учиться за границей в следующем году", "en": "He will study abroad next year"},
+      {"ru": "Мы отпразднуем нашу годовщину", "en": "We will celebrate our anniversary"},
+      {"ru": "Ты почувствуешь себя лучше после отдыха", "en": "You will feel better after resting"},
+      {"ru": "Сегодня ночью будет холодно", "en": "It will be cold tonight"},
+      {"ru": "Она приготовит пасту на ужин", "en": "She will cook pasta for dinner"},
+      {"ru": "Они поедут в Испанию", "en": "They will travel to Spain"},
+      {"ru": "Я прочитаю ту книгу", "en": "I will read that book"},
+      {"ru": "Он починит сломанный стул", "en": "He will fix the broken chair"},
+      {"ru": "Мы будем смотреть закат", "en": "We will watch the sunset"},
+      {"ru": "Ты будешь скучать по мне когда я уйду", "en": "You will miss me when I'm gone"},
+      {"ru": "В горах будет снег", "en": "It will snow in the mountains"},
+      {"ru": "Она закончит учёбу в следующем году", "en": "She will graduate next year"},
+      {"ru": "Сможем ли мы получить дешёвые билеты, как ты думаешь?", "en": "Will we be able to get cheap tickets, do you think?"},
+      {"ru": "Ты отправишь мне новую программу на следующей неделе?", "en": "Will you send me the new programme next week?"},
+      {"ru": "Ты будешь ещё много гулять в следующем семестре?", "en": "Will you be able to go out more next term?"},
+      {"ru": "Я не буду звонить тебе как только мы приедем в Грецию", "en": "I will not call you as soon as we arrive in Greece"},
+      {"ru": "Я не поверю этому человеку. Он обманет тебя", "en": "I will not believe this man. He will cheat you"},
+      {"ru": "Я не скажу Кейт или Люси", "en": "I will not tell Kate or Lucy"},
+      {"ru": "Я не пойду в библиотеку", "en": "I will not go to the library"},
+      {"ru": "Я не подожду следующий автобус", "en": "I will not wait for the next bus"},
+      {"ru": "Я ещё не продам свою машину", "en": "I will not sell my car yet"},
+      {"ru": "Я не буду читать эту книгу к пятнице", "en": "I will not be reading this book by Friday"},
+      {"ru": "Я не буду оставаться в офисе дольше обычного сегодня", "en": "I will not be staying in the office longer than usual today"},
+      {"ru": "В следующем июне они не будут женаты тридцать лет", "en": "They will not have been married for thirty years next June"},
+      {"ru": "К концу моего курса обучения я не сдам более двадцати экзаменов", "en": "I will not have taken over twenty exams by the end of my course of studies"},
+      {"ru": "Этой осенью Джон не будет преподавать десять лет", "en": "John will not have been teaching for ten years this autumn"},
+      {"ru": "Мы не соберём всю необходимую информацию к завтрашнему дню", "en": "We will not have collected all the necessary information by tomorrow"},
+      {"ru": "К концу октября все дикие утки и гуси не улетят на юг", "en": "All wild ducks and geese will not have flown away to the South by the end of October"},
+      {"ru": "Река не замёрзнет к середине декабря", "en": "The river will not have frozen by mid-December"},
+      {"ru": "К полудню я не буду ехать без остановки шесть часов", "en": "I will not have been driving for six hours non-stop by midday"},
+      {"ru": "Ты не закончишь работу к завтрашнему дню", "en": "You will not have completed the work by tomorrow"},
+      {"ru": "Городские власти говорят что они не улучшат значительно транспортное сообщение к 2008 году", "en": "The city authorities say that they will not have considerably improved the transport communications by 2008"},
+      {"ru": "Я не смогу больше гулять в следующем семестре", "en": "I will not be able to go out more next term"},
+      {"ru": "Мы не смогли получить дешёвые билеты", "en": "We were not able to get cheap tickets"},
+      {"ru": "Мы не могли видеть всё!", "en": "We could not see everything!"},
+      {"ru": "Иногда нельзя получить хорошие места", "en": "You cannot get some really good seats sometimes"},
+      {"ru": "Я не отправлю тебе новую программу на следующей неделе", "en": "I will not send you the new programme next week"},
+      {"ru": "Мы не сможем получить дешёвые билеты", "en": "We will not be able to get cheap tickets"},
+      {"ru": "Не волнуйся, мама. Я обещаю что не позвоню тебе как только мы приедем в Грецию", "en": "Don't worry, mum. I promise I will not call you as soon as we arrive in Greece"},
+      {"ru": "Я не буду верить этому человеку. Он обманет тебя", "en": "I will not believe this man. He will cheat you"}
+    ]
+  },
+  pastContinuous:{
+    title:"Past Continuous",
+    explanation:"Действия в процессе в определённый момент прошлого. was/were + V-ing.",
+    examples: [
+      "Утверждение: I was having dinner at 8 o'clock",
+      "Утверждение: They were watching TV", 
+      "Отрицание: I wasn't listening",
+      "Вопрос: What were you doing at 11.30?",
+      "Вопрос: Were you working?"
+    ],
+    startQuote: "While we are focusing on the past, the future is being created. — Paulo Coelho",
+    endQuote: "Life can only be understood backwards; but it must be lived forwards. — Søren Kierkegaard",
+    items:[
+      {"ru": "Что ты делал в 11:30 вчера?", "en": "What were you doing at 11.30 yesterday?"},
+      {"ru": "Шёл дождь поэтому мы не вышли", "en": "It was raining so we didn't go out"},
+      {"ru": "В 2009 году мы жили в Канаде", "en": "In 2009 we were living in Canada"},
+      {"ru": "Сегодня она носит юбку, но вчера она носила брюки", "en": "Today she's wearing a skirt, but yesterday she was wearing trousers"},
+      {"ru": "Я встал рано вчера. Это было красивое утро. Светило солнце и пели птицы", "en": "I woke up early yesterday. It was a beautiful morning. The sun was shining and the birds were singing"},
+      {"ru": "Рейчел была дома. Она смотрела телевизор", "en": "Rachel was at home. She was watching TV"},
+      {"ru": "Джек и Кейт играли в теннис. Они сильно потели", "en": "Jack and Kate were playing tennis. They were sweating a lot"},
+      {"ru": "Том читал книгу. Он сидел на диване", "en": "Tom was reading a book. He was sitting on the sofa"},
+      {"ru": "Я готовил ужин. Кухня была полна пара", "en": "I was cooking dinner. The kitchen was full of steam"},
+      {"ru": "А ты? Я готовился к экзамену", "en": "And you? I was studying for my exam"},
+      {"ru": "Мэтт позвонил пока мы ужинали", "en": "Matt phoned while we were having dinner"},
+      {"ru": "Шёл дождь когда я встал", "en": "It was raining when I got up"},
+      {"ru": "Я видел тебя в парке вчера. Ты сидел на траве и читал книгу", "en": "I saw you in the park yesterday. You were sitting on the grass and reading a book"},
+      {"ru": "Я повредил спину когда работал в саду", "en": "I hurt my back while I was working in the garden"},
+      {"ru": "Я шёл по дороге когда увидел Дэна. Поэтому я остановился, и мы поболтали", "en": "I was walking along the road when I saw Dan. So I stopped, and we had a chat"},
+      {"ru": "Я ужинал в 8 часов вчера вечером", "en": "I was having dinner at 8 o'clock yesterday evening"},
+      {"ru": "Я был в автобусе по дороге домой в 5 часов в прошлый понедельник", "en": "I was on a bus on my way home at 5 o'clock last Monday"},
+      {"ru": "Я смотрел телевизор в 10:15 вчера утром", "en": "I was watching TV at 10.15 yesterday morning"},
+      {"ru": "Я чистил зубы в 4:30 сегодня утром", "en": "I was brushing my teeth at 4.30 this morning"},
+      {"ru": "Я готовил ужин в 7:45 вчера вечером", "en": "I was cooking dinner at 7.45 yesterday evening"},
+      {"ru": "Я читал книгу полчаса назад", "en": "I was reading a book half an hour ago"},
+      {"ru": "Зазвонил дверной звонок пока я принимал душ", "en": "The doorbell rang while I was taking a shower"},
+      {"ru": "Машина начала издавать странный звук когда мы ехали по шоссе", "en": "The car began to make a strange noise when we were driving on the highway"},
+      {"ru": "Джессика заснула пока смотрела фильм", "en": "Jessica fell asleep while she was watching a movie"},
+      {"ru": "Телевизор был включён, но никто не смотрел его", "en": "The television was on, but nobody was watching it"},
+      {"ru": "Я сидел дома один день, чувствуя себя несчастным", "en": "I was sitting at home one day, feeling miserable"},
+      {"ru": "Шёл дождь и я думал о своих летних каникулах", "en": "It was raining and I was thinking about my summer holidays"},
+      {"ru": "Позже в тот день я сидел в интернете", "en": "Later that day, I was surfing the Internet"},
+      {"ru": "Я не искал ничего конкретного", "en": "I wasn't looking for anything in particular"},
+      {"ru": "Потом я нашёл интересный сайт. Новая авиакомпания рекламировала дешёвые авиабилеты в Индию", "en": "Then I found an interesting site. A new airline was advertising cheap flights to India"},
+      {"ru": "Некоторые из моих друзей путешествовали по Индии", "en": "Some of my friends were travelling round India"},
+      {"ru": "Они были в Дели и они прекрасно проводили время", "en": "They were in Delhi and they were having a wonderful time"},
+      {"ru": "Внезапно показалось хорошей идеей присоединиться к ним и два дня спустя я не сидел дома в холодной несчастной Англии; я летел в Дели!", "en": "Suddenly, it seemed like a good idea to join them and two days later I was not sitting at home in cold, miserable England; I was flying to Delhi!"},
+      {"ru": "Когда я вышел из самолёта, мои друзья ждали чтобы встретить меня", "en": "When I got off the plane, my friends were waiting to meet me"},
+      {"ru": "Что ты делал вчера вечером? — Я слушал громкую музыку. Я не слышал как ты стучал", "en": "What were you doing yesterday evening? --- I was listening to loud music. I didn't hear you knock"},
+      {"ru": "Где ты был в восемь часов сегодня утра? — На собеседовании. Поэтому он был в костюме и галстуке", "en": "Where were you at eight o'clock this morning? --- To a job interview. That's why he was wearing a suit and tie"},
+      {"ru": "Ты пользовался компьютером всё утро? — Да, я общался с друзьями онлайн", "en": "Were you using the computer all morning? --- Yes, I was chatting to some friends online"},
+      {"ru": "Соседи делали много шума прошлой ночью! — Да, я знаю. Они праздновали свою годовщину свадьбы пока остальные из нас пытались поспать!", "en": "The neighbours were making a lot of noise last night! --- Yes, I know. They were celebrating their wedding anniversary while the rest of us were trying to get some sleep!"},
+      {"ru": "Я не видел Ив или Джорджа в августе. Что они делали? — Ну, Ив ехала через США с друзьями и Джордж работал в магазине своего отца", "en": "I didn't see Eve or George in August. What were they doing? --- Well, Eve was driving across the US with some friends and George was working in his dad's shop"},
+      {"ru": "С кем ты разговаривал возле кинотеатра прошлой ночью? — С друзьями. Мы обсуждали фильм", "en": "Who were you talking to outside the cinema last night? --- Some friends. We were discussing the film"},
+      {"ru": "Я так устал! Брайан и я копали в саду весь день вчера! — Правда? Почему вы копали?", "en": "I'm so tired! Brian and I were digging in the garden all day yesterday! --- Really? Why were you digging?"},
+      {"ru": "Ты работал в 11:30 вчера?", "en": "Were you working at 11.30 yesterday?"},
+      {"ru": "Где ты жил в 2012 году?", "en": "Where were you living in 2012?"},
+      {"ru": "Что ты делал в 2 часа?", "en": "What were you doing at 2 o'clock?"},
+      {"ru": "Шёл дождь когда ты встал?", "en": "Was it raining when you got up?"},
+      {"ru": "Сью так быстро ехала?", "en": "Was Sue driving so fast?"},
+      {"ru": "Том был в костюме вчера?", "en": "Was Tom wearing a suit yesterday?"},
+      {"ru": "Что ты делал в 8 часов вчера вечером?", "en": "What were you doing at 8 o'clock yesterday evening?"},
+      {"ru": "Что ты делал в 5 часов в прошлый понедельник?", "en": "What were you doing at 5 o'clock last Monday?"},
+      {"ru": "Что ты делал в 10:15 вчера утром?", "en": "What were you doing at 10.15 yesterday morning?"},
+      {"ru": "Что ты делал в 4:30 сегодня утром?", "en": "What were you doing at 4.30 this morning?"},
+      {"ru": "Что ты делал в 7:45 вчера вечером?", "en": "What were you doing at 7.45 yesterday evening?"},
+      {"ru": "Что ты делал полчаса назад?", "en": "What were you doing half an hour ago?"},
+      {"ru": "Что ты делал когда зазвонил дверной звонок?", "en": "What were you doing when the doorbell rang?"},
+      {"ru": "Что ты делал когда машина начала издавать странный звук?", "en": "What were you doing when the car began to make a strange noise?"},
+      {"ru": "Что ты делал когда Джессика заснула?", "en": "What were you doing when Jessica fell asleep?"},
+      {"ru": "Кто смотрел телевизор?", "en": "Who was watching the television?"},
+      {"ru": "Почему ты копал?", "en": "Why were you digging?"}
+    ]
+  },
+  futureContinuous:{
+    title:"Future Continuous",
+    explanation:"Действия в процессе в определённый момент будущего. will be + V-ing.",
+    examples: [
+      "Утверждение: I'll be lying on the beach",
+      "Утверждение: We'll be having dinner", 
+      "Отрицание: I won't be working",
+      "Вопрос: Will you be having dinner?",
+      "Вопрос: Will you still be doing the same job?"
+    ],
+    startQuote: "The best way to predict the future is to create it. — Abraham Lincoln",
+    endQuote: "Your future is created by what you do today, not tomorrow. — Robert Kiyosaki",
+    items:[
+      {"ru": "На следующей неделе в это время я буду отдыхать. Я буду лежать на пляже или плавать в море", "en": "This time next week I'll be on holiday. I'll be lying on the beach or swimming in the sea"},
+      {"ru": "Не звони между 7 и 8. Мы будем ужинать", "en": "Don't phone between 7 and 8. We'll be having dinner"},
+      {"ru": "В 10 часов завтра она будет в офисе. Она будет работать", "en": "At 10 o'clock tomorrow, she will be in her office. She will be working"},
+      {"ru": "Так что в 4 часа мы будем играть в теннис", "en": "So at 4 o'clock, we'll be playing tennis"},
+      {"ru": "Я буду работать", "en": "I'll be working"},
+      {"ru": "Он будет тратить все свои деньги до конца отпуска", "en": "He'll be spending all his money before the end of his holiday"},
+      {"ru": "Ты всё ещё будешь работать на той же работе через десять лет?", "en": "Will you still be doing the same job in ten years' time?"},
+      {"ru": "К концу поездки она проедет более 3000 миль", "en": "By the end of the trip, she will have travelled more than 3,000 miles"},
+      {"ru": "Если тебе нужно связаться со мной, я буду жить в отеле 'Лев' до пятницы", "en": "If you need to contact me, I'll be staying at the Lion Hotel until Friday"},
+      {"ru": "Ты увидишь Лауру завтра?", "en": "Will you see Laura tomorrow?"},
+      {"ru": "Ты будешь ужинать?", "en": "Will you be having dinner?"},
+      {"ru": "Ты будешь тратить своё время если подашь заявление?", "en": "Will you be wasting your time if you apply for it?"},
+      {"ru": "Мы будем ужинать?", "en": "Will we be having dinner?"},
+      {"ru": "Я буду работать?", "en": "Will I be working?"},
+      {"ru": "Совещание закончится к тому времени?", "en": "Will the meeting end by then?"},
+      {"ru": "Он будет тратить все свои деньги до конца отпуска?", "en": "Will he be spending all his money before the end of his holiday?"},
+      {"ru": "Ты всё ещё будешь работать на той же работе через десять лет?", "en": "Will you still be doing the same job in ten years' time?"},
+      {"ru": "Она проедет более 3000 миль?", "en": "Will she have travelled more than 3,000 miles?"},
+      {"ru": "Я буду жить в отеле 'Лев' до пятницы?", "en": "Will I be staying at the Lion Hotel until Friday?"},
+      {"ru": "Ты увидишь Лауру завтра?", "en": "Will you see Laura tomorrow?"},
+      {"ru": "Я не буду ужинать", "en": "I won't be having dinner"},
+      {"ru": "Ты не будешь тратить своё время если подашь заявление", "en": "You won't be wasting your time if you apply for it"},
+      {"ru": "Мы не будем ужинать", "en": "We won't be having dinner"},
+      {"ru": "Я не буду работать", "en": "I won't be working"},
+      {"ru": "Совещание не закончится к тому времени", "en": "The meeting won't end by then"},
+      {"ru": "Он не будет тратить все свои деньги до конца отпуска", "en": "He won't be spending all his money before the end of his holiday"},
+      {"ru": "Ты не будешь работать на той же работе через десять лет", "en": "You won't still be doing the same job in ten years' time"},
+      {"ru": "Она не проедет более 3000 миль", "en": "She won't have travelled more than 3,000 miles"},
+      {"ru": "Я не буду жить в отеле 'Лев' до пятницы", "en": "I won't be staying at the Lion Hotel until Friday"},
+      {"ru": "Ты не увидишь Лауру завтра", "en": "You won't see Laura tomorrow"},
+      {"ru": "Джейн будет заниматься танцами час или около того. Тебе лучше позвонить ей когда это закончится", "en": "Jane will be having a dance class for an hour or so. You'd better call her when it's over"},
+      {"ru": "Мы приедем в театр только в 8. Спектакль уже начнётся", "en": "We'll be getting to the theatre only at 8. The performance will start already"},
+      {"ru": "Я буду читать эту книгу к пятнице", "en": "I'll be reading this book by Friday"},
+      {"ru": "Мне придётся остаться в офисе дольше обычного сегодня. К тому времени как я приду домой моя мама закончит все приготовления к вечеринке", "en": "I'll have to stay in the office longer than usual today. By the time I come home my mother will have finished all the preparations for the party"},
+      {"ru": "В следующем июне они будут женаты тридцать лет", "en": "They will have been married for thirty years next June"},
+      {"ru": "К концу моего курса обучения я сдам более двадцати экзаменов", "en": "By the end of my course of studies I will have taken over twenty exams"},
+      {"ru": "Этой осенью Джон будет преподавать десять лет", "en": "John will have been teaching for ten years this autumn"},
+      {"ru": "Мы надеемся что мы соберём всю необходимую информацию к завтрашнему дню", "en": "We hope that we will have collected all the necessary information by tomorrow"},
+      {"ru": "К концу октября все дикие утки и гуси улетят на юг", "en": "By the end of October all wild ducks and geese will have flown away to the South"},
+      {"ru": "Река замёрзнет к середине декабря", "en": "The river will have frozen by mid-December"},
+      {"ru": "К полудню я буду ехать без остановки шесть часов", "en": "I will have been driving for six hours non-stop by midday"},
+      {"ru": "Если ты сделаешь всё возможное ты закончишь работу к завтрашнему дню", "en": "If you do your best you will have completed the work by tomorrow"},
+      {"ru": "Городские власти говорят что они значительно улучшат транспортное сообщение к 2008 году", "en": "The city authorities say that they will have considerably improved the transport communications by 2008"},
+      {"ru": "Я не буду читать эту книгу к пятнице", "en": "I won't be reading this book by Friday"},
+      {"ru": "Я не буду оставаться в офисе дольше обычного сегодня", "en": "I won't be staying in the office longer than usual today"},
+      {"ru": "В следующем июне они не будут женаты тридцать лет", "en": "They won't have been married for thirty years next June"},
+      {"ru": "К концу моего курса обучения я не сдам более двадцати экзаменов", "en": "I won't have taken over twenty exams by the end of my course of studies"},
+      {"ru": "Этой осенью Джон не будет преподавать десять лет", "en": "John won't have been teaching for ten years this autumn"},
+      {"ru": "Мы не соберём всю необходимую информацию к завтрашнему дню", "en": "We won't have collected all the necessary information by tomorrow"},
+      {"ru": "К концу октября все дикие утки и гуси не улетят на юг", "en": "All wild ducks and geese won't have flown away to the South by the end of October"},
+      {"ru": "Река не замёрзнет к середине декабря", "en": "The river won't have frozen by mid-December"},
+      {"ru": "К полудню я не буду ехать без остановки шесть часов", "en": "I won't have been driving for six hours non-stop by midday"},
+      {"ru": "Ты не закончишь работу к завтрашнему дню", "en": "You won't have completed the work by tomorrow"},
+      {"ru": "Городские власти говорят что они не улучшат значительно транспортное сообщение к 2008 году", "en": "The city authorities say that they won't have considerably improved the transport communications by 2008"},
+      {"ru": "Ты будешь читать эту книгу к пятнице?", "en": "Will you be reading this book by Friday?"},
+      {"ru": "Ты будешь оставаться в офисе дольше обычного сегодня?", "en": "Will you be staying in the office longer than usual today?"},
+      {"ru": "В следующем июне они будут женаты тридцать лет?", "en": "Will they have been married for thirty years next June?"},
+      {"ru": "Ты сдашь более двадцати экзаменов к концу твоего курса обучения?", "en": "Will you have taken over twenty exams by the end of your course of studies?"},
+      {"ru": "Джон будет преподавать десять лет этой осенью?", "en": "Will John have been teaching for ten years this autumn?"}
+    ]
+  },
+  presentPerfect:{
+    title:"Present Perfect",
+    explanation:"Действия в прошлом с результатом в настоящем. have/has + V3.",
+    examples: [
+      "Утверждение: I have lost my key",
+      "Утверждение: She has visited many countries",
+      "Отрицание: I haven't seen Paula", 
+      "Вопрос: Have you seen Kate?",
+      "Вопрос: Have you ever been to Spain?"
+    ],
+    startQuote: "One language sets you in a corridor for life. Two languages open every door along the way. — Frank Smith",
+    endQuote: "Language is the road map of a culture. It tells you where its people come from and where they are going. — Rita Mae Brown",
+    items:[
+      {"ru": "Я потерял ключ", "en": "I have lost my key"},
+      {"ru": "Бен ушёл домой", "en": "Ben has gone home"},
+      {"ru": "Мой друг писатель. Он написал много книг", "en": "My friend is a writer. He has written many books"},
+      {"ru": "Мы живём в Сингапуре шесть лет", "en": "We have lived in Singapore for six years"},
+      {"ru": "Сью нет здесь. Она вышла", "en": "Sue isn't here. She has gone out"},
+      {"ru": "Она посетила много стран", "en": "She has visited many countries"},
+      {"ru": "Я жил в Мексике много лет", "en": "I have lived in Mexico for many years"},
+      {"ru": "Том потерял ключ", "en": "Tom has lost his key"},
+      {"ru": "Лиза сломала ногу", "en": "Lisa has broken her leg"},
+      {"ru": "Проезд в автобусе подорожал", "en": "The bus fare has gone up"},
+      {"ru": "Её английский улучшился", "en": "Her English has improved"},
+      {"ru": "Дэн отрастил бороду", "en": "Dan has grown a beard"},
+      {"ru": "Письмо пришло", "en": "The letter has arrived"},
+      {"ru": "Температура упала", "en": "The temperature has fallen"},
+      {"ru": "Хелен была в Ирландии три дня", "en": "Helen has been in Ireland for three days"},
+      {"ru": "Линн и Марк женаты 20 лет", "en": "Lynn and Mark have been married for 20 years"},
+      {"ru": "Я купил эти туфли несколько дней назад", "en": "I have bought these shoes a few days ago"},
+      {"ru": "Сильвия изучает английский шесть месяцев", "en": "Silvia has been learning English for six months"},
+      {"ru": "Ты знаешь Лизу давно?", "en": "Have you known Lisa for a long time?"},
+      {"ru": "Я прочитал эту книгу", "en": "I have read this book"},
+      {"ru": "Они женаты пять лет", "en": "They have been married for five years"},
+      {"ru": "Как долго ты женат?", "en": "How long have you been married?"},
+      {"ru": "Как долго ты знаешь её?", "en": "How long have you known her?"},
+      {"ru": "Я знаю её давно", "en": "I have known her for a long time"},
+      {"ru": "Как долго она живёт в Лондоне?", "en": "How long has she lived in London?"},
+      {"ru": "Она живёт там всю жизнь", "en": "She has lived there all her life"},
+      {"ru": "Как долго у тебя есть твоя машина?", "en": "How long have you had your car?"},
+      {"ru": "У меня она с апреля", "en": "I have had it since April"},
+      {"ru": "Мои руки очень грязные. Я ремонтировал свой велосипед", "en": "My hands are very dirty. I've been repairing my bike"},
+      {"ru": "Джо ел слишком много в последнее время. Он должен есть меньше", "en": "Joe has been eating too much recently. He should eat less"},
+      {"ru": "Приятно видеть тебя снова. Что ты делал с тех пор как мы виделись в последний раз?", "en": "It's nice to see you again. What have you been doing since we last met?"},
+      {"ru": "Где ты был? Ты играл в теннис?", "en": "Where have you been? Have you been playing tennis?"},
+      {"ru": "Мой велосипед снова в порядке. Я починил его", "en": "My bike is OK again now. I've repaired it"},
+      {"ru": "Кто-то съел все шоколадки. Коробка пуста", "en": "Somebody has eaten all the chocolates. The box is empty"},
+      {"ru": "Где книга которую я тебе дал? Что ты с ней сделал?", "en": "Where's the book I gave you? What have you done with it?"},
+      {"ru": "Ты когда-нибудь играл в теннис?", "en": "Have you ever played tennis?"},
+      {"ru": "Как долго ты читаешь эту книгу?", "en": "How long have you been reading that book?"},
+      {"ru": "Лиза пишет письма. Она пишет письма всё утро", "en": "Lisa is writing emails. She's been writing emails all morning"},
+      {"ru": "Они играют в теннис с 2 часов", "en": "They've been playing tennis since 2 o'clock"},
+      {"ru": "Я учу арабский, но я учу его не очень долго", "en": "I'm learning Arabic, but I haven't been learning it very long"},
+      {"ru": "Сколько ты прочитал из той книги?", "en": "How much of that book have you read?"},
+      {"ru": "Лиза пишет письма. Она отправила много писем сегодня утром", "en": "Lisa is writing emails. She's sent lots of emails this morning"},
+      {"ru": "Они играли в теннис три раза на этой неделе", "en": "They've played tennis three times this week"},
+      {"ru": "Я учу арабский, но я выучил не очень много", "en": "I'm learning Arabic, but I haven't learnt very much yet"},
+      {"ru": "Она путешествует три месяца", "en": "She has been travelling for three months"},
+      {"ru": "Она посетила шесть стран на данный момент", "en": "She has visited six countries so far"},
+      {"ru": "Он выиграл национальное чемпионство четыре раза", "en": "He has won the national championship four times"},
+      {"ru": "Он играет в теннис с десяти лет", "en": "He has been playing tennis since he was ten"},
+      {"ru": "Они снимают фильмы с тех пор как окончили колледж", "en": "They have been making films since they left college"},
+      {"ru": "Они сняли пять фильмов с тех пор как окончили колледж", "en": "They have made five films since they left college"},
+      {"ru": "Сэм не звонил мне ещё", "en": "Sam hasn't phoned me yet"},
+      {"ru": "Я не видел Паулу", "en": "I haven't seen Paula"},
+      {"ru": "Я не учу это очень долго", "en": "I haven't been learning it very long"},
+      {"ru": "Я не выучил очень много ещё", "en": "I haven't learnt very much yet"},
+      {"ru": "Я не жду долго", "en": "I haven't been waiting long"},
+      {"ru": "Я не поймал никакой рыбы", "en": "I haven't caught any fish"},
+      {"ru": "Я не пригласил много людей", "en": "I haven't invited many people"},
+      {"ru": "Я не преподаю долго", "en": "I haven't been teaching for long"},
+      {"ru": "Я не написал много книг", "en": "I haven't written many books"},
+      {"ru": "Я не пишу книги долго", "en": "I haven't been writing books for long"}
+    ]
+  },
+  pastPerfect:{
+    title:"Past Perfect",
+    explanation:"Действие завершилось до другого действия в прошлом. had + V3.",
+    examples: [
+      "Утверждение: They had hardly gone when she arrived",
+      "Утверждение: He had worked hard all day", 
+      "Отрицание: They had not cleaned it for weeks",
+      "Вопрос: Had he already left?",
+      "Вопрос: Had she taught at this school for twenty years?"
+    ],
+    startQuote: "The past is always tense, the future perfect. — Zadie Smith",
+    endQuote: "We are products of our past, but we don't have to be prisoners of it. — Rick Warren",
+    items:[
+      {"ru": "Они едва ушли когда тётя Джулия медленно вошла в комнату", "en": "They had hardly gone when aunt Julia wandered slowly into the room"},
+      {"ru": "Он едва достиг двери своего офиса когда встретил двух молодых людей", "en": "He had hardly reached the door of his office when he encountered two young men"},
+      {"ru": "Он едва сделал несколько шагов по улице когда три человека появились из-за угла", "en": "He had scarcely taken a few steps along the street, when three men appeared from around the corner"},
+      {"ru": "Не успел он начать играть как одна струна на скрипке порвалась", "en": "No sooner had he started to play than one string on the violin broke"},
+      {"ru": "Они едва вышли из комнаты когда начался хаос", "en": "They had barely left the room when the chaos broke out"},
+      {"ru": "Не успели они приехать в Ружмонт как её сестра позвонила из дома о несчастном случае с её маленькой дочерью", "en": "No sooner had they arrived at Rougemont than her sister rang up from home about an accident with her little daughter"},
+      {"ru": "Не успели подняться занавесы как она встала чтобы уйти", "en": "No sooner had the curtains risen than she rose to go"},
+      {"ru": "Едва он задал свои вопросы как она ответила на них", "en": "Hardly had he asked his questions when she answered them"},
+      {"ru": "Он едва снял пальто когда начал читать письмо", "en": "He had scarcely taken off his coat when he began to read the letter"},
+      {"ru": "Нелл едва устроилась на маленькой кучке соломы в углу когда заснула", "en": "Nell had scarcely settled herself on a little heap of straw in the corner, when she fell asleep"},
+      {"ru": "Дождь почти прекратился когда он достиг своего отеля", "en": "The rain had nearly stopped when he reached his hotel"},
+      {"ru": "Он едва сказал первые слова когда она прервала его", "en": "He had scarcely said the first words when she interrupted him"},
+      {"ru": "Когда я ушёл из дома, снег уже прекратился", "en": "When I left home, the snow had already stopped"},
+      {"ru": "Было 6 вечера и Джек устал потому что он усердно работал весь день", "en": "It was 6 p.m. and Jack was tired because he had worked hard all day"},
+      {"ru": "Он явно слушал наш разговор и я интересовался сколько он услышал", "en": "He clearly listened to our conversation and I wondered how much he had heard"},
+      {"ru": "Она сказала что преподавала в этой школе двадцать лет", "en": "She said she had taught at this school for twenty years"},
+      {"ru": "Он сказал что только что закончил книгу которую читал всё время", "en": "He said he had just finished the book he had read all the time"},
+      {"ru": "Почтальон пришёл после обеда и принёс мне письмо которое я ждал долгое время", "en": "The postman came after lunch and brought me a letter which I had expected for a long time"},
+      {"ru": "Шёл дождь с утра, и поля были довольно грязными", "en": "It had been raining since the morning, and the fields were quite muddy"},
+      {"ru": "Когда я пришёл домой тем вечером, мой маленький сын поужинал сам в первый раз", "en": "When I got home that evening, my little son had eaten dinner himself for the first time"},
+      {"ru": "Свадьба моей сестры была единственной вещью о которой все говорили дома последние две недели", "en": "My sister's wedding had been the only thing everybody talked about at home for the last two weeks"},
+      {"ru": "Они вернулись в отель и в свой номер, где они ждали инспектора в шесть тридцать", "en": "They had gone back to the hotel and up to their suite, where they expected the inspector at six-thirty"},
+      {"ru": "Вскоре он повернулся чтобы посмотреть на угол где она стояла", "en": "Presently he turned to look at the corner where she had stood"},
+      {"ru": "Скарлетт, которая обмахивала себя веером из индюшачьего хвоста, резко остановилась", "en": "Scarlett, who had fanned herself with a turkey-tail fan, had stopped abruptly"},
+      {"ru": "Он только что уехал в аэропорт когда я позвонил", "en": "He had just left for the airport when I called"},
+      {"ru": "О ком ты думаешь? — спросил он после того как посмотрел на меня несколько секунд", "en": "Who are you thinking of? he asked after he looked at me for a few seconds"},
+      {"ru": "Они стояли в открытом дверном проёме, ожидая когда она войдёт из дождя", "en": "They had stood in the open front doorway, waiting for her to come in out of the rain"},
+      {"ru": "Их дочь не сказала где она спала и у неё была странно выглядящая коробка в руках", "en": "Their daughter had not said where she had slept and she had had a curiously looking box in her hands"},
+      {"ru": "Они едва ушли когда тётя Джулия медленно вошла в комнату?", "en": "Had they hardly gone when aunt Julia wandered slowly into the room?"},
+      {"ru": "Он едва достиг двери своего офиса когда встретил двух молодых людей?", "en": "Had he hardly reached the door of his office when he encountered two young men?"},
+      {"ru": "Он едва сделал несколько шагов по улице когда три человека появились из-за угла?", "en": "Had he scarcely taken a few steps along the street, when three men appeared from around the corner?"},
+      {"ru": "Не успел он начать играть как одна струна на скрипке порвалась?", "en": "Had no sooner he started to play than one string on the violin broke?"},
+      {"ru": "Они едва вышли из комнаты когда начался хаос?", "en": "Had they barely left the room when the chaos broke out?"},
+      {"ru": "Не успели они приехать в Ружмонт как её сестра позвонила из дома о несчастном случае?", "en": "Had no sooner they arrived at Rougemont than her sister rang up from home about an accident with her little daughter?"},
+      {"ru": "Не успели подняться занавесы как она встала чтобы уйти?", "en": "Had no sooner the curtains risen than she rose to go?"},
+      {"ru": "Едва он задал свои вопросы как она ответила на них?", "en": "Had hardly he asked his questions when she answered them?"},
+      {"ru": "Он едва снял пальто когда начал читать письмо?", "en": "Had he scarcely taken off his coat when he began to read the letter?"},
+      {"ru": "Нелл едва устроилась на маленькой кучке соломы в углу когда заснула?", "en": "Had Nell scarcely settled herself on a little heap of straw in the corner, when she fell asleep?"},
+      {"ru": "Дождь почти прекратился когда он достиг своего отеля?", "en": "Had the rain nearly stopped when he reached his hotel?"},
+      {"ru": "Он едва сказал первые слова когда она прервала его?", "en": "Had he scarcely said the first words when she interrupted him?"},
+      {"ru": "Когда я ушёл из дома, снег уже прекратился?", "en": "When I left home, had the snow already stopped?"},
+      {"ru": "Было 6 вечера и Джек устал потому что он усердно работал весь день?", "en": "Was it 6 p.m. and was Jack tired because he had worked hard all day?"},
+      {"ru": "Он явно слушал наш разговор и я интересовался сколько он услышал?", "en": "Had he clearly listened to our conversation and had I wondered how much he had heard?"},
+      {"ru": "Она сказала что преподавала в этой школе двадцать лет?", "en": "Had she said she had taught at this school for twenty years?"},
+      {"ru": "Он сказал что только что закончил книгу которую читал всё время?", "en": "Had he said he had just finished the book he had read all the time?"},
+      {"ru": "Почтальон пришёл после обеда и принёс мне письмо которое я ждал долгое время?", "en": "Had the postman come after lunch and brought me a letter which I had expected for a long time?"},
+      {"ru": "Шёл дождь с утра, и поля были довольно грязными?", "en": "Had it been raining since the morning, and had the fields been quite muddy?"},
+      {"ru": "Когда я пришёл домой тем вечером, мой маленький сын поужинал сам в первый раз?", "en": "When I got home that evening, had my little son eaten dinner himself for the first time?"},
+      {"ru": "Свадьба моей сестры была единственной вещью о которой все говорили дома последние две недели?", "en": "Had my sister's wedding been the only thing everybody talked about at home for the last two weeks?"},
+      {"ru": "Они вернулись в отель и в свой номер, где они ждали инспектора в шесть тридцать?", "en": "Had they gone back to the hotel and up to their suite, where they expected the inspector at six-thirty?"},
+      {"ru": "Вскоре он повернулся чтобы посмотреть на угол где она стояла?", "en": "Had presently he turned to look at the corner where she had stood?"},
+      {"ru": "Скарлетт, которая обмахивала себя веером из индюшачьего хвоста, резко остановилась?", "en": "Had Scarlett, who had fanned herself with a turkey-tail fan, stopped abruptly?"},
+      {"ru": "Он только что уехал в аэропорт когда я позвонил?", "en": "Had he just left for the airport when I called?"},
+      {"ru": "О ком ты думаешь? — спросил он после того как посмотрел на меня несколько секунд?", "en": "Who are you thinking of? had he asked after he looked at me for a few seconds?"},
+      {"ru": "Они стояли в открытом дверном проёме, ожидая когда она войдёт из дождя?", "en": "Had they stood in the open front doorway, waiting for her to come in out of the rain?"},
+      {"ru": "Их дочь не сказала где она спала и у неё была странно выглядящая коробка в руках?", "en": "Had their daughter not said where she had slept and had she had a curiously looking box in her hands?"},
+      {"ru": "Я не был уверен кто она. Я видел её раньше, но не мог вспомнить где", "en": "I wasn't sure who she was. I'd seen her before, but I couldn't remember where"},
+      {"ru": "Мы не были голодны. Мы только что пообедали", "en": "We weren't hungry. We'd just had lunch"},
+      {"ru": "Дом был грязным. Они не убирали его неделями", "en": "The house was dirty. They hadn't cleaned it for weeks"},
+      {"ru": "Том был там когда ты приехал? — Да, но он ушёл вскоре после этого", "en": "Was Tom there when you arrived? --- Yes, but he left soon afterwards"},
+      {"ru": "Том был там когда ты приехал? — Нет, он уже ушёл", "en": "Was Tom there when you arrived? --- No, he had already left"},
+      {"ru": "Кейт не было дома когда я позвонил. Она была в доме своей матери", "en": "Kate wasn't at home when I phoned. She was at her mother's house"},
+      {"ru": "Кейт только что пришла домой когда я позвонил. Она была в доме своей матери", "en": "Kate had just got home when I phoned. She had been at her mother's house"}
+    ]
+  },
+  futurePerfect:{
+    title:"Future Perfect",
+    explanation:"Действие завершится к определённому моменту в будущем. will have + V3.",
+    examples: [
+      "Утверждение: I will have cleaned the house by the time you get home",
+      "Утверждение: Most people will have forgotten the fire", 
+      "Отрицание: I won't have finished by then",
+      "Вопрос: Will you have completed the work by tomorrow?",
+      "Вопрос: Will school have closed by now?"
+    ],
+    startQuote: "The future starts today, not tomorrow. — Pope John Paul II",
+    endQuote: "The future depends on what you do today. — Mahatma Gandhi",
+    items:[
+      {"ru": "К тому времени как ты придёшь домой, я уберу дом сверху донизу", "en": "By the time you get home I will have cleaned the house from top to bottom"},
+      {"ru": "Я уверен что его ужасное поведение скоро будет забыто", "en": "I'm sure his awful behaviour will soon have been forgotten"},
+      {"ru": "Надеюсь это письмо убедит тебя что дальнейшие действия не требуются", "en": "I hope this email will have reassured you that no further action is required"},
+      {"ru": "Большинство людей уже забудут пожар", "en": "Most people will have forgotten the fire by now"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты", "en": "Tennis fans will have been queuing at Wimbledon all day to buy tickets"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости после того как её оштрафовали на £100 на прошлой неделе за езду со скоростью 33 мили в час в зоне 30 миль в час", "en": "Motorist Vicky Hao will have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone"},
+      {"ru": "К настоящему времени школа закроется на Рождество и ты будешь наслаждаться отдыхом", "en": "By now school will have closed for Christmas and you will have been enjoying a rest"},
+      {"ru": "Трудно поверить что Тиму уже 18 и что через несколько месяцев он будет заканчивать школу для колледжа", "en": "It's hard to believe that Tim's already 18 and that it's only a few months until he will have been leaving school for college"},
+      {"ru": "Моя главная новость что мой брат Джо и его семья приедут в следующую пятницу как часть их большого путешествия вокруг света", "en": "My main news is that my brother, Joe, and his family will have been arriving next Friday as part of their big trip around the world"},
+      {"ru": "К тому времени как они приедут сюда они побывают в Калифорнии и Новой Зеландии", "en": "By the time they get here they will have been to California and New Zealand"},
+      {"ru": "Без сомнения дети Джо планировали это месяцами", "en": "No doubt Joe's children will have been planning it all out for months"},
+      {"ru": "Они не проведут всё своё время со мной", "en": "They won't have spent all their time with me"},
+      {"ru": "Джо должен поехать в Токио по делам, поэтому я буду развлекать остальных членов семьи пока его не будет", "en": "Joe has to go to Tokyo on business, so I will have kept the rest of the family entertained while he's away"},
+      {"ru": "Потом они все поедут в Киото...", "en": "Then they will all have been going to Kyoto ..."},
+      {"ru": "Я уверен что его ужасное поведение не будет забыто", "en": "I'm sure his awful behaviour won't have been forgotten"},
+      {"ru": "Большинство людей не забудут пожар к настоящему времени", "en": "Most people won't have forgotten the fire by now"},
+      {"ru": "Болельщики тенниса не будут стоять в очереди в Уимблдон весь день чтобы купить билеты", "en": "Tennis fans won't have been queuing at Wimbledon all day to buy tickets"},
+      {"ru": "Автомобилистка Вики Хао не будет спрашивать себя хорошая ли идея камеры скорости", "en": "Motorist Vicky Hao won't have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone"},
+      {"ru": "К настоящему времени школа не закроется на Рождество и ты не будешь наслаждаться отдыхом", "en": "By now school won't have closed for Christmas and you won't have been enjoying a rest"},
+      {"ru": "Трудно поверить что Тиму уже 18 и что через несколько месяцев он не будет заканчивать школу для колледжа", "en": "It's hard to believe that Tim's already 18 and that it's only a few months until he won't have been leaving school for college"},
+      {"ru": "Моя главная новость что мой брат Джо и его семья не приедут в следующую пятницу как часть их большого путешествия вокруг света", "en": "My main news is that my brother, Joe, and his family won't have been arriving next Friday as part of their big trip around the world"},
+      {"ru": "К тому времени как они приедут сюда они не побывают в Калифорнии и Новой Зеландии", "en": "By the time they get here they won't have been to California and New Zealand"},
+      {"ru": "Без сомнения дети Джо не планировали это месяцами", "en": "No doubt Joe's children won't have been planning it all out for months"},
+      {"ru": "Они не проведут всё своё время со мной", "en": "They won't have spent all their time with me"},
+      {"ru": "Джо должен поехать в Токио по делам, поэтому я не буду развлекать остальных членов семьи пока его не будет", "en": "Joe has to go to Tokyo on business, so I won't have kept the rest of the family entertained while he's away"},
+      {"ru": "Потом они не поедут в Киото...", "en": "Then they won't have been going to Kyoto ..."},
+      {"ru": "Ты уберёшь дом сверху донизу к тому времени как придёшь домой?", "en": "Will you have cleaned the house from top to bottom by the time you get home?"},
+      {"ru": "Его ужасное поведение будет забыто?", "en": "Will his awful behaviour have been forgotten?"},
+      {"ru": "Это письмо убедит тебя что дальнейшие действия не требуются?", "en": "Will this email have reassured you that no further action is required?"},
+      {"ru": "Джо будет использовать свою машину сегодня?", "en": "Will Joe be using his car today?"},
+      {"ru": "Большинство людей забудут пожар к настоящему времени?", "en": "Will most people have forgotten the fire by now?"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты?", "en": "Will tennis fans have been queuing at Wimbledon all day to buy tickets?"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости?", "en": "Will Motorist Vicky Hao have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone?"},
+      {"ru": "Школа закроется на Рождество к настоящему времени?", "en": "Will school have closed for Christmas by now?"},
+      {"ru": "Ты будешь наслаждаться отдыхом?", "en": "Will you have been enjoying a rest?"},
+      {"ru": "Тим будет заканчивать школу для колледжа?", "en": "Will Tim have been leaving school for college?"},
+      {"ru": "Мой брат Джо и его семья приедут в следующую пятницу как часть их большого путешествия вокруг света?", "en": "Will my brother, Joe, and his family have been arriving next Friday as part of their big trip around the world?"},
+      {"ru": "Они побывают в Калифорнии и Новой Зеландии к тому времени как приедут сюда?", "en": "Will they have been to California and New Zealand by the time they get here?"},
+      {"ru": "Дети Джо планировали это месяцами?", "en": "Will Joe's children have been planning it all out for months?"},
+      {"ru": "Они проведут всё своё время со мной?", "en": "Will they have spent all their time with me?"},
+      {"ru": "Я буду развлекать остальных членов семьи пока Джо не будет?", "en": "Will I have kept the rest of the family entertained while Joe is away?"},
+      {"ru": "Они поедут в Киото?", "en": "Will they have been going to Kyoto?"},
+      {"ru": "Ты будешь читать эту книгу к пятнице?", "en": "Will you be reading this book by Friday?"},
+      {"ru": "Ты будешь оставаться в офисе дольше обычного сегодня?", "en": "Will you be staying in the office longer than usual today?"},
+      {"ru": "В следующем июне они будут женаты тридцать лет?", "en": "Will they have been married for thirty years next June?"},
+      {"ru": "Ты сдашь более двадцати экзаменов к концу твоего курса обучения?", "en": "Will you have taken over twenty exams by the end of your course of studies?"},
+      {"ru": "Джон будет преподавать десять лет этой осенью?", "en": "Will John have been teaching for ten years this autumn?"},
+      {"ru": "Ты соберёшь всю необходимую информацию к завтрашнему дню?", "en": "Will you have collected all the necessary information by tomorrow?"},
+      {"ru": "Все дикие утки и гуси улетят на юг к концу октября?", "en": "Will all wild ducks and geese have flown away to the South by the end of October?"},
+      {"ru": "Река замёрзнет к середине декабря?", "en": "Will the river have frozen by mid-December?"},
+      {"ru": "Ты будешь ехать без остановки шесть часов к полудню?", "en": "Will you have been driving for six hours non-stop by midday?"},
+      {"ru": "Ты закончишь работу к завтрашнему дню?", "en": "Will you have completed the work by tomorrow?"},
+      {"ru": "Городские власти значительно улучшат транспортное сообщение к 2008 году?", "en": "Will the city authorities have considerably improved the transport communications by 2008?"},
+      {"ru": "В следующем году я буду работать в компании 30 лет", "en": "Next year I will have been working in the company for 30 years"},
+      {"ru": "Мы могли бы попросить одолжить машину Джо. Он не будет использовать её сегодня — он поехал на работу на велосипеде", "en": "We could ask to borrow Joe's car. He won't be using it today -- he went to work by bike"},
+      {"ru": "Ты будешь работать в компании 30 лет в следующем году?", "en": "Will you have been working in the company for 30 years next year?"},
+      {"ru": "Джо будет использовать свою машину сегодня?", "en": "Will Joe be using his car today?"},
+      {"ru": "Большинство людей забудут пожар к настоящему времени?", "en": "Will most people have forgotten the fire by now?"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты?", "en": "Will tennis fans have been queuing at Wimbledon all day to buy tickets?"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости?", "en": "Will Motorist Vicky Hao have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone?"},
+      {"ru": "Школа закроется на Рождество к настоящему времени?", "en": "Will school have closed for Christmas by now?"},
+      {"ru": "Ты будешь наслаждаться отдыхом?", "en": "Will you have been enjoying a rest?"}
+    ]
+  },
+  presentPerfectContinuous:{
+    title:"Present Perfect Continuous",
+    explanation:"Действие началось в прошлом и продолжается до сих пор. have been + V-ing.",
+    examples: [
+      "Утверждение: I have been studying English for six months",
+      "Утверждение: She has been working here since 2020", 
+      "Отрицание: I haven't been learning it very long",
+      "Вопрос: Have you been studying English?",
+      "Вопрос: How long have you been reading that book?"
+    ],
+    startQuote: "Language is not a genetic gift, it is a social gift. — Frank Smith",
+    endQuote: "Learning is a treasure that will follow its owner everywhere. — Chinese Proverb",
+    items:[
+      {"ru": "Я изучаю английский шесть месяцев", "en": "I have been studying English for six months"},
+      {"ru": "Она работает здесь с 2020 года", "en": "She has been working here since 2020"},
+      {"ru": "Они живут в Париже три года", "en": "They have been living in Paris for three years"},
+      {"ru": "Он ждёт тебя с 9 часов", "en": "He has been waiting for you since 9 o'clock"},
+      {"ru": "Мы путешествуем по Европе две недели", "en": "We have been traveling around Europe for two weeks"},
+      {"ru": "Дети играют на улице весь день", "en": "The children have been playing outside all afternoon"},
+      {"ru": "Я читаю эту книгу два часа", "en": "I have been reading this book for two hours"},
+      {"ru": "Она готовит ужин с полудня", "en": "She has been cooking dinner since noon"},
+      {"ru": "Они разговаривают по телефону час", "en": "They have been talking on the phone for an hour"},
+      {"ru": "Он бегает каждое утро год", "en": "He has been running every morning for a year"},
+      {"ru": "Я пишу письма весь день", "en": "I have been writing emails all day"},
+      {"ru": "Она учит французский шесть месяцев", "en": "She has been learning French for six months"},
+      {"ru": "Они смотрят телевизор с обеда", "en": "They have been watching TV since lunchtime"},
+      {"ru": "Я убираю дом всё утро", "en": "I have been cleaning the house all morning"},
+      {"ru": "Он едет восемь часов без остановки", "en": "He has been driving for eight hours straight"},
+      {"ru": "Мы идём три часа", "en": "We have been walking for three hours"},
+      {"ru": "Она красит стены два дня", "en": "She has been painting the walls for two days"},
+      {"ru": "Я слушаю музыку час", "en": "I have been listening to music for an hour"},
+      {"ru": "Они плавают с 10 часов", "en": "They have been swimming since 10 o'clock"},
+      {"ru": "Он чинит свой велосипед час", "en": "He has been fixing his bike for an hour"},
+      {"ru": "Ты изучаешь английский шесть месяцев?", "en": "Have you been studying English for six months?"},
+      {"ru": "Она работает здесь с 2020 года?", "en": "Has she been working here since 2020?"},
+      {"ru": "Они живут в Париже три года?", "en": "Have they been living in Paris for three years?"},
+      {"ru": "Он ждёт тебя с 9 часов?", "en": "Has he been waiting for you since 9 o'clock?"},
+      {"ru": "Мы путешествуем по Европе две недели?", "en": "Have we been traveling around Europe for two weeks?"},
+      {"ru": "Дети играют на улице весь день?", "en": "Have the children been playing outside all afternoon?"},
+      {"ru": "Ты читаешь эту книгу два часа?", "en": "Have you been reading this book for two hours?"},
+      {"ru": "Она готовит ужин с полудня?", "en": "Has she been cooking dinner since noon?"},
+      {"ru": "Они разговаривают по телефону час?", "en": "Have they been talking on the phone for an hour?"},
+      {"ru": "Он бегает каждое утро год?", "en": "Has he been running every morning for a year?"},
+      {"ru": "Я не изучаю английский шесть месяцев", "en": "I have not been studying English for six months"},
+      {"ru": "Она не работает здесь с 2020 года", "en": "She has not been working here since 2020"},
+      {"ru": "Они не живут в Париже три года", "en": "They have not been living in Paris for three years"},
+      {"ru": "Он не ждёт тебя с 9 часов", "en": "He has not been waiting for you since 9 o'clock"},
+      {"ru": "Мы не путешествуем по Европе две недели", "en": "We have not been traveling around Europe for two weeks"},
+      {"ru": "Дети не играют на улице весь день", "en": "The children have not been playing outside all afternoon"},
+      {"ru": "Я не читаю эту книгу два часа", "en": "I have not been reading this book for two hours"},
+      {"ru": "Она не готовит ужин с полудня", "en": "She has not been cooking dinner since noon"},
+      {"ru": "Они не разговаривают по телефону час", "en": "They have not been talking on the phone for an hour"},
+      {"ru": "Он не бегает каждое утро год", "en": "He has not been running every morning for a year"},
+      {"ru": "Я не учу это очень долго", "en": "I haven't been learning it very long"},
+      {"ru": "Я не жду долго", "en": "I haven't been waiting long"},
+      {"ru": "Я не поймал никакой рыбы", "en": "I haven't caught any fish"},
+      {"ru": "Я не пригласил много людей", "en": "I haven't invited many people"},
+      {"ru": "Я не преподаю долго", "en": "I haven't been teaching for long"},
+      {"ru": "Я не написал много книг", "en": "I haven't written many books"},
+      {"ru": "Я не пишу книги долго", "en": "I haven't been writing books for long"},
+      {"ru": "Я не коплю долго", "en": "I haven't been saving for long"},
+      {"ru": "Я не сэкономил много денег", "en": "I haven't saved much money"},
+      {"ru": "Что ты делал с тех пор как мы виделись в последний раз?", "en": "What have you been doing since we last met?"},
+      {"ru": "Ты играл в теннис?", "en": "Have you been playing tennis?"},
+      {"ru": "Ты когда-нибудь играл в теннис?", "en": "Have you ever played tennis?"},
+      {"ru": "Как долго ты читаешь эту книгу?", "en": "How long have you been reading that book?"},
+      {"ru": "Как долго ты пишешь письма?", "en": "How long have you been writing emails?"},
+      {"ru": "Как долго ты играешь в теннис?", "en": "How long have you been playing tennis?"},
+      {"ru": "Как долго ты учишь арабский?", "en": "How long have you been learning Arabic?"},
+      {"ru": "Ты ждёшь долго?", "en": "Have you been waiting long?"},
+      {"ru": "Ты поймал какую-нибудь рыбу?", "en": "Have you caught any fish?"},
+      {"ru": "Сколько людей ты пригласил?", "en": "How many people have you invited?"},
+      {"ru": "Как долго ты преподаёшь?", "en": "How long have you been teaching?"},
+      {"ru": "Сколько книг ты написал?", "en": "How many books have you written?"},
+      {"ru": "Как долго ты пишешь книги?", "en": "How long have you been writing books?"},
+      {"ru": "Как долго ты копишь?", "en": "How long have you been saving?"},
+      {"ru": "Сколько денег ты сэкономил?", "en": "How much money have you saved?"}
+    ]
+  },
+  pastPerfectContinuous:{
+    title:"Past Perfect Continuous",
+    explanation:"Длительное действие продолжалось до другого действия в прошлом. had been + V-ing.",
+    examples: [
+      "Утверждение: She had been training in the gym all morning",
+      "Утверждение: They had been talking for quite a time", 
+      "Отрицание: I hadn't been listening to his jokes",
+      "Вопрос: Had she been training in the gym?",
+      "Вопрос: Had they been talking for long?"
+    ],
+    startQuote: "The past is a place of reference, not a place of residence. — Roy T. Bennett",
+    endQuote: "Don't let yesterday take up too much of today. — Will Rogers",
+    items:[
+      {"ru": "У неё болело всё тело. Она тренировалась в спортзале всё утро", "en": "Her body ached all over. She had been training in the gym all the morning"},
+      {"ru": "Они внезапно поняли что было очень поздно. Они разговаривали довольно долго", "en": "They suddenly realized that it was very late. They had been talking for quite a time"},
+      {"ru": "Я чувствовал себя больным и уставшим после того как слушал его глупые шутки несколько часов", "en": "I felt sick and tired after I had been listening to his silly jokes for several hours"},
+      {"ru": "Его одежда была грязной. Он сказал что мыл свою машину", "en": "His clothes were dirty. He said that he had been washing his car"},
+      {"ru": "Полина просмотрела записи лекций которые она делала последние несколько недель", "en": "Pauline went through the notes of the lectures she had been making the last few weeks"},
+      {"ru": "Часть автомагистрали была покрыта водой: лил дождь всю ночь", "en": "Part of the motorway was covered with water: it had been pouring all night long"},
+      {"ru": "Они работали в саду около часа когда их сосед мистер Лорранс подошёл к воротам", "en": "They had been gardening for about an hour when their neighbor Mr. Lorrance came up to the gate"},
+      {"ru": "Внезапно мы оба поняли что мы кричали друг на друга так громко что люди на улице могли слышать нас", "en": "Suddenly we both realized that we had been screaming at each other so loudly that people on the street could hear us"},
+      {"ru": "Менеджер обнаружил что клерк обманывал его несколько месяцев подделывая его подпись", "en": "The manager found out that the clerk had been cheating him for several months by forging his signature"},
+      {"ru": "Он ехал два часа когда понял что движется в неправильном направлении", "en": "He had been driving for two hours when he understood that he was moving in the wrong direction"},
+      {"ru": "Когда я пришёл домой, Рик ждал меня два часа. Глаза Мэри были красными. Я понял что она плакала", "en": "When I came home, Rick had been waiting for me for two hours. Mary's eyes were red. I understood that she had been crying"},
+      {"ru": "Миссис Джонс сказала что она смотрела телевизор весь вечер. Мэри спросила меня как долго я писал тот рассказ", "en": "Mrs. Jones said that she had been watching TV all the evening. Mary asked me how long I had been writing that story"},
+      {"ru": "Мы убираем дом сегодня. (Она заметила) — Она заметила что они убирали дом в тот день", "en": "We have been cleaning the house today. (She remarked) --- She remarked that they had been cleaning the house that day"},
+      {"ru": "Люси рассказывает нам интересную историю о волках. (Мой сын сказал) — Мой сын сказал что Люси рассказывала им интересную историю о волках", "en": "Lucy has been telling us an interesting story about wolves. (My son said) --- My son said that Lucy had been telling them an interesting story about wolves"},
+      {"ru": "Там идёт снег три дня. (Мы не знали) — Мы не знали что там шёл снег три дня", "en": "It has been snowing for three days in that region. (We didn't know) --- We didn't know that it had been snowing for three days in that region"},
+      {"ru": "Его жена ждёт его весь вечер. (Ему было жаль) — Ему было жаль что его жена ждала его весь вечер", "en": "His wife has been waiting for him the whole evening. (He was sorry) --- He was sorry that his wife had been waiting for him the whole evening"},
+      {"ru": "Лили пытается помириться с Роном всю неделю. (Я узнал) — Я узнал что Лили пыталась помириться с Роном всю неделю", "en": "Lily has been trying to make up with Ron all the week. (I learnt) --- I learnt that Lily had been trying to make up with Ron all the week"},
+      {"ru": "Кто играл с моей шкатулкой для украшений? (Я хотел знать) — Я хотел знать кто играл с моей шкатулкой для украшений", "en": "Who has been playing with my jewelry box? (I wanted to know) --- I wanted to know who had been playing with my jewelry box"},
+      {"ru": "Трое студентов пропускают занятия на этой неделе. (Учитель указал) — Учитель указал что трое студентов пропускали занятия в ту неделю", "en": "Three of the students have been missing classes this week. (The teacher pointed out) --- The teacher pointed out that three of the students had been missing classes that week"},
+      {"ru": "Она ходила по магазинам весь день и купила много подарков для детей. (Она сказала) — Она сказала что она ходила по магазинам весь день и купила много подарков для детей", "en": "She has been shopping all day and has bought lots of presents for the kids. (She said) --- She said that she had been shopping all day and had bought lots of presents for the kids"},
+      {"ru": "Он хорошо работает для нас в последнее время. (Босс упомянул) — Босс упомянул что он хорошо работал для них в последнее время", "en": "He has been doing a good job for us of late. (The boss mentioned) --- The boss mentioned that he had been doing a good job for them of late"},
+      {"ru": "Кто приносил цветы ей всё это время? (Мне было интересно) — Мне было интересно кто приносил цветы ей всё то время", "en": "Who has been bringing flowers to her all this time? (I wondered) --- I wondered who had been bringing flowers to her all that time"},
+      {"ru": "Как долго ты практикуешь эту пьесу? (Мой учитель музыки спросил) — Мой учитель музыки спросил как долго я практиковал ту пьесу", "en": "How long have you been practicing this piece? (My music teacher asked) --- My music teacher asked how long I had been practicing that piece"},
+      {"ru": "Я искал эту книгу повсюду. (Мой брат сказал) — Мой брат сказал что он искал ту книгу повсюду", "en": "I've been searching for this book all over the place. (My brother said) --- My brother said that he had been searching for that book all over the place"},
+      {"ru": "Она тренировалась в спортзале всё утро?", "en": "Had she been training in the gym all the morning?"},
+      {"ru": "Они разговаривали довольно долго?", "en": "Had they been talking for quite a time?"},
+      {"ru": "Я слушал его глупые шутки несколько часов?", "en": "Had I been listening to his silly jokes for several hours?"},
+      {"ru": "Он мыл свою машину?", "en": "Had he been washing his car?"},
+      {"ru": "Полина делала записи лекций?", "en": "Had Pauline been making the notes of the lectures?"},
+      {"ru": "Лил дождь всю ночь?", "en": "Had it been pouring all night long?"},
+      {"ru": "Они работали в саду около часа?", "en": "Had they been gardening for about an hour?"},
+      {"ru": "Мы кричали друг на друга так громко?", "en": "Had we been screaming at each other so loudly?"},
+      {"ru": "Клерк обманывал его несколько месяцев?", "en": "Had the clerk been cheating him for several months?"},
+      {"ru": "Он ехал два часа?", "en": "Had he been driving for two hours?"},
+      {"ru": "Рик ждал меня два часа?", "en": "Had Rick been waiting for me for two hours?"},
+      {"ru": "Мэри плакала?", "en": "Had Mary been crying?"},
+      {"ru": "Миссис Джонс смотрела телевизор весь вечер?", "en": "Had Mrs. Jones been watching TV all the evening?"},
+      {"ru": "Я писал тот рассказ?", "en": "Had I been writing that story?"},
+      {"ru": "Они убирали дом в тот день?", "en": "Had they been cleaning the house that day?"},
+      {"ru": "Люси рассказывала им интересную историю о волках?", "en": "Had Lucy been telling them an interesting story about wolves?"},
+      {"ru": "Там шёл снег три дня?", "en": "Had it been snowing for three days in that region?"},
+      {"ru": "Его жена ждала его весь вечер?", "en": "Had his wife been waiting for him the whole evening?"},
+      {"ru": "Лили пыталась помириться с Роном всю неделю?", "en": "Had Lily been trying to make up with Ron all the week?"},
+      {"ru": "Кто-нибудь играл с моей шкатулкой для украшений?", "en": "Had anyone been playing with my jewelry box?"},
+      {"ru": "Трое студентов пропускали занятия в ту неделю?", "en": "Had three of the students been missing classes that week?"},
+      {"ru": "Она ходила по магазинам весь день?", "en": "Had she been shopping all day?"},
+      {"ru": "Он хорошо работал для них в последнее время?", "en": "Had he been doing a good job for them of late?"},
+      {"ru": "Кто-нибудь приносил цветы ей всё то время?", "en": "Had anyone been bringing flowers to her all that time?"},
+      {"ru": "Я практиковал ту пьесу?", "en": "Had I been practicing that piece?"},
+      {"ru": "Он искал ту книгу повсюду?", "en": "Had he been searching for that book all over the place?"},
+      {"ru": "Я не слушал его глупые шутки несколько часов", "en": "I hadn't been listening to his silly jokes for several hours"},
+      {"ru": "Он не мыл свою машину", "en": "He hadn't been washing his car"},
+      {"ru": "Она не делала записи лекций", "en": "She hadn't been making the notes of the lectures"},
+      {"ru": "Не лил дождь всю ночь", "en": "It hadn't been pouring all night long"},
+      {"ru": "Они не работали в саду около часа", "en": "They hadn't been gardening for about an hour"},
+      {"ru": "Мы не кричали друг на друга так громко", "en": "We hadn't been screaming at each other so loudly"},
+      {"ru": "Клерк не обманывал его несколько месяцев", "en": "The clerk hadn't been cheating him for several months"},
+      {"ru": "Он не ехал два часа", "en": "He hadn't been driving for two hours"},
+      {"ru": "Рик не ждал меня два часа", "en": "Rick hadn't been waiting for me for two hours"},
+      {"ru": "Мэри не плакала", "en": "Mary hadn't been crying"},
+      {"ru": "Миссис Джонс не смотрела телевизор весь вечер", "en": "Mrs. Jones hadn't been watching TV all the evening"},
+      {"ru": "Я не писал тот рассказ", "en": "I hadn't been writing that story"},
+      {"ru": "Они не убирали дом в тот день", "en": "They hadn't been cleaning the house that day"},
+      {"ru": "Люси не рассказывала им интересную историю о волках", "en": "Lucy hadn't been telling them an interesting story about wolves"},
+      {"ru": "Там не шёл снег три дня", "en": "It hadn't been snowing for three days in that region"},
+      {"ru": "Его жена не ждала его весь вечер", "en": "His wife hadn't been waiting for him the whole evening"},
+      {"ru": "Лили не пыталась помириться с Роном всю неделю", "en": "Lily hadn't been trying to make up with Ron all the week"},
+      {"ru": "Никто не играл с моей шкатулкой для украшений", "en": "No one had been playing with my jewelry box"},
+      {"ru": "Трое студентов не пропускали занятия в ту неделю", "en": "Three of the students hadn't been missing classes that week"},
+      {"ru": "Она не ходила по магазинам весь день", "en": "She hadn't been shopping all day"},
+      {"ru": "Он не хорошо работал для них в последнее время", "en": "He hadn't been doing a good job for them of late"},
+      {"ru": "Никто не приносил цветы ей всё то время", "en": "No one had been bringing flowers to her all that time"},
+      {"ru": "Я не практиковал ту пьесу", "en": "I hadn't been practicing that piece"},
+      {"ru": "Он не искал ту книгу повсюду", "en": "He hadn't been searching for that book all over the place"}
+    ]
+  },
+  futurePerfectContinuous:{
+    title:"Future Perfect Continuous",
+    explanation:"Длительное действие будет продолжаться до определённого момента в будущем. will have been + V-ing.",
+    examples: [
+      "Утверждение: I will have been working in the company for 30 years",
+      "Утверждение: Tennis fans will have been queuing all day", 
+      "Отрицание: I won't have been working for 30 years",
+      "Вопрос: Will you have been working for 30 years?",
+      "Вопрос: Will tennis fans have been queuing all day?"
+    ],
+    startQuote: "The future is not something we enter. The future is something we create. — Leonard Sweet",
+    endQuote: "Your present circumstances don't determine where you can go; they merely determine where you start. — Nido Qubein",
+    items:[
+      {"ru": "В следующем году я буду работать в компании 30 лет", "en": "Next year I will have been working in the company for 30 years"},
+      {"ru": "Мы могли бы попросить одолжить машину Джо. Он не будет использовать её сегодня — он поехал на работу на велосипеде", "en": "We could ask to borrow Joe's car. He won't be using it today -- he went to work by bike"},
+      {"ru": "Большинство людей уже забудут пожар", "en": "Most people will have forgotten the fire by now"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты", "en": "Tennis fans will have been queuing at Wimbledon all day to buy tickets"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости после того как её оштрафовали на £100 на прошлой неделе за езду со скоростью 33 мили в час в зоне 30 миль в час", "en": "Motorist Vicky Hao will have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone"},
+      {"ru": "К настоящему времени школа закроется на Рождество и ты будешь наслаждаться отдыхом", "en": "By now school will have closed for Christmas and you will have been enjoying a rest"},
+      {"ru": "Трудно поверить что Тиму уже 18 и что через несколько месяцев он будет заканчивать школу для колледжа", "en": "It's hard to believe that Tim's already 18 and that it's only a few months until he will have been leaving school for college"},
+      {"ru": "Моя главная новость что мой брат Джо и его семья приедут в следующую пятницу как часть их большого путешествия вокруг света", "en": "My main news is that my brother, Joe, and his family will have been arriving next Friday as part of their big trip around the world"},
+      {"ru": "К тому времени как они приедут сюда они побывают в Калифорнии и Новой Зеландии", "en": "By the time they get here they will have been to California and New Zealand"},
+      {"ru": "Без сомнения дети Джо планировали это месяцами", "en": "No doubt Joe's children will have been planning it all out for months"},
+      {"ru": "Они не проведут всё своё время со мной", "en": "They won't have spent all their time with me"},
+      {"ru": "Джо должен поехать в Токио по делам, поэтому я буду развлекать остальных членов семьи пока его не будет", "en": "Joe has to go to Tokyo on business, so I will have kept the rest of the family entertained while he's away"},
+      {"ru": "Потом они все поедут в Киото...", "en": "Then they will all have been going to Kyoto ..."},
+      {"ru": "В следующем году я не буду работать в компании 30 лет", "en": "Next year I won't have been working in the company for 30 years"},
+      {"ru": "Мы не могли бы попросить одолжить машину Джо. Он не будет использовать её сегодня — он поехал на работу на велосипеде", "en": "We couldn't ask to borrow Joe's car. He won't be using it today -- he went to work by bike"},
+      {"ru": "Большинство людей не забудут пожар к настоящему времени", "en": "Most people won't have forgotten the fire by now"},
+      {"ru": "Болельщики тенниса не будут стоять в очереди в Уимблдон весь день чтобы купить билеты", "en": "Tennis fans won't have been queuing at Wimbledon all day to buy tickets"},
+      {"ru": "Автомобилистка Вики Хао не будет спрашивать себя хорошая ли идея камеры скорости", "en": "Motorist Vicky Hao won't have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone"},
+      {"ru": "К настоящему времени школа не закроется на Рождество и ты не будешь наслаждаться отдыхом", "en": "By now school won't have closed for Christmas and you won't have been enjoying a rest"},
+      {"ru": "Трудно поверить что Тиму уже 18 и что через несколько месяцев он не будет заканчивать школу для колледжа", "en": "It's hard to believe that Tim's already 18 and that it's only a few months until he won't have been leaving school for college"},
+      {"ru": "Моя главная новость что мой брат Джо и его семья не приедут в следующую пятницу как часть их большого путешествия вокруг света", "en": "My main news is that my brother, Joe, and his family won't have been arriving next Friday as part of their big trip around the world"},
+      {"ru": "К тому времени как они приедут сюда они не побывают в Калифорнии и Новой Зеландии", "en": "By the time they get here they won't have been to California and New Zealand"},
+      {"ru": "Без сомнения дети Джо не планировали это месяцами", "en": "No doubt Joe's children won't have been planning it all out for months"},
+      {"ru": "Они не проведут всё своё время со мной", "en": "They won't have spent all their time with me"},
+      {"ru": "Джо должен поехать в Токио по делам, поэтому я не буду развлекать остальных членов семьи пока его не будет", "en": "Joe has to go to Tokyo on business, so I won't have kept the rest of the family entertained while he's away"},
+      {"ru": "Потом они не поедут в Киото...", "en": "Then they won't have been going to Kyoto ..."},
+      {"ru": "Ты будешь работать в компании 30 лет в следующем году?", "en": "Will you have been working in the company for 30 years next year?"},
+      {"ru": "Джо будет использовать свою машину сегодня?", "en": "Will Joe be using his car today?"},
+      {"ru": "Большинство людей забудут пожар к настоящему времени?", "en": "Will most people have forgotten the fire by now?"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты?", "en": "Will tennis fans have been queuing at Wimbledon all day to buy tickets?"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости?", "en": "Will Motorist Vicky Hao have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone?"},
+      {"ru": "Школа закроется на Рождество к настоящему времени?", "en": "Will school have closed for Christmas by now?"},
+      {"ru": "Ты будешь наслаждаться отдыхом?", "en": "Will you have been enjoying a rest?"},
+      {"ru": "Тим будет заканчивать школу для колледжа?", "en": "Will Tim have been leaving school for college?"},
+      {"ru": "Мой брат Джо и его семья приедут в следующую пятницу как часть их большого путешествия вокруг света?", "en": "Will my brother, Joe, and his family have been arriving next Friday as part of their big trip around the world?"},
+      {"ru": "Они побывают в Калифорнии и Новой Зеландии к тому времени как приедут сюда?", "en": "Will they have been to California and New Zealand by the time they get here?"},
+      {"ru": "Дети Джо планировали это месяцами?", "en": "Will Joe's children have been planning it all out for months?"},
+      {"ru": "Они проведут всё своё время со мной?", "en": "Will they have spent all their time with me?"},
+      {"ru": "Я буду развлекать остальных членов семьи пока Джо не будет?", "en": "Will I have kept the rest of the family entertained while Joe is away?"},
+      {"ru": "Они поедут в Киото?", "en": "Will they have been going to Kyoto?"},
+      {"ru": "К тому времени как ты придёшь домой я уберу дом сверху донизу", "en": "By the time you get home I will have cleaned the house from top to bottom"},
+      {"ru": "Я уверен что его ужасное поведение скоро будет забыто", "en": "I'm sure his awful behaviour will soon have been forgotten"},
+      {"ru": "Надеюсь это письмо убедит тебя что дальнейшие действия не требуются", "en": "I hope this email will have reassured you that no further action is required"},
+      {"ru": "В следующем году я буду работать в компании 30 лет", "en": "Next year I will have been working in the company for 30 years"},
+      {"ru": "Мы могли бы попросить одолжить машину Джо. Он не будет использовать её сегодня — он поехал на работу на велосипеде", "en": "We could ask to borrow Joe's car. He won't be using it today -- he went to work by bike"},
+      {"ru": "Большинство людей уже забудут пожар", "en": "Most people will have forgotten the fire by now"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты", "en": "Tennis fans will have been queuing at Wimbledon all day to buy tickets"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости после того как её оштрафовали на £100 на прошлой неделе за езду со скоростью 33 мили в час в зоне 30 миль в час", "en": "Motorist Vicky Hao will have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone"},
+      {"ru": "К настоящему времени школа закроется на Рождество и ты будешь наслаждаться отдыхом", "en": "By now school will have closed for Christmas and you will have been enjoying a rest"},
+      {"ru": "Трудно поверить что Тиму уже 18 и что через несколько месяцев он будет заканчивать школу для колледжа", "en": "It's hard to believe that Tim's already 18 and that it's only a few months until he will have been leaving school for college"},
+      {"ru": "Моя главная новость что мой брат Джо и его семья приедут в следующую пятницу как часть их большого путешествия вокруг света", "en": "My main news is that my brother, Joe, and his family will have been arriving next Friday as part of their big trip around the world"},
+      {"ru": "К тому времени как они приедут сюда они побывают в Калифорнии и Новой Зеландии", "en": "By the time they get here they will have been to California and New Zealand"},
+      {"ru": "Без сомнения дети Джо планировали это месяцами", "en": "No doubt Joe's children will have been planning it all out for months"},
+      {"ru": "Они не проведут всё своё время со мной", "en": "They won't have spent all their time with me"},
+      {"ru": "Джо должен поехать в Токио по делам, поэтому я буду развлекать остальных членов семьи пока его не будет", "en": "Joe has to go to Tokyo on business, so I will have kept the rest of the family entertained while he's away"},
+      {"ru": "Потом они все поедут в Киото...", "en": "Then they will all have been going to Kyoto ..."},
+      {"ru": "Ты будешь работать в компании 30 лет в следующем году?", "en": "Will you have been working in the company for 30 years next year?"},
+      {"ru": "Джо будет использовать свою машину сегодня?", "en": "Will Joe be using his car today?"},
+      {"ru": "Большинство людей забудут пожар к настоящему времени?", "en": "Will most people have forgotten the fire by now?"},
+      {"ru": "Болельщики тенниса будут стоять в очереди в Уимблдон весь день чтобы купить билеты?", "en": "Will tennis fans have been queuing at Wimbledon all day to buy tickets?"},
+      {"ru": "Автомобилистка Вики Хао будет спрашивать себя хорошая ли идея камеры скорости?", "en": "Will Motorist Vicky Hao have been asking herself whether speed cameras are a good idea after she was fined £100 last week for driving at 33 mph in a 30 mph zone?"},
+      {"ru": "Школа закроется на Рождество к настоящему времени?", "en": "Will school have closed for Christmas by now?"},
+      {"ru": "Ты будешь наслаждаться отдыхом?", "en": "Will you have been enjoying a rest?"},
+      {"ru": "Тим будет заканчивать школу для колледжа?", "en": "Will Tim have been leaving school for college?"},
+      {"ru": "Мой брат Джо и его семья приедут в следующую пятницу как часть их большого путешествия вокруг света?", "en": "Will my brother, Joe, and his family have been arriving next Friday as part of their big trip around the world?"},
+      {"ru": "Они побывают в Калифорнии и Новой Зеландии к тому времени как приедут сюда?", "en": "Will they have been to California and New Zealand by the time they get here?"},
+      {"ru": "Дети Джо планировали это месяцами?", "en": "Will Joe's children have been planning it all out for months?"},
+      {"ru": "Они проведут всё своё время со мной?", "en": "Will they have spent all their time with me?"},
+      {"ru": "Я буду развлекать остальных членов семьи пока Джо не будет?", "en": "Will I have kept the rest of the family entertained while Joe is away?"},
+      {"ru": "Они поедут в Киото?", "en": "Will they have been going to Kyoto?"}
+    ]
+  }
+};
+
+let currentTense=null, index=0;
+
+document.querySelectorAll('.tense[data-tense]').forEach(card=>{
+  card.addEventListener('click',()=> openTense(card.getAttribute('data-tense')));
+});
+document.getElementById('backBtn').addEventListener('click',()=>{
+  document.getElementById('trainer').classList.remove('active');
+  document.getElementById('front').classList.add('active');
+  index=0;
+});
+
+function openTense(key){
+  currentTense=tenses[key]; index=0;
+  document.getElementById('front').classList.remove('active');
+  document.getElementById('trainer').classList.add('active');
+  document.getElementById('tenseTitle').textContent=currentTense.title;
+  document.getElementById('quoteTop').textContent=currentTense.startQuote;
+  
+  // Create explanation with examples
+  const explainDiv = document.getElementById('explain');
+  explainDiv.innerHTML = `
+    <div>${currentTense.explanation}</div>
+    <div class="examples">
+      <strong>Примеры:</strong>
+      ${currentTense.examples.map(ex => `<div>${ex}</div>`).join('')}
+    </div>
+  `;
+  
+  renderExercise();
+}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function norm(s){return s.toLowerCase().replace(/[.?!,]/g,'').replace(/\s+/g,' ').trim();}
+
+function speakEnglish(text){
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith('en'));
+  if(v) u.voice=v; speechSynthesis.speak(u);
+}
+
+speechSynthesis.onvoiceschanged=()=>{};
+
+function hasFrequencyTip(en){
+  const low=en.toLowerCase().split(/\s+/);
+  return low.some(w=>freqWords.includes(w));
+}
+
+function renderExercise(){
+  const wrap=document.getElementById('exercises'); wrap.innerHTML='';
+  const items=currentTense.items;
+
+  if(index>=items.length){
+    document.getElementById('explain').style.display='none';
+    const q=document.createElement('div'); q.className='quote'; q.textContent=currentTense.endQuote; wrap.appendChild(q);
+    const congr=document.createElement('div'); congr.className='ok result'; congr.style.display='block'; congr.style.textAlign='center'; congr.style.fontSize='20px';
+    congr.textContent=`🎉 Поздравляем! Вы полностью прошли ${currentTense.title}!`; wrap.appendChild(congr);
+    return;
+  }else{
+    document.getElementById('explain').style.display='block';
+  }
+
+  if(index>0 && index%5===0){
+    const percent=Math.round(index/items.length*100);
+    const mile=document.createElement('div'); mile.className='milestone';
+    const messages = [
+      "Great job! Five in a row! 🚀",
+      "Excellent! You're on fire! 🔥", 
+      "Amazing progress! Keep going! 💪",
+      "Fantastic! You're mastering this! 🌟",
+      "Outstanding work! Almost there! 🎯",
+      "Incredible! Five more done! ⭐",
+      "Brilliant! You're unstoppable! 🏆",
+      "Superb! Keep this momentum! 🚀",
+      "Terrific! You're learning fast! 📚",
+      "Wonderful! Five exercises completed! ✅"
+    ];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    mile.textContent=`${randomMessage} Прогресс: ${percent}%`; wrap.appendChild(mile);
+  }
+
+  const ex=items[index];
+  const box=document.createElement('div'); box.className='exercise'; box.dataset.answer=ex.en;
+  box.innerHTML=`
+    <div class="russian">${ex.ru}</div>
+    <div class="instruction">Попробуйте сказать на английском, а потом уже собрать предложение.</div>
+    <div class="ruleTip" id="ruleTip"></div>
+    <div class="wordbank"></div>
+    <div class="output dropzone"><span class="placeholder">⬇️ Перетащите или нажимайте слова, чтобы собрать предложение</span></div>
+    <button class="btn check">Проверить</button>
+    <div class="result"></div>
+  `;
+  wrap.appendChild(box);
+
+  const tip=box.querySelector('#ruleTip');
+  if(hasFrequencyTip(ex.en)){
+    tip.style.display='block';
+    tip.textContent="Порядок с наречиями частоты: Subject + Adverb + Verb (I usually get up early). С глаголом to be: be + Adverb (She is often late).";
+  }
+
+  // Handle question marks - don't include them in word tiles
+  const isQuestion = ex.en.includes('?');
+  const words=shuffle(ex.en.replace(/[.?!]/g,'').split(' '));
+  const bank=box.querySelector('.wordbank'); const out=box.querySelector('.output');
+
+  words.forEach(w=>{
+    const t=document.createElement('div'); t.className='tile'; t.textContent=w; t.draggable=true;
+    t.addEventListener('click',()=>{ 
+      out.querySelector('.placeholder')?.remove(); 
+      out.appendChild(t); 
+      // Add question mark automatically for questions
+      if(isQuestion && !out.innerHTML.includes('?')) {
+        const questionMark = document.createElement('div');
+        questionMark.className = 'tile';
+        questionMark.textContent = '?';
+        questionMark.style.background = '#f59e0b';
+        out.appendChild(questionMark);
+      }
+    });
+    t.addEventListener('dragstart',()=>t.classList.add('dragging'));
+    t.addEventListener('dragend',()=>t.classList.remove('dragging'));
+    bank.appendChild(t);
+  });
+
+  out.addEventListener('click',e=>{
+    const t=e.target.closest('.tile'); if(!t) return;
+    bank.appendChild(t);
+    if(!out.querySelector('.tile')) out.innerHTML='<span class="placeholder">⬇️ Перетащите или нажимайте слова, чтобы собрать предложение</span>';
+  });
+}
+
+document.addEventListener('dragover',e=>{
+  e.preventDefault();
+  const dragging=document.querySelector('.tile.dragging'); if(!dragging) return;
+  const zone=e.target.closest('.dropzone,.wordbank'); if(!zone) return;
+  zone.querySelector('.placeholder')?.remove();
+  const after=e.target.closest('.tile');
+  if(after && after!==dragging) zone.insertBefore(dragging,after); else zone.appendChild(dragging);
+});
+
+document.addEventListener('click',e=>{
+  if(!e.target.classList.contains('check')) return;
+  const ex=e.target.closest('.exercise');
+  const guess=norm([...ex.querySelectorAll('.output .tile')].map(t=>t.textContent).join(' '));
+  const ans=norm(ex.dataset.answer);
+  const res=ex.querySelector('.result');
+  if(guess===ans){
+    res.className='result ok'; res.style.display='block';
+    const done=index+1,total=currentTense.items.length,p=Math.round(done/total*100);
+    res.textContent=`✅ Верно! Прогресс: ${done} из ${total} (${p}%)`;
+    speakEnglish(ex.dataset.answer);
+    if(!ex.querySelector('.continue')){
+      const b=document.createElement('button'); b.className='btn continue'; b.textContent='Продолжить ⟶';
+      b.onclick=()=>{ index++; renderExercise(); };
+      ex.appendChild(b);
+    }
+  }else{
+    res.className='result bad'; res.style.display='block'; res.textContent='❌ Неверно.';
+  }
+});
+</script>
+</body>
+</html>

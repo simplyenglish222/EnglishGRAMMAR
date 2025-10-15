@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Одна карточка за раз — путаемые слова</title>
+<style>
+  :root { --ok:#16a34a; --bad:#dc2626; --fg:#111827; --muted:#6b7280; --bg:#f8fafc; --card:#ffffff; --accent:#3b82f6; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; background: var(--bg); color: var(--fg); }
+  .wrap { max-width: 720px; margin: 24px auto; padding: 16px; }
+  .head { background: var(--card); border:1px solid #e5e7eb; border-radius: 14px; padding: 18px; box-shadow: 0 6px 18px rgba(2,6,23,.06); }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  .sub { color: var(--muted); font-size: 14px; }
+
+  .card { margin: 14px 0; background: var(--card); border:1px solid #e5e7eb; border-radius: 14px; padding: 18px; box-shadow: 0 6px 18px rgba(2,6,23,.06); }
+  .q { font-weight: 700; margin-bottom: 10px; }
+  .opts { display: grid; gap: 10px; }
+  .opt { display:flex; align-items:center; gap:10px; padding:12px; border:1px solid #e5e7eb; border-radius: 10px; cursor:pointer; }
+  .opt input { accent-color: var(--accent); }
+  .opt.correct { border-color: var(--ok); background:#ecfdf5; }
+  .opt.wrong { border-color: var(--bad); background:#fef2f2; }
+  .exp { font-size: 13px; color: var(--muted); margin-top: 10px; display:none; }
+
+  .bar { display:flex; align-items:center; gap:12px; margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .progress { flex:1; height: 8px; background:#e5e7eb; border-radius: 999px; overflow: hidden; }
+  .progress > div { height: 100%; width:0%; background: var(--accent); transition: width .25s ease; }
+
+  .actions { position: sticky; bottom: 0; display:flex; gap:10px; flex-wrap:wrap; margin-top: 16px; padding: 12px; border-top:1px solid #e5e7eb; background: rgba(248,250,252,.85); backdrop-filter: saturate(150%) blur(6px); }
+  button { border:0; border-radius: 10px; padding:10px 14px; font-weight: 700; cursor:pointer; }
+  .primary { background: var(--accent); color:#fff; }
+  .ghost { background:#eef2ff; }
+  .warn { background:#fee2e2; }
+  .score { margin-left:auto; font-weight: 800; color:#111827; }
+  .muted { color: var(--muted); }
+  button:disabled{opacity:.5; cursor:not-allowed}
+
+  @media (max-width:520px) {
+    .actions { gap:8px; }
+    .score { width:100%; order:3; text-align:right; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h1>Мини-тест: путаемые английские слова</h1>
+      <div class="sub">На экране только один вопрос. Сначала выбери ответ и нажми «Проверить». Только потом станет доступен «Следующий».</div>
+      <div class="bar">
+        <span id="pos" class="muted">1 / 1</span>
+        <div class="progress"><div id="prog"></div></div>
+      </div>
+    </div>
+
+    <div id="card" class="card"></div>
+
+    <div class="actions">
+      <button id="prevBtn" class="ghost">← Предыдущий</button>
+      <button id="checkBtn" class="primary">Проверить</button>
+      <button id="revealBtn" class="ghost">Показать ответ</button>
+      <button id="resetBtn" class="warn">Сбросить всё</button>
+      <button id="nextBtn" class="ghost" disabled>Следующий →</button>
+      <div id="score" class="score">Верно: 0 / 0</div>
+    </div>
+  </div>
+
+<script>
+const data = [
+  // Звук
+  {p:"Какое слово значит «злой»?", o:["angry","hungry"], a:0, e:"angry — «злой», hungry — «голодный»."},
+  {p:"Как сказать «угол» по-английски?", o:["angel","angle"], a:1, e:"angle — «угол», angel — «ангел»."},
+  {p:"Что означает «курица»?", o:["kitchen","chicken"], a:1, e:"chicken — «курица», kitchen — «кухня»."},
+  {p:"Выберите слово для «корабль».", o:["ship","sheep"], a:0, e:"ship — «корабль», sheep — «овца»."},
+  {p:"Где вариант «дешёвый»?", o:["cheap","chip"], a:0, e:"cheap — «дешёвый», chip — «чип»."},
+  {p:"Что значит «жить»?", o:["leave","live"], a:1, e:"live — «жить», leave — «уезжать/покидать»."},
+  {p:"Подберите слово «мир (не война)».", o:["piece","peace"], a:1, e:"peace — «мир», piece — «кусок»."},
+  {p:"Отметьте «дурак».", o:["full","fool"], a:1, e:"fool — «дурак», full — «полный»."},
+
+  // Написание
+  {p:"Какое слово — «кроме»?", o:["accept","except"], a:1, e:"except — «кроме», accept — «принимать»."},
+  {p:"Где глагол «воздействовать»?", o:["affect","effect"], a:0, e:"affect — глагол, effect — существительное."},
+  {p:"Что означает «свободный, болтающийся»?", o:["lose","loose"], a:1, e:"loose — «свободный», lose — «терять/проигрывать»."},
+  {p:"Укажите «вполне, довольно».", o:["quiet","quite","quit"], a:1, e:"quite — «вполне», quiet — «тихий», quit — «бросать»."},
+  {p:"Чем из этого переводится «затем»?", o:["than","then"], a:1, e:"then — «затем», than — «чем»."},
+  {p:"Выберите существительное «совет».", o:["advice","advise"], a:0, e:"advice — «совет» (сущ.), advise — «советовать»."},
+  {p:"Где «дышать»?", o:["breath","breathe"], a:1, e:"breathe — «дышать», breath — «дыхание»."},
+  {p:"Найдите «десерт».", o:["desert","dessert"], a:1, e:"dessert — «десерт», desert — «пустыня»."},
+  {p:"Какое слово — «принцип»?", o:["principal","principle"], a:1, e:"principle — «принцип», principal — «директор; главный»."},
+  {p:"Выберите «канцтовары».", o:["stationary","stationery"], a:1, e:"stationery — «канцтовары», stationary — «неподвижный»."},
+  {p:"Что значит «коллаж»?", o:["college","collage"], a:1, e:"collage — «коллаж», college — «колледж»."},
+  {p:"Где множественное «женщины»?", o:["woman","women"], a:1, e:"women — «женщины», woman — «женщина»."},
+
+  // Употребление
+  {p:"Какое слово обычно для «сообщить кому-то (кому?)»?", o:["say","tell","speak","talk"], a:1, e:"tell — «говорить кому-то». say — «сказать (что)»."},
+  {p:"Подберите «давать взаймы».", o:["borrow","lend"], a:1, e:"lend — «давать взаймы», borrow — «брать взаймы»."},
+  {p:"Что означает «унести отсюда»?", o:["bring","take"], a:1, e:"take — «уносить/брать (от)», bring — «приносить (к)»."},
+  {p:"Где «уходить, идти туда»?", o:["come","go"], a:1, e:"go — «идти/уходить (туда)», come — «приходить (сюда)»."},
+  {p:"Выберите глагол «поднимать (что-то)».", o:["raise","rise","arise"], a:0, e:"raise — поднимать, rise — подниматься, arise — возникать."},
+  {p:"Как сказать «напомнить кому-то»?", o:["remember","remind"], a:1, e:"remind — «напомнить (кому-то)», remember — «помнить»."},
+  {p:"Укажите «видеть (непреднамеренно)».", o:["look","see","watch"], a:1, e:"see — «видеть», look — «смотреть на», watch — «наблюдать»."},
+  {p:"Что значит «слушать»?", o:["listen","hear"], a:0, e:"listen — «слушать (намеренно)», hear — «слышать»."},
+  {p:"Где «должность, место работы»?", o:["job","work"], a:0, e:"job — место/должность, work — процесс."},
+  {p:"Как передать «смешной»?", o:["fun","funny"], a:1, e:"funny — «смешной», fun — «веселье»."},
+  {p:"Выберите «чувствительный».", o:["sensible","sensitive"], a:1, e:"sensitive — «чувствительный», sensible — «разумный»."},
+  {p:"Где «исторический (относящийся к истории)»?", o:["historic","historical"], a:1, e:"historical — относящийся к истории; historic — знаковый."},
+  {p:"Найдите «экономичный».", o:["economic","economical"], a:1, e:"economical — «экономичный», economic — «экономический»."},
+  {p:"Что значит «классической традиции (музыка и т. п.)»?", o:["classic","classical"], a:1, e:"classical — стиль/эпоха, classic — образцовый."},
+  {p:"Укажите «результативный при минимальных затратах».", o:["efficient","effective"], a:0, e:"efficient — экономит ресурсы, effective — даёт результат."},
+  {p:"Какой вариант — «каждый день» (раздельно)?", o:["everyday","every day"], a:1, e:"every day — «каждый день», everyday — «повседневный»."},
+  {p:"Где «дальше» в переносном смысле (продвинуть обсуждение)?", o:["farther","further"], a:1, e:"further — переносное; farther — про расстояние."},
+  {p:"Выберите «кроме того».", o:["beside","besides"], a:1, e:"besides — «кроме того», beside — «рядом с»."},
+  {p:"Что подходит для «между несколькими чётко обозначенными»?", o:["between","among"], a:0, e:"between — между конкретными; among — среди многих."},
+  {p:"Найдите слово для «всё ещё».", o:["already","yet","still"], a:2, e:"still — «всё ещё», already — «уже», yet — «уже?/ещё нет»."},
+  {p:"Как сказать «минуту в минуту, без опозданий»?", o:["in time","on time"], a:1, e:"on time — по расписанию; in time — успеть вовремя."},
+  {p:"Что употребляют как «недавно» вне Present Perfect?", o:["lately","recently"], a:1, e:"recently — нейтральное «недавно», lately — тянет Present Perfect."},
+  {p:"Где «когда-нибудь»?", o:["sometime","some time","sometimes"], a:0, e:"sometime — когда-нибудь; some time — некоторое время; sometimes — иногда."},
+
+  // -ed / -ing
+  {p:"Выберите форму для «мне скучно».", o:["bored","boring"], a:0, e:"bored — состояние человека; boring — «скучный» о предмете."},
+  {p:"Что нужно, если «мне интересно»?", o:["interested","interesting"], a:0, e:"interested — «мне интересно», interesting — «интересный»."},
+  {p:"Найдите слово для «мне неловко».", o:["embarrassed","embarrassing"], a:0, e:"embarrassed — «мне неловко», embarrassing — «неловкий/стыдный»."},
+];
+
+let i = 0;
+const answers = Array(data.length).fill(null);
+const checked  = Array(data.length).fill(false);
+const corrects = Array(data.length).fill(false);
+
+const cardEl = document.getElementById("card");
+const posEl  = document.getElementById("pos");
+const progEl = document.getElementById("prog");
+const scoreEl= document.getElementById("score");
+
+const prevBtn   = document.getElementById("prevBtn");
+const nextBtn   = document.getElementById("nextBtn");
+const checkBtn  = document.getElementById("checkBtn");
+const revealBtn = document.getElementById("revealBtn");
+const resetBtn  = document.getElementById("resetBtn");
+
+function updateNav(){
+  prevBtn.disabled = (i === 0);
+  nextBtn.disabled = (!checked[i] || i === data.length - 1);
+}
+
+function renderQuestion(idx){
+  const q = data[idx];
+  cardEl.innerHTML = "";
+
+  const qEl = document.createElement("div");
+  qEl.className = "q";
+  qEl.textContent = `${idx+1}. ${q.p}`;
+  cardEl.appendChild(qEl);
+
+  const opts = document.createElement("div");
+  opts.className = "opts";
+
+  q.o.forEach((opt, j) => {
+    const id = `q${idx}_o${j}`;
+    const label = document.createElement("label");
+    label.className = "opt";
+    label.setAttribute("for", id);
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = `q${idx}`;
+    input.id = id;
+    input.value = j;
+    input.checked = answers[idx] === j;
+
+    input.addEventListener("change", () => {
+      answers[idx] = j;
+      if(!checked[idx]){
+        [...opts.querySelectorAll(".opt")].forEach(l => l.classList.remove("correct","wrong"));
+        exp.style.display = "none";
+        // пока не проверено — «Следующий» заблокирован
+        updateNav();
+      }
+    });
+
+    const txt = document.createElement("span");
+    txt.textContent = opt;
+
+    label.appendChild(input);
+    label.appendChild(txt);
+    opts.appendChild(label);
+  });
+
+  const exp = document.createElement("div");
+  exp.className = "exp";
+  exp.textContent = q.e;
+
+  cardEl.appendChild(opts);
+  cardEl.appendChild(exp);
+
+  if(checked[idx]){
+    const labels = cardEl.querySelectorAll(".opt");
+    labels.forEach(l => l.classList.remove("correct","wrong"));
+    const chosen = answers[idx];
+    if(chosen !== null){
+      if(chosen === q.a){
+        labels[chosen].classList.add("correct");
+      } else {
+        labels[chosen].classList.add("wrong");
+        labels[q.a].classList.add("correct");
+      }
+    } else {
+      labels[q.a].classList.add("correct");
+    }
+    exp.style.display = "block";
+  }
+
+  posEl.textContent = `${idx+1} / ${data.length}`;
+  progEl.style.width = `${Math.round(100*(idx)/(data.length-1))}%`;
+  scoreEl.textContent = `Верно: ${corrects.filter(Boolean).length} / ${data.length}`;
+  updateNav();
+}
+
+function checkCurrent(){
+  const q = data[i];
+  const labels = cardEl.querySelectorAll(".opt");
+  const exp = cardEl.querySelector(".exp");
+  const chosenInput = cardEl.querySelector("input[type=radio]:checked");
+
+  labels.forEach(l => l.classList.remove("correct","wrong"));
+
+  if(!chosenInput){
+    // нет выбора — подсветим правильный, но балл не даём
+    labels[q.a].classList.add("correct");
+    checked[i] = true;
+    corrects[i] = false;
+  } else {
+    const chosen = +chosenInput.value;
+    if(chosen === q.a){
+      labels[chosen].classList.add("correct");
+      corrects[i] = true;
+    } else {
+      labels[chosen].classList.add("wrong");
+      labels[q.a].classList.add("correct");
+      corrects[i] = false;
+    }
+    checked[i] = true;
+  }
+  exp.style.display = "block";
+  scoreEl.textContent = `Верно: ${corrects.filter(Boolean).length} / ${data.length}`;
+  updateNav(); // теперь можно «Следующий»
+}
+
+function revealCurrent(){
+  const q = data[i];
+  const labels = cardEl.querySelectorAll(".opt");
+  const exp = cardEl.querySelector(".exp");
+  labels.forEach(l => l.classList.remove("wrong","correct"));
+  labels[q.a].classList.add("correct");
+  checked[i] = true;
+  corrects[i] = false; // показ ответа — без балла
+  exp.style.display = "block";
+  scoreEl.textContent = `Верно: ${corrects.filter(Boolean).length} / ${data.length}`;
+  updateNav(); // разрешаем «Следующий»
+}
+
+function resetAll(){
+  for(let k=0;k<data.length;k++){
+    answers[k]=null; checked[k]=false; corrects[k]=false;
+  }
+  i = 0;
+  renderQuestion(i);
+  updateNav();
+}
+
+prevBtn.addEventListener("click", () => {
+  if(i>0){ i--; renderQuestion(i); }
+});
+
+// пытаются жать вперёд без проверки — подмигиваем «Проверить»
+nextBtn.addEventListener("click", () => {
+  if(nextBtn.disabled){
+    checkBtn.animate([{transform:"scale(1)"},{transform:"scale(1.06)"},{transform:"scale(1)"}], {duration:220});
+    return;
+  }
+  if(i<data.length-1){ i++; renderQuestion(i); }
+});
+
+checkBtn.addEventListener("click", checkCurrent);
+revealBtn.addEventListener("click", revealCurrent);
+resetBtn.addEventListener("click", resetAll);
+
+// стрелки: вправо только если «Следующий» доступен
+window.addEventListener("keydown", (e)=>{
+  if(e.key === "ArrowRight"){
+    if(!nextBtn.disabled && i < data.length-1){ i++; renderQuestion(i); }
+  }
+  if(e.key === "ArrowLeft"){
+    if(i>0){ i--; renderQuestion(i); }
+  }
+});
+
+renderQuestion(i);
+</script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IELTS Reading • The Wright Brothers (3 Reading Skills)</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --card:#131a33;
+    --ink:#e9eefc;
+    --muted:#a9b2cc;
+    --accent:#7cc4ff;
+    --good:#2ecc71;
+    --bad:#ff5c73;
+    --mark:#ffe58f;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
+    color:var(--ink); background:linear-gradient(180deg,#0a0f20 0,#0f1630 100%);
+  }
+  header{padding:20px 18px 6px; border-bottom:1px solid #243057}
+  h1{margin:0 0 4px; font-weight:800; letter-spacing:.2px}
+  p.lead{margin:0; color:var(--muted); font-size:14px}
+  .wrap{max-width:1200px; margin:16px auto; padding:0 14px 40px}
+  .card{
+    background:var(--card); border:1px solid #1e274a; border-radius:16px; overflow:hidden; margin:18px 0 28px;
+    box-shadow:0 8px 26px rgba(3,8,30,.35);
+  }
+  .section-head{
+    padding:16px 18px; display:flex; gap:12px; align-items:center; justify-content:space-between;
+    background:linear-gradient(90deg,#141c3f,#12193b);
+    border-bottom:1px solid #1f2850;
+  }
+  .section-head h2{margin:0; font-size:18px}
+  .mode {font-size:13px; color:var(--accent); font-weight:600}
+  .note{font-size:13px; color:var(--muted); margin:6px 0 12px}
+  details.vocab{background:#0f1530}
+  details.vocab summary{
+    cursor:pointer; padding:14px 18px; color:var(--accent); font-weight:600; list-style:none; outline:none;
+  }
+  details.vocab[open] summary{border-bottom:1px solid #223060}
+  .vlist{padding:12px 18px 18px; color:var(--ink); columns:2; column-gap:28px; font-size:14px}
+  .vlist b{color:#d6e3ff}
+  .two-col{
+    display:grid; grid-template-columns:1.05fr .95fr; gap:0; min-height:60vh;
+  }
+  .passage{
+    padding:20px; border-right:1px solid #202a52; background:#0f1633; max-height:65vh; overflow:auto; line-height:1.62;
+  }
+  .passage p{margin:0 0 10px}
+  .questions{padding:18px; max-height:65vh; overflow:auto}
+  .q{background:#111941; border:1px solid #1c2550; border-radius:12px; padding:12px 14px; margin:10px 0}
+  .q h4{margin:0 0 8px; font-size:15px}
+  .q .opts{margin:6px 0 0 2px}
+  .q label{display:block; margin:6px 0; cursor:pointer}
+  .q select{width:100%; padding:8px 10px; border-radius:10px; border:1px solid #2a386e; background:#0f1630; color:var(--ink)}
+  .explain{display:none; margin-top:8px; font-size:13px; color:#cbd6ff}
+  .explain b{color:#fff}
+  .result{margin-top:12px; font-weight:700}
+  .btns{display:flex; gap:10px; padding:14px 18px; border-top:1px solid #1f2850; background:#0f1530}
+  button{
+    appearance:none; border:1px solid #2b3a73; background:#132057; color:#fff; padding:10px 14px;
+    border-radius:12px; font-weight:700; cursor:pointer;
+  }
+  button:hover{filter:brightness(1.08)}
+  .good{color:var(--good)} .bad{color:var(--bad)}
+  mark{background:var(--mark); color:#000; padding:0 .12em; border-radius:4px}
+  .sticky-head{position:sticky; top:0; z-index:5}
+  /* mobile */
+  @media (max-width: 880px){
+    .two-col{grid-template-columns:1fr; min-height:unset}
+    .passage,.questions{max-height:unset}
+    .vlist{columns:1}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>IELTS Reading • The Wright Brothers: Putting America on Wings</h1>
+  <p class="lead">3 passages • 30 questions • Explanations + automatic keyword highlighting after you press “Check”. Each passage focuses on a different reading skill.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ========== PART 1 (SKIMMING) ========== -->
+  <section id="part1" class="card">
+    <div class="section-head sticky-head">
+      <h2>Part I • Childhood, curiosity, and first gliders <span class="mode">(Skimming)</span></h2>
+      <span class="note"></span>
+    </div>
+
+    <div class="note">Instruction: Read quickly and focus on the main ideas. Do not worry about every detail.</div>
+
+    <details class="vocab">
+      <summary>Useful words & collocations</summary>
+      <div class="vlist">
+        <p><b>revolutionary invention</b></p>
+        <p><b>accomplish the “impossible”</b></p>
+        <p><b>study, experiment, and hard work</b></p>
+        <p><b>pioneering spirit</b></p>
+        <p><b>gift for original thinking</b></p>
+        <p><b>crude forerunner</b></p>
+        <p><b>airborne objects</b></p>
+        <p><b>soaring against the sky</b></p>
+        <p><b>kite-making business</b></p>
+        <p><b>formal technical education</b></p>
+        <p><b>conquest of the air</b></p>
+        <p><b>motor machines that imitated birds</b></p>
+      </div>
+    </details>
+
+    <div class="two-col">
+      <article class="passage" id="p1">
+        <p>In 1903 two brothers named Wilbur and Orville Wright sent a letter to government officials in Washington, D.C., announcing a revolutionary invention. They wrote, “The series of experiments upon which we have been engaged for the past five years, has ended in the production of a flying machine…” At the time, however, such an achievement was considered impossible, and their letter and invention were ignored.</p>
+        <p>Nevertheless, the Wright brothers had indeed accomplished the “impossible,” and they had not done it by accident. It was successfully done through years of study, experiment, and hard work.</p>
+        <p>The Wright brothers were raised in Ohio, the sons of a bishop in the Church of the United Brethren in Christ. Wilbur was born in 1867; and he and his brother Orville, younger by four years, enjoyed a similarity in spirit and interests which made them a natural team.</p>
+        <p>Ever since childhood the brothers had displayed a talent for building things. Their father had encouraged them, urging them to earn money to meet the cost of any project they started. Both brothers were especially interested in mechanical things. This interest, together with their pioneering spirit and gift for original thinking, eventually produced the “impossible” machine—the airplane.</p>
+        <p>As two poorly educated young men, the Wright brothers were the first to discover the secret of air travel that had escaped the genius of the world’s greatest scholars for thousands of years. Their earliest contact with the dream of flight came as children when their father brought them a toy helicopter. It was basically a flying top, powered by twisted rubberbands, a crude forerunner of the familiar flying machine that is so useful today. The boys studied the toy, took it apart, and finally discarded it. But the memory of its flying principles stayed with them and sparked their imagination. They began to explore other airborne objects. They watched birds and studied the lifting and drifting of the birds’ wings soaring against the sky. They experimented with kites and set up their own kite-making business for neighborhood children.</p>
+        <p>As the brothers grew older, they continued their studies, reading the history of man’s early attempts to fly and reports of recent experiments with gliders being conducted by Otto Lilienthal in Germany and by the Americans, Octave Chanute and Samuel P. Langley. Such studies helped to overcome their lack of formal technical education; but from the start of their experiments, they found that they needed to earn money to pay for their research.</p>
+        <p>To earn this money, the brothers in 1892 opened a bicycle shop in Dayton, Ohio. It was a successful enterprise and they were soon marketing a bicycle of their own design, the Van Cleve. But their main interest remained the study of flight. They learned that there were two schools of thought in regard to the possible conquest of the air. First, there were those who believed in gliders that flew like kites. Then, there were those who had experimented with motor machines that imitated birds, even to copying the flapping of their wings.</p>
+        <p>The Wrights decided to start their experiments with motorless gliders. They built a crude craft and journeyed to the eastern shore of the United States. They wanted an unpopulated area with soft sand and, more important, steady winds. They wrote to the United States Weather Bureau for advice and were directed to the sand dune region near Kitty Hawk, North Carolina. There, late in 1900, the brothers completed their first glider flight with a man aboard. Wilbur was the pilot, proving that only man could glide through the air. The more important question remained unanswered: could man fly through the air?</p>
+      </article>
+
+      <div class="questions" id="qbox1">
+        <div class="q" data-answer="T" data-keys='["1903","letter","ignored"]'>
+          <h4>1) T/F/NG: Officials initially ignored the Wrights’ 1903 letter about their invention.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q1" value="T"> True</label>
+            <label><input type="radio" name="q1" value="F"> False</label>
+            <label><input type="radio" name="q1" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. The passage says their “letter and invention were <b>ignored</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="F" data-keys='["not done by accident","years of study","experiment","hard work"]'>
+          <h4>2) T/F/NG: Their breakthrough happened by accident.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q2" value="T"> True</label>
+            <label><input type="radio" name="q2" value="F"> False</label>
+            <label><input type="radio" name="q2" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>False</b>. It was “<b>not</b> done by accident,” but by “years of <b>study</b>, <b>experiment</b>, and <b>hard work</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="Ohio" data-keys='["raised in Ohio"]'>
+          <h4>3) Multiple choice: Where were the Wright brothers raised?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q3" value="Ohio"> Ohio</label>
+            <label><input type="radio" name="q3" value="North Carolina"> North Carolina</label>
+            <label><input type="radio" name="q3" value="Virginia"> Virginia</label>
+            <label><input type="radio" name="q3" value="Washington, D.C."> Washington, D.C.</label>
+          </div>
+          <div class="explain">Answer: <b>Ohio</b>. “The Wright brothers were <b>raised in Ohio</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="F" data-keys='["father had encouraged them"]'>
+          <h4>4) T/F/NG: Their father discouraged their building projects.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q4" value="T"> True</label>
+            <label><input type="radio" name="q4" value="F"> False</label>
+            <label><input type="radio" name="q4" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>False</b>. Their “<b>father had encouraged them</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="helicopter" data-keys='["toy helicopter","twisted rubberbands"]'>
+          <h4>5) Sentence completion: Their earliest contact with flight came from a toy <i>_____</i> powered by twisted rubberbands.</h4>
+          <select name="q5">
+            <option value="">— choose —</option>
+            <option>helicopter</option>
+            <option>kite</option>
+            <option>glider</option>
+            <option>aerodrome</option>
+          </select>
+          <div class="explain">Answer: <b>helicopter</b>. The father brought “a <b>toy helicopter</b>… powered by <b>twisted rubberbands</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="T" data-keys='["kite-making business"]'>
+          <h4>6) T/F/NG: The brothers ran a kite-making business for neighborhood children.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q6" value="T"> True</label>
+            <label><input type="radio" name="q6" value="F"> False</label>
+            <label><input type="radio" name="q6" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. They “set up their own <b>kite-making business</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="Otto Lilienthal" data-keys='["Otto Lilienthal in Germany"]'>
+          <h4>7) Multiple choice: Which German experimenter with gliders influenced them?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q7" value="Otto Lilienthal"> Otto Lilienthal</label>
+            <label><input type="radio" name="q7" value="Octave Chanute"> Octave Chanute</label>
+            <label><input type="radio" name="q7" value="Samuel Langley"> Samuel Langley</label>
+            <label><input type="radio" name="q7" value="Glenn Curtiss"> Glenn Curtiss</label>
+          </div>
+          <div class="explain">Answer: <b>Otto Lilienthal</b>. The passage cites “<b>Otto Lilienthal in Germany</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="1892" data-keys='["in 1892 opened a bicycle shop"]'>
+          <h4>8) Multiple choice: In what year did they open their bicycle shop in Dayton?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q8" value="1892"> 1892</label>
+            <label><input type="radio" name="q8" value="1900"> 1900</label>
+            <label><input type="radio" name="q8" value="1903"> 1903</label>
+            <label><input type="radio" name="q8" value="1912"> 1912</label>
+          </div>
+          <div class="explain">Answer: <b>1892</b>. “The brothers in <b>1892</b> opened a bicycle shop.”</div>
+        </div>
+
+        <div class="q" data-answer="F" data-keys='["start their experiments with motorless gliders"]'>
+          <h4>9) T/F/NG: They first tried motor machines that imitated birds.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q9" value="T"> True</label>
+            <label><input type="radio" name="q9" value="F"> False</label>
+            <label><input type="radio" name="q9" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>False</b>. They decided to <b>start… with motorless gliders</b>.</div>
+        </div>
+
+        <div class="q" data-answer="Kitty Hawk" data-keys='["Kitty Hawk, North Carolina","first glider flight with a man aboard"]'>
+          <h4>10) Multiple choice: Where did they complete their first manned glider flight late in 1900?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q10" value="Kitty Hawk"> Kitty Hawk, North Carolina</label>
+            <label><input type="radio" name="q10" value="Dayton"> Dayton, Ohio</label>
+            <label><input type="radio" name="q10" value="Fort Myer"> Fort Myer, Virginia</label>
+            <label><input type="radio" name="q10" value="Potomac"> Potomac River, Washington, D.C.</label>
+          </div>
+          <div class="explain">Answer: <b>Kitty Hawk</b>. “There… the brothers completed their <b>first glider flight with a man aboard</b>… <b>Kitty Hawk, North Carolina</b>.”</div>
+        </div>
+
+        <div class="result" id="score1"></div>
+      </div>
+    </div>
+    <div class="btns">
+      <button onclick="checkSection('part1', 1, 10)">Check Part I</button>
+      <button onclick="resetSection('part1')">Reset</button>
+      <span class="note">Highlights will appear inside the passage.</span>
+    </div>
+  </section>
+
+
+  <!-- ========== PART 2 (SCANNING) ========== -->
+  <section id="part2" class="card">
+    <div class="section-head sticky-head">
+      <h2>Part II • From gliders to the first powered flight <span class="mode">(Scanning)</span></h2>
+      <span class="note">Left: passage • Right: questions in the same order</span>
+    </div>
+
+    <div class="note">Instruction: Scan for specific facts such as numbers, dates, names and places.</div>
+
+    <details class="vocab">
+      <summary>Useful words & collocations</summary>
+      <div class="vlist">
+        <p><b>movable portions of the wings</b></p>
+        <p><b>all-important propellers</b></p>
+        <p><b>coming to the conclusion</b></p>
+        <p><b>heavier-than-air machines</b></p>
+        <p><b>disastrous failures</b></p>
+        <p><b>catapult his plane</b></p>
+        <p><b>pioneer plane</b></p>
+        <p><b>controlled, sustained flight</b></p>
+        <p><b>the right to the first trial</b></p>
+        <p><b>without reduction of speed</b></p>
+      </div>
+    </details>
+
+    <div class="two-col">
+      <article class="passage" id="p2">
+        <p>For three more years the Wrights worked to improve their glider, paying particular attention to its controls and to the shape of the wings. By experimenting with movable portions of the wings, they made important improvements in flight control. Orville then designed an engine which they built and mounted on the glider to produce flying power. They also experimented with various designs for the all-important propellers.</p>
+        <p>The strange new craft gradually took shape, first in the Wright brothers’ minds and then physically, as they worked in the yard of their little bicycle shop. At the same time, however, the scientific world was coming to the conclusion that flight in heavier-than-air machines seemed impossible. There had already been many costly failures of powered flight experiments, and scientists were saying that such flights just could not be done.</p>
+        <p>Samuel P. Langley of the Smithsonian Institution in Washington, D.C., had been working on the construction of a man-carrying airplane which he called the Aerodrome. In 1903 he suffered two disastrous failures when he attempted to catapult his plane into the air from a boat on the Potomac River near Washington, D.C. His second unsuccessful attempt had taken place on December 6, 1903.</p>
+        <p>The Wright brothers, both now over 30 years old, were not discouraged by these mishaps. Their experiments had taught them the basic principles of flight that trained scientific minds had failed to find. So once again the brothers returned to the sand hills at Kitty Hawk this time in the middle of winter. The date was December 17, 1903.</p>
+        <p>Their flying machine, made of pieces of wood and cloth, looked too fragile to fly. With Orville at the controls, the pioneer plane moved down a track, was catapulted into the air, and flew for twelve seconds. It was the first controlled, sustained flight of an airplane. Orville described the flight in the following way:</p>
+        <p>“During the night of December 16, 1903, a strong cold wind blew from the north. When we arose on the morning of the 17th, the puddles of water which had been standing about camp since the recent rains, were covered with ice. The wind had a velocity of 22 to 27 miles an hour. We thought it would die down before long, but when 10 o’clock arrived, and the wind was as brisk as ever, we decided that we had better get the machine out.</p>
+        <p>“Wilbur, having used his turn in the unsuccessful attempt on the 14th, the right to the first trial now belonged to me. Wilbur ran at the side, holding the wing to balance it on the track. The machine, facing a 27-mile wind, started very slowly. Wilbur was able to stay with it till it lifted from the track after a forty foot run.</p>
+        <p>“The course of the flight up and down was exceedingly erratic. The control of the front rudder was difficult. As a result the machine would rise suddenly to about ten feet, and then as suddenly dart for the ground. A sudden dart when a little over 120 feet from the point at which it rose into the air, ended the flight. The flight lasted only 12 seconds, but it was nevertheless the first in the history of the world in which a machine carrying a man had raised itself by its own power into the air in full flight, had sailed forward without reduction of speed, and had finally landed at a point as high as that from which it started.”</p>
+        <p>Later in the day, Wilbur made a flight of more than 800 feet and stayed in the air for fifty-nine seconds.</p>
+      </article>
+
+      <div class="questions" id="qbox2">
+
+        <div class="q" data-answer="propellers" data-keys='["all-important propellers"]'>
+          <h4>11) Sentence completion: They experimented with designs for the all-important <i>_____</i>.</h4>
+          <select name="q11">
+            <option value="">— choose —</option>
+            <option>propellers</option>
+            <option>wings</option>
+            <option>engine</option>
+            <option>rudder</option>
+          </select>
+          <div class="explain">Answer: <b>propellers</b>. The text says “the <b>all-important propellers</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="T" data-keys='["scientific world","heavier-than-air","seemed impossible"]'>
+          <h4>12) T/F/NG: Many scientists concluded heavier-than-air flight was impossible.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q12" value="T"> True</label>
+            <label><input type="radio" name="q12" value="F"> False</label>
+            <label><input type="radio" name="q12" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. “The <b>scientific world</b> was coming to the conclusion that flight in <b>heavier-than-air</b> machines <b>seemed impossible</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="T" data-keys='["catapult his plane","from a boat on the Potomac River"]'>
+          <h4>13) T/F/NG: Langley tried to launch his plane from a boat on the Potomac River.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q13" value="T"> True</label>
+            <label><input type="radio" name="q13" value="F"> False</label>
+            <label><input type="radio" name="q13" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. He attempted to <b>catapult his plane</b> “<b>from a boat on the Potomac River</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="December 6, 1903" data-keys='["second unsuccessful attempt","December 6, 1903"]'>
+          <h4>14) Multiple choice: When did Langley’s second unsuccessful attempt occur?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q14" value="December 6, 1903"> December 6, 1903</label>
+            <label><input type="radio" name="q14" value="October 5, 1905"> October 5, 1905</label>
+            <label><input type="radio" name="q14" value="May 1912"> May 1912</label>
+            <label><input type="radio" name="q14" value="December 17, 1903"> December 17, 1903</label>
+          </div>
+          <div class="explain">Answer: <b>December 6, 1903</b>. The passage states that date explicitly.</div>
+        </div>
+
+        <div class="q" data-answer="December 17, 1903" data-keys='["The date was December 17, 1903"]'>
+          <h4>15) Multiple choice: On what date did the Wrights achieve the first powered flight?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q15" value="December 17, 1903"> December 17, 1903</label>
+            <label><input type="radio" name="q15" value="December 16, 1903"> December 16, 1903</label>
+            <label><input type="radio" name="q15" value="October 5, 1905"> October 5, 1905</label>
+            <label><input type="radio" name="q15" value="January 30, 1948"> January 30, 1948</label>
+          </div>
+          <div class="explain">Answer: <b>December 17, 1903</b>. The passage: “The date was <b>December 17, 1903</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="F" data-keys='["looked too fragile to fly"]'>
+          <h4>16) T/F/NG: Their machine looked robust and heavy.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q16" value="T"> True</label>
+            <label><input type="radio" name="q16" value="F"> False</label>
+            <label><input type="radio" name="q16" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>False</b>. It “<b>looked too fragile to fly</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="12 seconds" data-keys='["flew for twelve seconds","The flight lasted only 12 seconds"]'>
+          <h4>17) Multiple choice: How long did the first flight last?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q17" value="12 seconds"> 12 seconds</label>
+            <label><input type="radio" name="q17" value="59 seconds"> 59 seconds</label>
+            <label><input type="radio" name="q17" value="5 minutes"> 5 minutes</label>
+            <label><input type="radio" name="q17" value="38 minutes"> 38 minutes</label>
+          </div>
+          <div class="explain">Answer: <b>12 seconds</b>. It “<b>flew for twelve seconds</b>… ‘The flight lasted only <b>12 seconds</b>.’”</div>
+        </div>
+
+        <div class="q" data-answer="22–27 mph" data-keys='["velocity of 22 to 27 miles an hour"]'>
+          <h4>18) Multiple choice: What was the wind velocity during the first flight?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q18" value="22–27 mph"> 22–27 mph</label>
+            <label><input type="radio" name="q18" value="10–12 mph"> 10–12 mph</label>
+            <label><input type="radio" name="q18" value="30–35 mph"> 30–35 mph</label>
+            <label><input type="radio" name="q18" value="Calm"> Calm</label>
+          </div>
+          <div class="explain">Answer: <b>22–27 mph</b>. Orville wrote “The wind had a <b>velocity of 22 to 27 miles an hour</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="Orville" data-keys='["With Orville at the controls","right to the first trial now belonged to me"]'>
+          <h4>19) Multiple choice: Who piloted the first successful powered flight?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q19" value="Orville"> Orville</label>
+            <label><input type="radio" name="q19" value="Wilbur"> Wilbur</label>
+            <label><input type="radio" name="q19" value="Langley"> Samuel Langley</label>
+            <label><input type="radio" name="q19" value="Chanute"> Octave Chanute</label>
+          </div>
+          <div class="explain">Answer: <b>Orville</b>. “<b>With Orville at the controls</b>… ‘the <b>first trial</b> now belonged to me.’”</div>
+        </div>
+
+        <div class="q" data-answer="T" data-keys='["more than 800 feet","fifty-nine seconds"]'>
+          <h4>20) T/F/NG: Later that day Wilbur flew more than 800 feet for 59 seconds.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q20" value="T"> True</label>
+            <label><input type="radio" name="q20" value="F"> False</label>
+            <label><input type="radio" name="q20" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. “Wilbur made a flight of <b>more than 800 feet</b>… for <b>fifty-nine seconds</b>.”</div>
+        </div>
+
+        <div class="result" id="score2"></div>
+      </div>
+    </div>
+    <div class="btns">
+      <button onclick="checkSection('part2', 11, 20)">Check Part II</button>
+      <button onclick="resetSection('part2')">Reset</button>
+      <span class="note">Highlights will appear inside the passage.</span>
+    </div>
+  </section>
+
+
+  <!-- ========== PART 3 (DETAILED READING) ========== -->
+  <section id="part3" class="card">
+    <div class="section-head sticky-head">
+      <h2>Part III • Recognition, achievements, and legacy <span class="mode">(Detailed Reading)</span></h2>
+      <span class="note">Left: passage • Right: questions in the same order</span>
+    </div>
+
+    <div class="note">Instruction: Read carefully. Decide if statements agree with the text (True / False / Not Given) or answer meaning-based questions.</div>
+
+    <details class="vocab">
+      <summary>Useful words & collocations</summary>
+      <div class="vlist">
+        <p><b>public’s disbelief</b></p>
+        <p><b>granted a patent</b></p>
+        <p><b>seek a market</b></p>
+        <p><b>dazzling demonstrations</b></p>
+        <p><b>licenses were granted</b></p>
+        <p><b>make public speeches</b></p>
+        <p><b>unwillingness to speak out</b></p>
+        <p><b>patent rights</b></p>
+        <p><b>slighted his achievements</b></p>
+        <p><b>placed on permanent exhibition</b></p>
+      </div>
+    </details>
+
+    <div class="two-col">
+      <article class="passage" id="p3">
+        <p>Though they had conquered the air, the Wrights still had to conquer the public's disbelief—the refusal of people to agree that a successful flight had been made. So the brothers returned to Ohio and continued with their experiments, improving their airplane and testing it near their home in Dayton. They sent letter after letter to government officials, but the news of their invention was either ignored or caused only little interest.</p>
+        <p>By the end of 1904, they could keep the airplane up for five minutes and fly complete circles. On October 5, 1905, in Dayton, Ohio, they flew 24 miles in 38 minutes—as far and as long as the gasoline supply would allow. Certain that they had the Flyer perfected, the Wright brothers were granted a patent for their invention in 1906. They formed the Wright Company to manufacture aircraft and began at that time to seek a market.</p>
+        <p>By 1908 the Wrights had gained worldwide fame. While Wilbur was in France dazzling European audiences with flying demonstrations, Orville was conducting a series of flights before United States government officials at Fort Myer, Virginia. As a result of these demonstrations, the United States purchased its first military aircraft, a Wright machine, for a cost of $25,000, and licenses were granted to firms abroad for the manufacture of the Wright brothers' aircraft.</p>
+        <p>Wilbur and Orville never lost their modesty when honors were showered upon them. They paid little attention to the medals and ribbons which they received from scientific societies, and again and again, they refused to make public speeches. Their unwillingness to speak out in public was emphasized by Wilbur when he commented, “I know of only one bird, the parrot, that talks, and the parrot cannot fly very high.”</p>
+        <p>For Wilbur there were to be only a few short years of success. In May 1912, at the age of 45, he died of typhoid fever. His death marked the end of one of the greatest inventive partnerships in history.</p>
+        <p>Though Orville continued to work in aviation for several years more, his heart was no longer in it. He flew a plane for the last time in 1918. He retired from his company and lived quietly at his home in Dayton.</p>
+        <p>Also contributing to Orville's withdrawal from public life was his unhappiness with legal disputes with fellow aviation pioneer Glenn Hammond Curtiss arising over the patent rights which the Wright Company held on aircraft design. He also felt the United States government slighted his and Wilbur's achievements when, in 1914, the Smithsonian Museum placed on display Samuel Langley's Aerodrome, which had been built but not flown in 1903, with the notice that it was the first heavier-than-air-machine “capable” of flight. When later invited by the Smithsonian to place the Kitty Hawk Flyer on display Orville declined and instead sent it to the Science Museum at South Kensington, England.</p>
+        <p>In 1943, at the request of President Franklin D. Roosevelt, Orville asked that the plane be returned to be put on permanent exhibit at the Smithsonian. Orville, however, never saw the display. On January 30, 1948, he died at the age of 77. The following December 17, exactly 45 years after the first flight, the Flyer was placed on permanent exhibition. A sign on the plane reads:</p>
+        <p><b>THE ORIGINAL WRIGHT BROTHERS' AEROPLANE</b><br>
+        The world's first power-driven heavier-than-air machine in which man made free, controlled, and sustained flight. Invented and built by Wilbur and Orville Wright, flown by them at Kitty Hawk, North Carolina, December 17, 1903.</p>
+        <p>By original scientific research the Wright brothers discovered the principles of human flight. As inventors, builders, and flyers they further developed the aeroplane, taught man to fly, and opened the age of aviation.</p>
+      </article>
+
+      <div class="questions" id="qbox3">
+
+        <div class="q" data-answer="public disbelief" data-keys='["conquer the public's disbelief"]'>
+          <h4>21) Multiple choice: After 1903, what major obstacle still remained for the brothers?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q21" value="public disbelief"> Public disbelief</label>
+            <label><input type="radio" name="q21" value="lack of fuel"> Lack of fuel</label>
+            <label><input type="radio" name="q21" value="patent rejection"> Patent rejection</label>
+            <label><input type="radio" name="q21" value="bad weather"> Bad weather</label>
+          </div>
+          <div class="explain">Answer: <b>Public disbelief</b>. They still had to “<b>conquer the public’s disbelief</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="F" data-keys='["five minutes","1904"]'>
+          <h4>22) T/F/NG: By the end of 1904 they could fly for half an hour.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q22" value="T"> True</label>
+            <label><input type="radio" name="q22" value="F"> False</label>
+            <label><input type="radio" name="q22" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>False</b>. By late 1904 they could keep the airplane up for <b>five minutes</b>.</div>
+        </div>
+
+        <div class="q" data-answer="24 miles in 38 minutes" data-keys='["24 miles","38 minutes","October 5, 1905"]'>
+          <h4>23) Multiple choice: On 5 October 1905 in Dayton, what distance and time did they achieve?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q23" value="24 miles in 38 minutes"> 24 miles in 38 minutes</label>
+            <label><input type="radio" name="q23" value="38 miles in 24 minutes"> 38 miles in 24 minutes</label>
+            <label><input type="radio" name="q23" value="5 miles in 12 minutes"> 5 miles in 12 minutes</label>
+            <label><input type="radio" name="q23" value="800 feet in 59 seconds"> 800 feet in 59 seconds</label>
+          </div>
+          <div class="explain">Answer: <b>24 miles in 38 minutes</b>. The passage states exactly those figures.</div>
+        </div>
+
+        <div class="q" data-answer="1906" data-keys='["granted a patent","in 1906"]'>
+          <h4>24) Multiple choice: In which year were they granted a patent for the Flyer?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q24" value="1906"> 1906</label>
+            <label><input type="radio" name="q24" value="1903"> 1903</label>
+            <label><input type="radio" name="q24" value="1908"> 1908</label>
+            <label><input type="radio" name="q24" value="1912"> 1912</label>
+          </div>
+          <div class="explain">Answer: <b>1906</b>. They were “<b>granted a patent</b>… <b>in 1906</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="T" data-keys='["purchased its first military aircraft","$25,000"]'>
+          <h4>25) T/F/NG: The United States bought its first military aircraft, a Wright machine, for $25,000.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q25" value="T"> True</label>
+            <label><input type="radio" name="q25" value="F"> False</label>
+            <label><input type="radio" name="q25" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. “The United States <b>purchased</b> its first military aircraft… for a cost of <b>$25,000</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="They preferred work over public speaking" data-keys='["refused to make public speeches","parrot cannot fly very high"]'>
+          <h4>26) Multiple choice: Wilbur’s remark about the parrot suggests what about the brothers?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q26" value="They preferred work over public speaking"> They preferred work over public speaking</label>
+            <label><input type="radio" name="q26" value="He disliked birds"> He disliked birds</label>
+            <label><input type="radio" name="q26" value="Parrots fly highest"> Parrots fly highest</label>
+            <label><input type="radio" name="q26" value="They sought fame"> They sought fame</label>
+          </div>
+          <div class="explain">Answer: <b>They preferred work over public speaking</b>. They “<b>refused to make public speeches</b>,” and the “<b>parrot cannot fly very high</b>” quip underlines that point.</div>
+        </div>
+
+        <div class="q" data-answer="1912 typhoid fever" data-keys='["May 1912","died of typhoid fever"]'>
+          <h4>27) Multiple choice: When and how did Wilbur die?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q27" value="1912 typhoid fever"> 1912, typhoid fever</label>
+            <label><input type="radio" name="q27" value="1918 influenza"> 1918, influenza</label>
+            <label><input type="radio" name="q27" value="1948 heart failure"> 1948, heart failure</label>
+            <label><input type="radio" name="q27" value="1903 crash"> 1903, crash</label>
+          </div>
+          <div class="explain">Answer: <b>1912, typhoid fever</b>. “In <b>May 1912</b>, … he <b>died of typhoid fever</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="T" data-keys='["legal disputes","Glenn Hammond Curtiss","patent rights"]'>
+          <h4>28) T/F/NG: Orville withdrew partly because of legal disputes with Glenn Curtiss over patent rights.</h4>
+          <div class="opts">
+            <label><input type="radio" name="q28" value="T"> True</label>
+            <label><input type="radio" name="q28" value="F"> False</label>
+            <label><input type="radio" name="q28" value="NG"> Not Given</label>
+          </div>
+          <div class="explain">Answer: <b>True</b>. The text notes “<b>legal disputes</b> with <b>Glenn Hammond Curtiss</b>… over the <b>patent rights</b>.”</div>
+        </div>
+
+        <div class="q" data-answer="Smithsonian Museum" data-keys='["the Smithsonian Museum placed on display","Aerodrome"]'>
+          <h4>29) Multiple choice: Which institution displayed Langley’s Aerodrome in 1914 with that controversial notice?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q29" value="Smithsonian Museum"> The Smithsonian Museum</label>
+            <label><input type="radio" name="q29" value="Science Museum, South Kensington"> Science Museum, South Kensington</label>
+            <label><input type="radio" name="q29" value="Wright Company Museum"> Wright Company Museum</label>
+            <label><input type="radio" name="q29" value="Fort Myer Museum"> Fort Myer Museum</label>
+          </div>
+          <div class="explain">Answer: <b>Smithsonian Museum</b>. It “<b>placed on display</b> Samuel Langley’s <b>Aerodrome</b>” in 1914.</div>
+        </div>
+
+        <div class="q" data-answer="1948" data-keys='["January 30, 1948","The following December 17","placed on permanent exhibition"]'>
+          <h4>30) Multiple choice: In which year was the Flyer put on permanent exhibition at the Smithsonian?</h4>
+          <div class="opts">
+            <label><input type="radio" name="q30" value="1948"> 1948</label>
+            <label><input type="radio" name="q30" value="1943"> 1943</label>
+            <label><input type="radio" name="q30" value="1908"> 1908</label>
+            <label><input type="radio" name="q30" value="1950"> 1950</label>
+          </div>
+          <div class="explain">Answer: <b>1948</b>. Orville died on <b>January 30, 1948</b>, and “<b>the following December 17</b>… the Flyer was <b>placed on permanent exhibition</b>.”</div>
+        </div>
+
+        <div class="result" id="score3"></div>
+      </div>
+    </div>
+    <div class="btns">
+      <button onclick="checkSection('part3', 21, 30)">Check Part III</button>
+      <button onclick="resetSection('part3')">Reset</button>
+      <span class="note">Highlights will appear inside the passage.</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Store original passage HTML for clean re-highlighting
+  document.querySelectorAll('.passage').forEach(p=>{
+    p.dataset.orig = p.innerHTML;
+  });
+
+  function resetSection(sectionId){
+    const sec = document.getElementById(sectionId);
+    // reset passage
+    sec.querySelector('.passage').innerHTML = sec.querySelector('.passage').dataset.orig;
+    // reset questions
+    sec.querySelectorAll('input[type=radio]').forEach(i=> i.checked = false);
+    sec.querySelectorAll('select').forEach(s=> s.selectedIndex = 0);
+    sec.querySelectorAll('.explain').forEach(e=> e.style.display = 'none');
+    const result = sec.querySelector('.result'); if(result) result.textContent = '';
+  }
+
+  function checkSection(sectionId, startNum, endNum){
+    const sec = document.getElementById(sectionId);
+    const passage = sec.querySelector('.passage');
+    // reset passage to original to avoid nested marks
+    passage.innerHTML = passage.dataset.orig;
+
+    let correct = 0, total = endNum - startNum + 1;
+    const keySet = new Set(); // collect keywords to highlight once
+
+    for(let n=startNum;n<=endNum;n++){
+      const q = sec.querySelector(`.q:nth-of-type(${n-startNum+1})`);
+      if(!q) continue;
+      const ans = q.dataset.answer;
+      let user = "";
+      const radios = q.querySelectorAll('input[type=radio]');
+      if(radios.length){
+        const r = [...radios].find(r=>r.checked);
+        if(r) user = r.value;
+      }else{
+        const sel = q.querySelector('select');
+        if(sel) user = sel.value;
+      }
+      const exp = q.querySelector('.explain');
+      if(user && user.trim() === ans.trim()){ correct++; exp.classList.remove('bad'); exp.classList.add('good'); }
+      else{ exp.classList.remove('good'); exp.classList.add('bad'); }
+      exp.style.display = 'block';
+
+      // collect highlight keywords for this question
+      try{
+        const keys = JSON.parse(q.dataset.keys || "[]");
+        keys.forEach(k => keySet.add(k));
+      }catch(e){}
+    }
+
+    // apply highlights for all collected keywords (case-insensitive, whole phrase)
+    let html = passage.innerHTML;
+    keySet.forEach(phrase=>{
+      if(!phrase) return;
+      const esc = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(esc, 'gi');
+      html = html.replace(re, m => `<mark>${m}</mark>`);
+    });
+    passage.innerHTML = html;
+
+    const scoreBox = sec.querySelector('.result');
+    scoreBox.innerHTML = `Score for this part: <span class="${correct===total?'good':'bad'}">${correct} / ${total}</span>`;
+  }
+</script>
+</body>
+</html>
