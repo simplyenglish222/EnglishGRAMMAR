@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>The shape of you – Humanoid Robots Worksheet</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 20px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin-bottom: 0.2em;
+    }
+
+    .subtitle {
+      color: #555;
+      margin-bottom: 1em;
+      font-size: 0.95em;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .sidebar {
+      flex: 1;
+      min-width: 260px;
+      align-self: flex-start;
+      position: sticky;
+      top: 10px;
+    }
+
+    .main {
+      flex: 2;
+      min-width: 0;
+    }
+
+    .paragraph-block {
+      border: 1px solid #ddd;
+      padding: 10px 10px 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+
+    .paragraph {
+      margin: 6px 0 4px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-size: 0.85em;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+      background: #f5f5f5;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ececec;
+    }
+
+    .word {
+      cursor: pointer;
+      padding: 0 2px;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+
+    .word:hover {
+      background: #e9f2ff;
+    }
+
+    .hidden-word {
+      color: transparent;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    .headings-bank {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px;
+      background: #fcfcfc;
+      margin-bottom: 16px;
+      font-size: 0.9em;
+    }
+
+    .headings-bank h2 {
+      margin: 0 0 6px;
+      font-size: 1em;
+    }
+
+    .heading {
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: 4px 6px;
+      margin: 4px 0;
+      background: #f9f9f9;
+      cursor: grab;
+      user-select: none;
+      font-size: 0.9em;
+    }
+
+    .heading:active {
+      cursor: grabbing;
+    }
+
+    .dropzone {
+      border: 1px dashed #bbb;
+      padding: 4px 6px;
+      margin-bottom: 6px;
+      min-height: 30px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: #666;
+      display: flex;
+      align-items: center;
+      background: #fff;
+    }
+
+    .dropzone.correct {
+      border-color: #2b8a3e;
+      background: #e6f6ea;
+      color: #1b4332;
+    }
+
+    .dropzone.incorrect {
+      border-color: #c92a2a;
+      background: #fdecea;
+      color: #7b1e1e;
+    }
+
+    .hint {
+      font-size: 0.8em;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    /* POPUP */
+
+    .popup {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup.visible {
+      display: flex;
+    }
+
+    .popup-content {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 14px 16px 12px;
+      max-width: 340px;
+      width: 90%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      position: relative;
+      font-size: 0.95em;
+    }
+
+    .popup-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .popup-row {
+      margin: 3px 0;
+    }
+
+    .popup-label {
+      font-weight: 600;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      border: none;
+      background: transparent;
+      font-size: 1.2em;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .popup-buttons {
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    #popupSpeakBtn {
+      padding: 4px 10px;
+      font-size: 0.85em;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        min-width: 0;
+        position: static; /* если хочешь, чтобы и на мобиле было «прилипание» – убери эту строку */
+      }
+      .main {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>The shape of you</h1>
+  <div class="subtitle">
+    «Rival firms’ race to build humanoid robots will intensify» – интерактивный worksheet.<br>
+    Нажмите на слово, чтобы увидеть перевод и транскрипцию во всплывающем окне.<br>
+    Кнопка «Скрыть / показать текст» оставляет только опорные слова для устной пересказки.
+  </div>
+
+  <div class="container">
+
+    <!-- Сайдбар СНАЧАЛА, чтобы sticky работал лучше -->
+    <div class="sidebar">
+      <div class="headings-bank">
+        <h2>Заголовки (перетащите к абзацам)</h2>
+        <div id="headingsList">
+          <!-- перемешаны, уровень Intermediate -->
+          <div class="heading" draggable="true" data-id="h4">
+            The dream of replacing human workers
+          </div>
+          <div class="heading" draggable="true" data-id="h1">
+            A clumsy helper in a modern home
+          </div>
+          <div class="heading" draggable="true" data-id="h6">
+            Amazing tricks, poor everyday skills
+          </div>
+          <div class="heading" draggable="true" data-id="h3">
+            Pricey champion and cheaper rival
+          </div>
+          <div class="heading" draggable="true" data-id="h2">
+            New companies joining the robot race
+          </div>
+          <div class="heading" draggable="true" data-id="h5">
+            Huge market, but many dangers
+          </div>
+          <div class="heading" draggable="true" data-id="h7">
+            Teaching machines to learn like people
+          </div>
+        </div>
+        <div class="hint">
+          Если заголовок подобран верно, рамка абзаца станет зелёной, если нет — красной.<br>
+          Двойной клик по заголовку в абзаце возвращает его обратно в этот список.
+        </div>
+      </div>
+    </div>
+
+    <!-- Основной текст -->
+    <div class="main">
+      <!-- Абзац 1 -->
+      <div class="paragraph-block" data-paragraph="1">
+        <div class="controls">
+          <strong>Абзац 1</strong>
+          <button class="toggle-hide" data-paragraph="1">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h1">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="1">
+          DRESSED IN SENSIBLE Nordic knitwear, Bernt Bornich’s robotic manservant is more stylish than practical. Ask it to fetch a can of Coca-Cola from another room, and more often than not, something will waylay it in the process. Getting the humanoid robot, called Neo, to work as a useful domestic assistant requires help from a remote human overseer and, ideally, an empty house. Yet by the end of 2026, Mr Bornich’s firm, 1x, hopes to have 10,000 of its robots in homes around the world.
+        </p>
+      </div>
+
+      <!-- Абзац 2 -->
+      <div class="paragraph-block" data-paragraph="2">
+        <div class="controls">
+          <strong>Абзац 2</strong>
+          <button class="toggle-hide" data-paragraph="2">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h2">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="2">
+          That makes 1x one of the more ambitious companies among the many now vying to build humanoid robots. Tesla aims to sell a million of its Optimus robots a year by 2030, but so far the carmaker has only a few of them in operation. Figure, a Silicon Valley darling, has tested just a handful of robots in a BMW car factory, though it recently announced an impressive-looking new model. Boston Dynamics has shown off the remarkable parkour abilities of its Atlas robot, but under its latest owner, Hyundai, the firm shows little interest in expanding its operations beyond research.
+        </p>
+      </div>
+
+      <!-- Абзац 3 -->
+      <div class="paragraph-block" data-paragraph="3">
+        <div class="controls">
+          <strong>Абзац 3</strong>
+          <button class="toggle-hide" data-paragraph="3">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h3">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="3">
+          The market leader is China’s Unitree, which delivered around 1,500 humanoid robots during 2024. But its most advanced model, the H1, which costs $90,000, is still described as a research platform. By contrast, 1x, based in Norway, is targeting the consumer market with Neo. A sporadically successful robot might sound like a hard sell, given its price tag of $20,000. Yet despite its limitations, Mr Bornich’s robot can still be useful. “When you have something that does all your chores, you will never give it back,” he says.
+        </p>
+      </div>
+
+      <!-- Абзац 4 -->
+      <div class="paragraph-block" data-paragraph="4">
+        <div class="controls">
+          <strong>Абзац 4</strong>
+          <button class="toggle-hide" data-paragraph="4">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h4">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="4">
+          The ultimate goal of those building humanoid robots is not to sell a housekeeper. It is to automate all physical labour. Elon Musk, Tesla’s boss, reckons such robots will outnumber people by 2040. In theory humanoids should fit smoothly into a world built for humans. But just how soon they will be ready for prime time is unclear.
+        </p>
+      </div>
+
+      <!-- Абзац 5 -->
+      <div class="paragraph-block" data-paragraph="5">
+        <div class="controls">
+          <strong>Абзац 5</strong>
+          <button class="toggle-hide" data-paragraph="5">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h5">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="5">
+          Interact Analysis, an industry analyst, reckons the market for humanoids could eventually be worth $2trn, but says safety concerns and regulation will hamper adoption in the short term. A robot that makes a mistake can cause physical harm. Lighter, less powerful robots are safer but much less capable. “The technology isn’t there yet,” says Rueben Scriven of Interact. He foresees a “humanoid winter” as funding dries up and ambitions plummet.
+        </p>
+      </div>
+
+      <!-- Абзац 6 -->
+      <div class="paragraph-block" data-paragraph="6">
+        <div class="controls">
+          <strong>Абзац 6</strong>
+          <button class="toggle-hide" data-paragraph="6">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h6">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="6">
+          Videos of humanoid robots show them performing all kinds of acrobatic feats, but none of them can enter a stranger’s kitchen and make a cup of coffee. The reason is what Nvidia’s director of robotics, Jim Fan, calls the “blind gymnast” problem. Training robots for thousands of simulated hours in virtual reality can give them incredible athleticism but grants them no understanding of how the world works.
+        </p>
+      </div>
+
+      <!-- Абзац 7 -->
+      <div class="paragraph-block" data-paragraph="7">
+        <div class="controls">
+          <strong>Абзац 7</strong>
+          <button class="toggle-hide" data-paragraph="7">Скрыть / показать текст</button>
+        </div>
+        <div class="dropzone" data-correct="h7">
+          Перетащите сюда подходящий заголовок
+        </div>
+        <p class="paragraph" data-paragraph="7">
+          Humans learn with their whole bodies, not just their brains. Developing “embodied intelligence” will require training a robot brain with a body around it, says Jim Torresen, a roboticist at the University of Oslo, who once taught Mr Bornich. And that is why 1x is so eager to get its Neo robots into people’s homes in the coming year to gather training data about the real world. It hopes this will enable its robots to improve rapidly. Humanoids are on the march. But don’t expect C-3PO in 2026.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP ДЛЯ ПЕРЕВОДА СЛОВ -->
+  <div class="popup" id="wordPopup">
+    <div class="popup-content">
+      <button class="popup-close" id="popupClose">&times;</button>
+      <div class="popup-title" id="popupWord">—</div>
+      <div class="popup-row">
+        <span class="popup-label">Транскрипция (по-русски): </span>
+        <span id="popupTranscription">—</span>
+      </div>
+      <div class="popup-row">
+        <span class="popup-label">Перевод: </span>
+        <span id="popupTranslation">—</span>
+      </div>
+      <div class="popup-buttons">
+        <button id="popupSpeakBtn" disabled>Прослушать</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==== СЛОВАРЬ: перевод и "русская" транскрипция ====
+    const DICT = {
+      "dressed": { transcription: "дрест", translation: "одетый" },
+      "sensible": { transcription: "сЭнсибл", translation: "практичный, разумный" },
+      "nordic": { transcription: "нОрдик", translation: "скандинавский, северный" },
+      "knitwear": { transcription: "нИтвэа", translation: "вязаная одежда, трикотаж" },
+      "robotic": { transcription: "робОтик", translation: "роботизированный" },
+      "manservant": { transcription: "мЭнсёрвэнт", translation: "слуга (мужчина)" },
+      "stylish": { transcription: "стАйлиш", translation: "стильный" },
+      "practical": { transcription: "прЭктикл", translation: "практичный" },
+      "ask": { transcription: "аск", translation: "спросить, попросить" },
+      "fetch": { transcription: "фэтч", translation: "сходить и принести; приносить" },
+      "can": { transcription: "кэн", translation: "жестяная банка; мочь" },
+      "coca-cola": { transcription: "кока-кОула", translation: "Кока-Кола" },
+      "room": { transcription: "рум", translation: "комната" },
+      "waylay": { transcription: "вэйлЭй", translation: "перехватить по пути, помешать" },
+      "process": { transcription: "прОусэс", translation: "процесс" },
+      "getting": { transcription: "гЕтинг", translation: "заставить (что-то) работать; получение" },
+      "humanoid": { transcription: "хьЮмэнойд", translation: "гуманоидный" },
+      "useful": { transcription: "юсфул", translation: "полезный" },
+      "domestic": { transcription: "домЭстик", translation: "домашний, бытовой" },
+      "assistant": { transcription: "эсИстэнт", translation: "помощник" },
+      "requires": { transcription: "риквАйэз", translation: "требует" },
+      "remote": { transcription: "римоут", translation: "удалённый" },
+      "overseer": { transcription: "оувэрсиэр", translation: "надсмотрщик, контролёр" },
+      "ideally": { transcription: "айдИэли", translation: "в идеале" },
+      "empty": { transcription: "Эмпти", translation: "пустой" },
+      "house": { transcription: "хаус", translation: "дом" },
+      "firm": { transcription: "фёрм", translation: "фирма, компания" },
+      "hopes": { transcription: "хоупс", translation: "надеется" },
+      "homes": { transcription: "хоумз", translation: "дома, жильё" },
+      "around": { transcription: "эрАунд", translation: "по, вокруг" },
+      "world": { transcription: "уёрлд", translation: "мир" },
+
+      "ambitious": { transcription: "эмбИшэс", translation: "амбициозный" },
+      "companies": { transcription: "кАмпэниз", translation: "компании" },
+      "vying": { transcription: "вАйинг", translation: "соперничающие" },
+      "build": { transcription: "билд", translation: "строить, создавать" },
+      "aims": { transcription: "эймз", translation: "стремится, нацеливается" },
+      "sell": { transcription: "сел", translation: "продавать" },
+      "million": { transcription: "мИльен", translation: "миллион" },
+      "operation": { transcription: "оперЭйшн", translation: "эксплуатация, работа" },
+      "silicon": { transcription: "сИликон", translation: "кремниевый" },
+      "valley": { transcription: "вЭлли", translation: "долина" },
+      "darling": { transcription: "дАрлинг", translation: "любимчик, фаворит" },
+      "handful": { transcription: "хЭндфул", translation: "горстка, небольшое количество" },
+      "factory": { transcription: "фЭктри", translation: "завод, фабрика" },
+      "though": { transcription: "зоу", translation: "хотя" },
+      "announced": { transcription: "энАунст", translation: "объявил" },
+      "impressive-looking": { transcription: "импрЭсив лУкинг", translation: "выглядящий впечатляюще" },
+      "remarkable": { transcription: "римАркэбл", translation: "поразительный, выдающийся" },
+      "abilities": { transcription: "эбИлитиз", translation: "способности, умения" },
+      "parkour": { transcription: "паркУр", translation: "паркур" },
+      "owner": { transcription: "Оунэ", translation: "владелец" },
+      "interest": { transcription: "Интрест", translation: "интерес" },
+      "expanding": { transcription: "икспЭндинг", translation: "расширяя" },
+      "beyond": { transcription: "биЁнд", translation: "за пределами" },
+      "research": { transcription: "рИсёрч", translation: "исследование" },
+
+      "leader": { transcription: "лИдэр", translation: "лидер" },
+      "delivered": { transcription: "дилИверд", translation: "поставил, доставил" },
+      "during": { transcription: "дЮринг", translation: "в течение" },
+      "advanced": { transcription: "эдвАнст", translation: "продвинутый" },
+      "costs": { transcription: "костс", translation: "стоит (о цене)" },
+      "described": { transcription: "дискрАйбд", translation: "описан как" },
+      "platform": { transcription: "плЭтформ", translation: "платформа" },
+      "contrast": { transcription: "кОнтрэст", translation: "контраст; в отличие" },
+      "targeting": { transcription: "тАргетинг", translation: "нацеливаясь на" },
+      "consumer": { transcription: "консЮмэ", translation: "потребительский" },
+      "market": { transcription: "мАркет", translation: "рынок" },
+      "sporadically": { transcription: "спорЭдикали", translation: "эпизодически, от случая к случаю" },
+      "successful": { transcription: "сэксЭсфул", translation: "успешный" },
+      "hard": { transcription: "хард", translation: "трудный" },
+      "tag": { transcription: "тэг", translation: "ценник, ярлык" },
+      "chores": { transcription: "чорз", translation: "домашние обязанности" },
+
+      "ultimate": { transcription: "Алтимэт", translation: "окончательный, конечный" },
+      "goal": { transcription: "гоул", translation: "цель" },
+      "housekeeper": { transcription: "хАускИпэ", translation: "домашний работник, домоуправитель" },
+      "automate": { transcription: "Отэмэйт", translation: "автоматизировать" },
+      "physical": { transcription: "фИзикэл", translation: "физический" },
+      "labour": { transcription: "лЭйбэ", translation: "труд" },
+      "elon": { transcription: "Илон", translation: "Илон" },
+      "musk": { transcription: "маск", translation: "Маск" },
+      "reckons": { transcription: "рЭкэнз", translation: "считает, полагает" },
+      "outnumber": { transcription: "аутнАмбэ", translation: "превосходить числом" },
+      "theory": { transcription: "сИэри", translation: "теория" },
+      "smoothly": { transcription: "смУдвли", translation: "гладко, без проблем" },
+      "unclear": { transcription: "анклИэ", translation: "неясно" },
+
+      "interact": { transcription: "интэрАкт", translation: "взаимодействовать" },
+      "analysis": { transcription: "энАлисис", translation: "анализ" },
+      "industry": { transcription: "Индэстри", translation: "отраслевой, промышленный" },
+      "analyst": { transcription: "Энэлэст", translation: "аналитик" },
+      "eventually": { transcription: "ивЭнчуэли", translation: "в конечном счёте" },
+      "worth": { transcription: "уёрс", translation: "стоящий (о ценности)" },
+      "safety": { transcription: "сЭйфти", translation: "безопасность" },
+      "concerns": { transcription: "консЁрнз", translation: "опасения" },
+      "regulation": { transcription: "рэгьюлЭйшн", translation: "регулирование" },
+      "hamper": { transcription: "хЭмпэ", translation: "препятствовать, мешать" },
+      "adoption": { transcription: "эдОпшн", translation: "внедрение, принятие" },
+      "short": { transcription: "шорт", translation: "короткий" },
+      "term": { transcription: "тёрм", translation: "срок; период" },
+      "harm": { transcription: "хам", translation: "вред" },
+      "lighter": { transcription: "лАйтэ", translation: "более лёгкий" },
+      "powerful": { transcription: "пАуэрфул", translation: "мощный" },
+      "safer": { transcription: "сЭйфэ", translation: "более безопасный" },
+      "capable": { transcription: "кЭйпэбл", translation: "способный" },
+      "technology": { transcription: "текнОлоджи", translation: "технология" },
+      "foresees": { transcription: "форсИз", translation: "предвидит" },
+      "winter": { transcription: "уИнтэ", translation: "зима" },
+      "funding": { transcription: "фАндинг", translation: "финансирование" },
+      "dries": { transcription: "дрАйз", translation: "высыхает" },
+      "plummet": { transcription: "плАмэт", translation: "резко падать, обрушиваться" },
+
+      "videos": { transcription: "вИдиоуз", translation: "видеоролики" },
+      "performing": { transcription: "пэрфО:рминг", translation: "выполняя, демонстрируя" },
+      "kinds": { transcription: "кАйндс", translation: "виды, типы" },
+      "acrobatic": { transcription: "акрэбЭтик", translation: "акробатический" },
+      "feats": { transcription: "фитс", translation: "подвиги, трюки" },
+      "enter": { transcription: "Энтэ", translation: "войти" },
+      "stranger": { transcription: "стрЭйнджэ", translation: "незнакомец" },
+      "kitchen": { transcription: "кИтчен", translation: "кухня" },
+      "make": { transcription: "мейк", translation: "сделать, приготовить" },
+      "cup": { transcription: "кап", translation: "чашка" },
+      "coffee": { transcription: "кОфи", translation: "кофе" },
+      "reason": { transcription: "рИзн", translation: "причина" },
+      "blind": { transcription: "блайнд", translation: "слепой" },
+      "gymnast": { transcription: "джИмнаст", translation: "гимнаст" },
+      "training": { transcription: "трЭйнинг", translation: "обучение, тренировка" },
+      "simulated": { transcription: "сИмьюлэйтид", translation: "симулированный" },
+      "virtual": { transcription: "вЁрчуэл", translation: "виртуальный" },
+      "reality": { transcription: "риАлити", translation: "реальность" },
+      "athleticism": { transcription: "эθлЭтисизм", translation: "атлетизм, спортивность" },
+      "grants": { transcription: "грЭнтс", translation: "даёт, предоставляет" },
+      "understanding": { transcription: "андэрстЭндинг", translation: "понимание" },
+
+      "humans": { transcription: "хьЮманз", translation: "люди" },
+      "learn": { transcription: "лёрн", translation: "учиться, узнавать" },
+      "whole": { transcription: "хоул", translation: "целый, весь" },
+      "bodies": { transcription: "бОдиз", translation: "тела" },
+      "brains": { transcription: "брэйнз", translation: "мозг" },
+      "developing": { transcription: "дивЭлопинг", translation: "развивая; развитие" },
+      "embodied": { transcription: "имбОдид", translation: "воплощённый, «с телом»" },
+      "intelligence": { transcription: "интЭлиджэнс", translation: "интеллект" },
+      "require": { transcription: "риквАйэ", translation: "требовать" },
+      "gather": { transcription: "гЭзэр", translation: "собирать" },
+      "enable": { transcription: "инЭйбл", translation: "сделать возможным" },
+      "improve": { transcription: "импрУв", translation: "улучшать" },
+      "rapidly": { transcription: "рЭпидли", translation: "быстро" },
+      "expect": { transcription: "икспЭкт", translation: "ожидать" },
+      "coming": { transcription: "кАмин", translation: "предстоящий, наступающий" }
+    };
+
+    // опорные слова (НЕ скрывать) по абзацам
+    const KEEP_WORDS = {
+      1: ["fetch", "a", "can", "human", "overseer", "10,000", "of", "its", "robots", "waylay"],
+      2: ["1x", "vying", "to", "build", "aims", "to", "sell", "has", "shown", "off", "expanding", "its", "operations", "beyond", "research",
+          "ambitious", "though", "parkour", "abilities"],
+      3: ["china’s", "unitree", "1,500", "h1", "90,000", "by", "contrast", "despite", "its", "limitations", "he", "says", "20,000"],
+      4: ["the", "ultimate", "goal", "of", "physical", "labour", "elon", "musk", "reckons", "in", "theory", "outnumber", "fit", "smoothly",
+          "will", "be", "ready"],
+      5: ["interact", "analysis", "reckons", "2trn", "hamper", "adoption", "in", "the", "short", "term", "physical", "harm", "much", "less", "capable",
+          "he", "foresees", "dries", "up", "plummet"],
+      6: ["videos", "of", "humanoid", "robots", "a", "cup", "of", "coffee", "the", "reason", "is", "grants", "them", "world"],
+      7: ["humans", "learn", "with", "brains", "developing", "embodied", "intelligence", "will", "require", "1x", "is", "eager", "to", "get",
+          "this", "will", "enable", "don’t", "expect", "in", "the", "coming", "year"]
+    };
+
+    function normalize(word) {
+      return word
+        .toLowerCase()
+        .replace(/[’]/g, "'")
+        .replace(/[.,!?;:"()$–—]/g, "")
+        .replace(/'s$/, "")
+        .trim();
+    }
+
+    function wrapWords() {
+      document.querySelectorAll(".paragraph").forEach(p => {
+        const text = p.textContent;
+        const parts = text.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+
+        parts.forEach(part => {
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(part));
+          } else if (part.length > 0) {
+            const span = document.createElement("span");
+            span.textContent = part;
+            span.dataset.word = part;
+            span.className = "word";
+            frag.appendChild(span);
+          }
+        });
+
+        p.textContent = "";
+        p.appendChild(frag);
+      });
+    }
+
+    function setupPopup() {
+      const popup = document.getElementById("wordPopup");
+      const popupWord = document.getElementById("popupWord");
+      const popupTrans = document.getElementById("popupTranscription");
+      const popupTranslation = document.getElementById("popupTranslation");
+      const popupSpeakBtn = document.getElementById("popupSpeakBtn");
+      const popupClose = document.getElementById("popupClose");
+
+      document.body.addEventListener("click", e => {
+        const target = e.target;
+
+        if (target.classList.contains("word")) {
+          const original = target.dataset.word || target.textContent;
+          const normalized = normalize(original);
+          const cleanWord = original.replace(/^[“"']|[”"']$/g, "");
+
+          const entry = DICT[normalized];
+
+          popupWord.textContent = cleanWord;
+          if (entry) {
+            popupTrans.textContent = entry.transcription;
+            popupTranslation.textContent = entry.translation;
+          } else {
+            popupTrans.textContent = "—";
+            popupTranslation.textContent = "Нет перевода (можно добавить в словарь DICT).";
+          }
+
+          popupSpeakBtn.disabled = false;
+          speakWord(cleanWord);
+
+          popup.classList.add("visible");
+        } else if (target === popup) {
+          popup.classList.remove("visible");
+        }
+      });
+
+      popupClose.addEventListener("click", () => {
+        popup.classList.remove("visible");
+      });
+
+      popupSpeakBtn.addEventListener("click", () => {
+        const w = popupWord.textContent;
+        if (w && w !== "—") speakWord(w);
+      });
+    }
+
+    function speakWord(word) {
+      if (!("speechSynthesis" in window)) {
+        alert("Ваш браузер не поддерживает озвучку (SpeechSynthesis).");
+        return;
+      }
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = "en-US";
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utter);
+    }
+
+    function setHideState(paragraphNum, hide) {
+      const keepSet = new Set(
+        (KEEP_WORDS[paragraphNum] || []).map(w => normalize(w))
+      );
+      const spans = document.querySelectorAll(
+        '.paragraph[data-paragraph="' + paragraphNum + '"] span.word'
+      );
+
+      spans.forEach(span => {
+        const originalWord = span.dataset.word || span.textContent;
+        const norm = normalize(originalWord);
+
+        if (hide && !keepSet.has(norm)) {
+          if (!span.dataset.original) {
+            span.dataset.original = span.textContent;
+          }
+          span.textContent = "_".repeat(span.textContent.length);
+          span.classList.add("hidden-word");
+        } else {
+          if (span.dataset.original) {
+            span.textContent = span.dataset.original;
+          }
+          span.classList.remove("hidden-word");
+        }
+      });
+    }
+
+    function setupHideButtons() {
+      const states = {};
+
+      document.querySelectorAll(".toggle-hide").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const num = Number(btn.dataset.paragraph);
+          const current = !!states[num];
+          const newState = !current;
+          states[num] = newState;
+          setHideState(num, newState);
+        });
+      });
+    }
+
+    function setupDragAndDrop() {
+      let draggedHeading = null;
+      const headings = document.querySelectorAll(".heading");
+      const dropzones = document.querySelectorAll(".dropzone");
+      const bank = document.getElementById("headingsList");
+
+      headings.forEach(h => {
+        h.addEventListener("dragstart", e => {
+          draggedHeading = h;
+          e.dataTransfer.effectAllowed = "move";
+        });
+        h.addEventListener("dragend", () => {
+          draggedHeading = null;
+        });
+
+        // двойной клик по заголовку в абзаце возвращает его в банк
+        h.addEventListener("dblclick", () => {
+          if (!bank) return;
+          const parent = h.parentElement;
+          bank.appendChild(h);
+          if (parent && parent.classList.contains("dropzone")) {
+            parent.classList.remove("correct", "incorrect");
+            parent.textContent = "Перетащите сюда подходящий заголовок";
+          }
+        });
+      });
+
+      function allowDrop(e) {
+        e.preventDefault();
+      }
+
+      function handleDrop(e) {
+        e.preventDefault();
+        if (!draggedHeading) return;
+
+        const existing = this.querySelector(".heading");
+        if (existing && bank) {
+          bank.appendChild(existing);
+        }
+
+        this.classList.remove("correct", "incorrect");
+        this.textContent = "";
+        this.appendChild(draggedHeading);
+
+        const correctId = this.dataset.correct;
+        if (draggedHeading.dataset.id === correctId) {
+          this.classList.add("correct");
+        } else {
+          this.classList.add("incorrect");
+        }
+      }
+
+      dropzones.forEach(zone => {
+        zone.addEventListener("dragover", allowDrop);
+        zone.addEventListener("drop", handleDrop);
+      });
+
+      if (bank) {
+        bank.addEventListener("dragover", allowDrop);
+        bank.addEventListener("drop", function (e) {
+          e.preventDefault();
+          if (!draggedHeading) return;
+          const prevParent = draggedHeading.parentElement;
+          this.appendChild(draggedHeading);
+          if (prevParent && prevParent.classList.contains("dropzone")) {
+            prevParent.classList.remove("correct", "incorrect");
+            prevParent.textContent = "Перетащите сюда подходящий заголовок";
+          }
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      wrapWords();
+      setupPopup();
+      setupHideButtons();
+      setupDragAndDrop();
+    });
+  </script>
+</body>
+</html>
