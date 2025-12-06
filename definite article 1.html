@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Definite Article: the</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.5;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px 15px 40px;
+            background-color: #f7f7fb;
+            color: #222;
+            font-size: 16px;
+        }
+
+        h1, h2, h3 {
+            color: #222;
+        }
+
+        h2 {
+            margin-top: 1.6em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #e6eef8;
+            text-align: left;
+        }
+
+        ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.3em;
+        }
+
+        .example {
+            font-style: italic;
+        }
+
+        .exercise {
+            background-color: #ffffff;
+            border-radius: 6px;
+            padding: 12px 14px 16px;
+            margin-top: 1.4em;
+            border: 1px solid #d0d0e5;
+        }
+
+        .instructions {
+            font-size: 0.95rem;
+            margin-bottom: 0.6em;
+        }
+
+        .sentence {
+            margin-bottom: 0.9em;
+        }
+
+        .sentence input[type="text"] {
+            width: 3rem;
+            text-align: center;
+            padding: 3px 4px;
+            margin: 0 2px;
+            font-size: 0.95rem;
+        }
+
+        button.check-btn {
+            margin-left: 6px;
+            padding: 3px 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .feedback {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.9rem;
+        }
+
+        .correct {
+            color: #0a7a27;
+        }
+
+        .incorrect {
+            color: #b00020;
+        }
+
+        .lines-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .lines-table td {
+            padding: 4px 4px;
+            vertical-align: top;
+        }
+
+        .radio-group {
+            margin-top: 4px;
+        }
+
+        .small-note {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            body {
+                padding: 14px 10px 24px;
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            h3 {
+                font-size: 1.05rem;
+            }
+
+            .exercise {
+                padding: 10px 10px 12px;
+            }
+
+            .sentence {
+                font-size: 0.95rem;
+            }
+
+            .sentence input[type="text"] {
+                width: 2.6rem;
+            }
+
+            button.check-btn {
+                margin-left: 4px;
+                margin-top: 4px;
+            }
+
+            /* Make long tables more readable on narrow screens */
+            .lines-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .lines-table tr {
+                display: block;
+                margin-bottom: 0.6em;
+            }
+
+            .lines-table td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .lines-table td:first-child {
+                font-weight: bold;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>Definite article: <em>the</em></h1>
+
+<h2>Часть 1. Теория</h2>
+
+<p class="small-note">
+    В таблице ниже: левая колонка — когда the употребляется, правая — когда не употребляется.
+    Нумерация понадобится для объяснений в упражнениях.
+</p>
+
+<table>
+    <tr>
+        <th>Мы используем the</th>
+        <th>Мы не используем the</th>
+    </tr>
+    <tr>
+        <td>
+            <ol>
+                <li><strong>Когда говорим о конкретном человеке или предмете.</strong><br>
+                    <span class="example">I met the man she's going to marry.</span>
+                </li>
+                <li><strong>С прилагательными в превосходной степени.</strong><br>
+                    <span class="example">Mount Everest is the highest mountain in the world.</span>
+                </li>
+                <li><strong>С частями суток (кроме at night).</strong><br>
+                    <span class="example">in the morning, in the afternoon, in the evening</span>
+                    (но: <span class="example">at night</span>).
+                </li>
+                <li><strong>С словами, описывающими географическое положение и ориентацию.</strong><br>
+                    <span class="example">in the north, on the left</span>
+                </li>
+                <li><strong>С названиями рек, океанов, морей, горных цепей, групп островов.</strong><br>
+                    <span class="example">the Thames, the Alps</span><br>
+                    (но без артикля с большинством озёр и с отдельными горами / островами:
+                    <span class="example">Lake Superior, Cuba, Mount Kilimanjaro</span>).
+                </li>
+                <li><strong>С названиями зданий, кинотеатров, отелей и т.п.</strong><br>
+                    <span class="example">the Eiffel Tower, the Imperial Hotel</span><br>
+                    (но без артикля с большинством церквей, площадей, улиц:
+                    <span class="example">Ely Cathedral, Trafalgar Square, Walton Street</span>).
+                </li>
+                <li><strong>С «множественными» странами и регионами.</strong><br>
+                    <span class="example">the United States, the West Indies, the Netherlands</span><br>
+                    (но без артикля с континентами и большинством стран:
+                    <span class="example">Asia, Europe, North America, Spain, Britain</span>).
+                </li>
+                <li><strong>С прилагательным, обозначающим народ как группу.</strong><br>
+                    <span class="example">the British, the French, the Japanese</span><br>
+                    При существительном people артикль обычно не обязателен:
+                    <span class="example">(the) Americans</span>.
+                </li>
+                <li><strong>С прилагательным, описывающим социальную / возрастную группу.</strong><br>
+                    <span class="example">the rich, the homeless</span>
+                </li>
+            </ol>
+        </td>
+        <td>
+            <ol>
+                <li><strong>В устойчивых выражениях с bed, work, home и транспортом.</strong><br>
+                    <span class="example">in bed, to bed, at work, to work, at home, by bus, by train</span>
+                </li>
+                <li><strong>Перед днями недели, месяцами и праздниками.</strong><br>
+                    <span class="example">on Sunday, in June, at Christmas</span>
+                </li>
+                <li><strong>Перед приёмами пищи.</strong><br>
+                    <span class="example">We have breakfast, lunch and dinner at the hotel.</span>
+                </li>
+                <li><strong>Перед школьными предметами и языками.</strong><br>
+                    <span class="example">I'm studying French and Geography this year.</span>
+                </li>
+                <li><strong>В выражениях времени с last / next.</strong><br>
+                    <span class="example">last week, next month, last Tuesday, next Thursday</span>
+                </li>
+                <li><strong>Перед church, hospital, school, college, university, prison, court,</strong><br>
+                    когда речь об основной функции места (пациент в больнице, ученик в школе и т.п.):<br>
+                    <span class="example">He's very ill. He's in hospital.</span><br>
+                    НО употребляем the, если говорим о конкретном здании
+                    или о другой цели визита (в гости, на работу, на встречу и т.п.):<br>
+                    <span class="example">He went to the hospital to see his mother.
+                    She works at the school in Miller Street.</span>
+                </li>
+                <li><strong>С большинством названий церквей, замков, площадей, улиц.</strong><br>
+                    <span class="example">Ely Cathedral, Trafalgar Square, Walton Street</span>
+                </li>
+            </ol>
+        </td>
+    </tr>
+</table>
+
+<h2>Часть 2. Упражнения</h2>
+
+<script>
+    function normalizeAnswer(str) {
+        return str.trim().toLowerCase();
+    }
+
+    function checkSentence(inputIds, expectedValues, feedbackId, correctSentence, ruleExplanation) {
+        var allCorrect = true;
+        for (var i = 0; i < inputIds.length; i++) {
+            var el = document.getElementById(inputIds[i]);
+            if (!el) continue;
+            var user = normalizeAnswer(el.value);
+            var expected = normalizeAnswer(expectedValues[i]);
+            if (user !== expected) {
+                allCorrect = false;
+            }
+        }
+        var fb = document.getElementById(feedbackId);
+        if (!fb) return;
+        var base = allCorrect ? "Верно. " : "Неверно. ";
+        fb.textContent = base + "Правильный вариант: " + correctSentence +
+            ". " + ruleExplanation;
+        fb.className = "feedback " + (allCorrect ? "correct" : "incorrect");
+    }
+
+    function checkRadio(groupName, feedbackId, correctValue, explanation) {
+        var radios = document.getElementsByName(groupName);
+        var chosen = null;
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                chosen = radios[i].value;
+                break;
+            }
+        }
+        var fb = document.getElementById(feedbackId);
+        if (!fb) return;
+        if (chosen === null) {
+            fb.textContent = "Сначала выберите вариант.";
+            fb.className = "feedback incorrect";
+            return;
+        }
+        if (chosen === correctValue) {
+            fb.textContent = "Верно. " + explanation;
+            fb.className = "feedback correct";
+        } else {
+            fb.textContent = "Неверно. " + explanation;
+            fb.className = "feedback incorrect";
+        }
+    }
+</script>
+
+<!-- Exercise 1 -->
+<div class="exercise">
+    <h3>1. Match the items in the two columns, and complete the sentences, using the where necessary.</h3>
+    <p class="instructions">
+        Итоговые предложения уже собраны. Впишите the, где он нужен (если не нужен, оставьте пусто),
+        затем нажмите «check». В объяснении указан номер правила из теории.
+    </p>
+
+    <div class="sentence">
+        1. <input id="e1s1-1" type="text"> River Nile is
+        <input id="e1s1-2" type="text"> longest river in
+        <input id="e1s1-3" type="text"> world.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s1-1','e1s1-2','e1s1-3'],
+                    ['the','the','the'],
+                    'fb-e1s1',
+                    'The River Nile is the longest river in the world',
+                    '«The River Nile» — правило 5 (названия рек); «the longest» — правило 2 (превосходная степень); «the world» — уникальный объект по правилу 1.'
+                )">
+            check
+        </button>
+        <span id="fb-e1s1" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        2. <input id="e1s2-1" type="text"> Volga is
+        <input id="e1s2-2" type="text"> longest river in
+        <input id="e1s2-3" type="text"> Europe.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s2-1','e1s2-2','e1s2-3'],
+                    ['the','the',''],
+                    'fb-e1s2',
+                    'The Volga is the longest river in Europe',
+                    '«The Volga» — правило 5 (реки); «the longest» — правило 2; «Europe» без артикля по правилу 7 (континенты).'
+                )">
+            check
+        </button>
+        <span id="fb-e1s2" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        3. <input id="e1s3-1" type="text"> Mount Kilimanjaro is
+        <input id="e1s3-2" type="text"> highest mountain in
+        <input id="e1s3-3" type="text"> Africa.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s3-1','e1s3-2','e1s3-3'],
+                    ['','the',''],
+                    'fb-e1s3',
+                    'Mount Kilimanjaro is the highest mountain in Africa',
+                    'Индивидуальная гора — без артикля (часть правила 5 после BUT NOT). «The highest» — правило 2; «Africa» без артикля по правилу 7.'
+                )">
+            check
+        </button>
+        <span id="fb-e1s3" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        4. <input id="e1s4-1" type="text"> Downing Street is
+        <input id="e1s4-2" type="text"> residence of
+        <input id="e1s4-3" type="text"> Britain’s Prime Minister.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s4-1','e1s4-2','e1s4-3'],
+                    ['','the',''],
+                    'fb-e1s4',
+                    'Downing Street is the residence of Britain’s Prime Minister',
+                    '«Downing Street» — без артикля (правило 7 правой колонки: улицы и площади чаще всего без the). «The residence» — конкретное здание по правилу 1.'
+                )">
+            check
+        </button>
+        <span id="fb-e1s4" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        5. <input id="e1s5-1" type="text"> White House is where
+        <input id="e1s5-2" type="text"> President of
+        <input id="e1s5-3" type="text"> the USA lives.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s5-1','e1s5-2','e1s5-3'],
+                    ['the','the',''],
+                    'fb-e1s5',
+                    'The White House is where the President of the USA lives',
+                    '«The White House» — правило 6 (здания). «The President» — правило 1 (единственный в стране). «The USA» — часть имени страны, см. правило 7 (plural countries).'
+                )">
+            check
+        </button>
+        <span id="fb-e1s5" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        6. <input id="e1s6-1" type="text"> rich and
+        <input id="e1s6-2" type="text"> famous stay at
+        <input id="e1s6-3" type="text"> Ritz Hotel in
+        <input id="e1s6-4" type="text"> London.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s6-1','e1s6-2','e1s6-3','e1s6-4'],
+                    ['the','the','the',''],
+                    'fb-e1s6',
+                    'The rich and the famous stay at the Ritz Hotel in London',
+                    '«The rich» и «the famous» — правило 9 (прилагательное обозначает группу людей). «The Ritz Hotel» — правило 6 (отели и здания). «London» без артикля по правилу 7 (города).'
+                )">
+            check
+        </button>
+        <span id="fb-e1s6" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        7. <input id="e1s7-1" type="text"> Trafalgar Square is
+        <input id="e1s7-2" type="text"> most famous square in
+        <input id="e1s7-3" type="text"> London.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s7-1','e1s7-2','e1s7-3'],
+                    ['','the',''],
+                    'fb-e1s7',
+                    'Trafalgar Square is the most famous square in London',
+                    '«Trafalgar Square» — без артикля (правило 7 правой колонки: площади и улицы). «The most famous» — правило 2. «London» без артикля по правилу 7.'
+                )">
+            check
+        </button>
+        <span id="fb-e1s7" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        8. <input id="e1s8-1" type="text"> English,
+        <input id="e1s8-2" type="text"> French and
+        <input id="e1s8-3" type="text"> Spanish colonised
+        <input id="e1s8-4" type="text"> West Indies.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e1s8-1','e1s8-2','e1s8-3','e1s8-4'],
+                    ['the','the','the','the'],
+                    'fb-e1s8',
+                    'The English, the French and the Spanish colonised the West Indies',
+                    'Национальности с прилагательными: the English, the French, the Spanish (правило 8). The West Indies — plural country / регион по правилу 7.'
+                )">
+            check
+        </button>
+        <span id="fb-e1s8" class="feedback"></span>
+    </div>
+</div>
+
+<!-- Exercise 2 -->
+<div class="exercise">
+    <h3>2. Mikael is learning English. He finds the use of the very difficult.</h3>
+    <p class="instructions">
+        Некоторые строки правильные, а в некоторых есть лишнее слово the. Для каждой строки
+        выберите вариант и нажмите «check».
+    </p>
+
+    <table class="lines-table">
+        <tr>
+            <td>1.</td>
+            <td>I've been learning English since the last year. I came to England</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-1" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-1" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-1',
+                            'fb-m2-1',
+                            'extra',
+                            'Нужно: since last year. Без the (правило 5 правой колонки: last / next + выражение времени).'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-1" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td>the last April, just before Easter. I go to a language school in the</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-2" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-2" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-2',
+                            'fb-m2-2',
+                            'extra',
+                            'Нужно: last April. Тоже правило 5 правой колонки — last / next без the.'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-2" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td>centre of London near the Leicester Square. We do three hours</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-3" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-3" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-3',
+                            'fb-m2-3',
+                            'extra',
+                            'Правильно: near Leicester Square. Площади и улицы обычно без артикля — правило 7 правой колонки.'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-3" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>4.</td>
+            <td>in the morning, then we have lunch. After the lunch we do two hours</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-4" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-4" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-4',
+                            'fb-m2-4',
+                            'extra',
+                            'In the morning — правильно (правило 3), но нужно after lunch без артикля. Приёмы пищи — правило 3 правой колонки.'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-4" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>5.</td>
+            <td>and finish at 4 o'clock. We don't work on Friday afternoons or on</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-5" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-5" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-5',
+                            'fb-m2-5',
+                            'ok',
+                            'Строка уже правильная: on Friday afternoons без the, как в правиле 2 правой колонки (дни недели).'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-5" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>6.</td>
+            <td>Saturdays. The last month I met an English girl, Rebecca, who</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-6" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-6" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-6',
+                            'fb-m2-6',
+                            'extra',
+                            'Нужно: Last month без артикля. То же самое правило 5 правой колонки.'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-6" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>7.</td>
+            <td>wants to learn the Russian. It's Christmas next week. Next</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-7" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-7" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-7',
+                            'fb-m2-7',
+                            'extra',
+                            'Правильно: wants to learn Russian. Языки и школьные предметы — без артикля (правило 4 правой колонки). Christmas также без the (правило 2).'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-7" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>8.</td>
+            <td>Saturday we're going to the north of England to spend Christmas with</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-8" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-8" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-8',
+                            'fb-m2-8',
+                            'ok',
+                            'Строка правильная: the north of England — географическое положение (правило 4 колонки «используем the»).'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-8" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>9.</td>
+            <td>her parents. We're going by the bus because it's the cheapest way to</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-9" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-9" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-9',
+                            'fb-m2-9',
+                            'extra',
+                            'Нужно: by bus без артикля (правило 1 правой колонки: транспорт). Выражение the cheapest way корректно по правилу 2 (превосходная степень).'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-9" class="feedback"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>10.</td>
+            <td>travel. The next summer Rebecca is coming to Russia to stay with me.</td>
+            <td>
+                <div class="radio-group">
+                    <label><input type="radio" name="m2-10" value="ok"> Строка правильная</label><br>
+                    <label><input type="radio" name="m2-10" value="extra"> Лишнее the</label>
+                </div>
+                <button class="check-btn"
+                        onclick="checkRadio(
+                            'm2-10',
+                            'fb-m2-10',
+                            'extra',
+                            'Правильно: Next summer без артикля, снова правило 5 правой колонки.'
+                        )">
+                    check
+                </button>
+                <span id="fb-m2-10" class="feedback"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Exercise 3 -->
+<div class="exercise">
+    <h3>3. Complete the text, using a or the.</h3>
+    <p class="instructions">
+        Вставьте a или the в каждую скобку (1–18). Если артикль не нужен, оставьте поле пустым.
+        После каждого предложения нажимайте «check».
+    </p>
+
+    <div class="sentence">
+        Sophie and Larry are looking for (1)
+        <input id="e3-1" type="text"> new house in (2)
+        <input id="e3-2" type="text"> town where they live.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-1','e3-2'],
+                    ['a','the'],
+                    'fb-e3-1',
+                    'Sophie and Larry are looking for a new house in the town where they live',
+                    'A new house — дом упоминается впервые. The town — конкретный город, где они живут (правило 1).'
+                )">
+            check
+        </button>
+        <span id="fb-e3-1" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        They like (3)
+        <input id="e3-3" type="text"> house they're living in, but (4)
+        <input id="e3-4" type="text"> rooms are too small, and it's difficult to find (5)
+        <input id="e3-5" type="text"> parking-place.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-3','e3-4','e3-5'],
+                    ['the','the','a'],
+                    'fb-e3-2',
+                    \"They like the house they're living in, but the rooms are too small, and it's difficult to find a parking-place\",
+                    'The house и the rooms — конкретные объекты, уже известные из контекста (правило 1). A parking-place — любое место для парковки.'
+                )">
+            check
+        </button>
+        <span id="fb-e3-2" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        (6) <input id="e3-6" type="text"> street's noisy too.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-6'],
+                    ['the'],
+                    'fb-e3-3',
+                    \"The street's noisy too\",
+                    'Речь о конкретной улице, где они живут, поэтому the по правилу 1.'
+                )">
+            check
+        </button>
+        <span id="fb-e3-3" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        Sophie wants (7)
+        <input id="e3-7" type="text"> bigger house away from the city centre.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-7'],
+                    ['a'],
+                    'fb-e3-4',
+                    'Sophie wants a bigger house away from the city centre',
+                    'Здесь нужен a: любой более большой дом, не конкретный (правило 1 для the ещё не включается).'
+                )">
+            check
+        </button>
+        <span id="fb-e3-4" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        They both want (8)
+        <input id="e3-8" type="text"> house in (9)
+        <input id="e3-9" type="text"> quiet part of (10)
+        <input id="e3-10" type="text"> town.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-8','e3-9','e3-10'],
+                    ['a','a','the'],
+                    'fb-e3-5',
+                    'They both want a house in a quiet part of the town',
+                    'A house и a quiet part — не конкретные варианты. The town — уже упомянутый город (правило 1).'
+                )">
+            check
+        </button>
+        <span id="fb-e3-5" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        Yesterday they looked at (11)
+        <input id="e3-11" type="text"> nice house with (12)
+        <input id="e3-12" type="text"> garage and (13)
+        <input id="e3-13" type="text"> garden.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-11','e3-12','e3-13'],
+                    ['a','a','a'],
+                    'fb-e3-6',
+                    'Yesterday they looked at a nice house with a garage and a garden',
+                    'Дом, гараж и сад появляются в истории впервые, поэтому используются неопределённые артикли.'
+                )">
+            check
+        </button>
+        <span id="fb-e3-6" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        Larry liked (14)
+        <input id="e3-14" type="text"> garage, but Sophie thought (15)
+        <input id="e3-15" type="text"> garden was too small.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-14','e3-15'],
+                    ['the','the'],
+                    'fb-e3-7',
+                    'Larry liked the garage, but Sophie thought the garden was too small',
+                    'Теперь гараж и сад — конкретные части уже описанного дома, поэтому the (правило 1).'
+                )">
+            check
+        </button>
+        <span id="fb-e3-7" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        And there was only (16)
+        <input id="e3-16" type="text"> shower in (17)
+        <input id="e3-17" type="text"> bathroom.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-16','e3-17'],
+                    ['a','the'],
+                    'fb-e3-8',
+                    'And there was only a shower in the bathroom',
+                    'A shower — один элемент; the bathroom — конкретная ванная этого дома (правило 1).'
+                )">
+            check
+        </button>
+        <span id="fb-e3-8" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        Was it really (18)
+        <input id="e3-18" type="text"> house they wanted?
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e3-18'],
+                    ['the'],
+                    'fb-e3-9',
+                    'Was it really the house they wanted?',
+                    'Речь о конкретном доме, который они только что смотрели, поэтому the (правило 1).'
+                )">
+            check
+        </button>
+        <span id="fb-e3-9" class="feedback"></span>
+    </div>
+</div>
+
+<!-- Exercise 4 -->
+<div class="exercise">
+    <h3>4. Complete the text, using the where necessary.</h3>
+    <p class="instructions">
+        Вставьте the, если он нужен. Если артикль не нужен, оставьте поле пустым.
+        После каждого предложения нажмите «check».
+    </p>
+
+    <div class="sentence">
+        Jerry Walsh's father is in (1)
+        <input id="e4-1" type="text"> prison. Jerry lives with his sister and his mother.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-1'],
+                    [''],
+                    'fb-e4-1',
+                    \"Jerry Walsh's father is in prison\",
+                    'In prison — без артикля, так как речь о статусе заключённого, а не о конкретном здании (правило 6 правой колонки).'
+                )">
+            check
+        </button>
+        <span id="fb-e4-1" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        They try to look after him, but his mother's at (2)
+        <input id="e4-2" type="text"> work all day and his sister's at (3)
+        <input id="e4-3" type="text"> college.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-2','e4-3'],
+                    ['',''],
+                    'fb-e4-2',
+                    \"They try to look after him, but his mother's at work all day and his sister's at college\",
+                    'At work и at college — устойчивые выражения без артикля (правило 1 и 6 правой колонки).'
+                )">
+            check
+        </button>
+        <span id="fb-e4-2" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        At the moment his mother's ill in (4)
+        <input id="e4-4" type="text"> hospital. He's never been to (5)
+        <input id="e4-5" type="text"> hospital to see her.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-4','e4-5'],
+                    ['','the'],
+                    'fb-e4-3',
+                    \"At the moment his mother's ill in hospital. He's never been to the hospital to see her\",
+                    'In hospital без артикля (она там как пациент). Но to the hospital to see her — посещение конкретного здания как гостя, поэтому the; всё это — правило 6 правой колонки.'
+                )">
+            check
+        </button>
+        <span id="fb-e4-3" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        He's supposed to be at (6)
+        <input id="e4-6" type="text"> school every day, but he stays in (7)
+        <input id="e4-7" type="text"> bed a lot of the time.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-6','e4-7'],
+                    ['',''],
+                    'fb-e4-4',
+                    \"He's supposed to be at school every day, but he stays in bed a lot of the time\",
+                    'At school — как ученик, in bed — устойчивое выражение. Оба без артикля (правило 1 и 6 правой колонки).'
+                )">
+            check
+        </button>
+        <span id="fb-e4-4" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        He goes to (8)
+        <input id="e4-8" type="text"> school at (9)
+        <input id="e4-9" type="text"> end of his street, but he doesn't go to (10)
+        <input id="e4-10" type="text"> school very often.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-8','e4-9','e4-10'],
+                    ['the','the',''],
+                    'fb-e4-5',
+                    \"He goes to the school at the end of his street, but he doesn't go to school very often\",
+                    'The school at the end of his street — конкретное здание (часть правила 6 после BUT). The end of his street — конкретное место, поэтому the по правилу 1. Во второй части go to school — посещать школу как учреждение, артикль не нужен.'
+                )">
+            check
+        </button>
+        <span id="fb-e4-5" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        He never goes to (11)
+        <input id="e4-11" type="text"> church on (12)
+        <input id="e4-12" type="text"> Sundays, but on (13)
+        <input id="e4-13" type="text"> Tuesdays he sometimes goes to (14)
+        <input id="e4-14" type="text"> church near his house because there's a youth club there.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-11','e4-12','e4-13','e4-14'],
+                    ['','', '', 'the'],
+                    'fb-e4-6',
+                    \"He never goes to church on Sundays, but on Tuesdays he sometimes goes to the church near his house because there's a youth club there\",
+                    'Go to church (как на службу) — без артикля (правило 6 правой колонки). On Sundays / on Tuesdays — дни недели без the (правило 2). The church near his house — конкретное здание, поэтому the.'
+                )">
+            check
+        </button>
+        <span id="fb-e4-6" class="feedback"></span>
+    </div>
+
+    <div class="sentence">
+        Jerry's only 12, but he's often in trouble with the police and he's already been in (15)
+        <input id="e4-15" type="text"> court three times.
+        <button class="check-btn"
+                onclick="checkSentence(
+                    ['e4-15'],
+                    [''],
+                    'fb-e4-7',
+                    \"Jerry's only 12, but he's often in trouble with the police and he's already been in court three times\",
+                    'In court — без артикля, потому что он там как участник процесса, а не посетитель конкретного здания (правило 6 правой колонки).'
+                )">
+            check
+        </button>
+        <span id="fb-e4-7" class="feedback"></span>
+    </div>
+</div>
+
+</body>
+</html>
