@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#1d5f73">
   <title>English Skills Test</title>
+  <!-- Submission fix version 2: unique ID for every new attempt -->
   <style>
     :root{
       --ink:#18313b;
@@ -1137,7 +1138,7 @@
       2. Upload this HTML file, Track_2.1.mp3 and Track_3.1.mp3 to the same GitHub folder.
       3. If an audio filename is different, edit AUDIO_FILES below.
     */
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxD44l8VNhZhB3nTk6rRxi3dUPYAqFFmkXxpBeHDyr_33T5lQCFq1Y_FyoMzAGBMpvg/exec";
+    const APPS_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
     const AUDIO_FILES = {
       listening1: "Track_2.1.mp3",
       listening2: "Track_3.1.mp3"
@@ -1147,7 +1148,7 @@
     const DRAFT_KEY = TEST_ID + "-draft";
     const PLAY_KEY = TEST_ID + "-plays";
     const START_KEY = TEST_ID + "-started";
-    const SUBMITTED_KEY = TEST_ID + "-submitted";
+    const ATTEMPT_KEY = TEST_ID + "-current-attempt";
 
     const form = document.getElementById("testForm");
     const submitButton = document.getElementById("submitButton");
@@ -1164,8 +1165,17 @@
     }
 
     function createSubmissionId() {
-      if (crypto && crypto.randomUUID) return crypto.randomUUID();
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
       return "sub-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+    }
+
+    function getAttemptId() {
+      let id = sessionStorage.getItem(ATTEMPT_KEY);
+      if (!id) {
+        id = createSubmissionId();
+        sessionStorage.setItem(ATTEMPT_KEY, id);
+      }
+      return id;
     }
 
     function getFormDataObject() {
@@ -1192,7 +1202,7 @@
       const playData = JSON.parse(localStorage.getItem(PLAY_KEY) || "{}");
 
       return {
-        submission_id: localStorage.getItem(SUBMITTED_KEY) || createSubmissionId(),
+        submission_id: getAttemptId(),
         test_id: TEST_ID,
         test_title: TEST_TITLE,
         submitted_at: new Date().toISOString(),
@@ -1454,7 +1464,6 @@
       }
 
       const payload = collectPayload();
-      localStorage.setItem(SUBMITTED_KEY, payload.submission_id);
 
       submitButton.disabled = true;
       downloadButton.disabled = true;
@@ -1471,6 +1480,9 @@
 
         setMessage("Your answers have been sent. You may now close this page.", "success");
         localStorage.removeItem(DRAFT_KEY);
+        localStorage.removeItem(START_KEY);
+        localStorage.removeItem(PLAY_KEY);
+        sessionStorage.removeItem(ATTEMPT_KEY);
         submitButton.textContent = "Answers sent";
       } catch (error) {
         submitButton.disabled = false;
