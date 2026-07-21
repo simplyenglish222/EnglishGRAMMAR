@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>English Level Test</title>
+<style>
+:root {
+  --bg:#f4f7fb; --card:#fff; --ink:#1b263b; --muted:#647189;
+  --line:#dce4ef; --blue:#2458c6; --blue-soft:#edf3ff;
+  --green:#18764c; --red:#b34343; --shadow:0 12px 34px rgba(25,43,76,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#eaf1ff 0,#f7f9fc 300px,var(--bg) 100%);color:var(--ink);
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.55}
+.top-progress{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.progress-inner{max-width:1080px;margin:auto;display:flex;align-items:center;gap:12px;padding:10px 16px}
+.progress-track{height:8px;border-radius:99px;background:#e8edf5;overflow:hidden;flex:1}
+.progress-fill{height:100%;width:0;background:var(--blue);transition:width .25s}
+.progress-text{font-weight:800;font-size:.86rem;min-width:42px;text-align:right}
+.page{max-width:1080px;margin:auto;padding:22px 16px 60px}
+.hero,.section,.submit-panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.hero{padding:30px}
+.eyebrow{margin:0;color:var(--blue);font-weight:850;text-transform:uppercase;letter-spacing:.1em;font-size:.78rem}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin:10px 0 12px}
+.hero p{max-width:760px}
+.student-grid{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:24px}
+label{font-weight:700}
+input[type=text],textarea,select{font:inherit;color:var(--ink);background:#fff;border:1px solid #cbd6e5;border-radius:10px}
+input[type=text],textarea{width:100%;padding:11px 12px}
+textarea{resize:vertical}
+select{padding:7px 30px 7px 9px;max-width:100%;font-weight:700}
+input:focus,textarea:focus,select:focus{outline:3px solid rgba(36,88,198,.14);border-color:var(--blue)}
+.field label{display:block;margin-bottom:6px}
+.section-nav{display:flex;gap:8px;overflow-x:auto;padding:14px 2px 4px;margin:10px 0 16px}
+.section-nav a{white-space:nowrap;text-decoration:none;color:var(--blue);background:var(--blue-soft);padding:9px 13px;border-radius:999px;font-weight:800;font-size:.9rem}
+.section{padding:26px;margin-top:18px}
+.section-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:22px}
+.section-number{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:white;border-radius:13px;font-weight:900;flex:0 0 auto}
+h2{margin:2px 0 4px;font-size:1.55rem}
+h3{margin:4px 0 10px}
+.section-description{margin:0;color:var(--muted)}
+.question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.question-card{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fbfcfe}
+.question-line{font-size:1.03rem;margin-bottom:12px}
+.q-number{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:8px;border-radius:9px;background:#e9effb;color:var(--blue);font-weight:900}
+.question-card label{display:block;margin-bottom:6px;font-size:.88rem;color:var(--muted)}
+.grammar-grid{display:grid;gap:16px}
+.grammar-text{border:1px solid var(--line);border-radius:17px;padding:20px;background:linear-gradient(135deg,#fbfcff,#fff)}
+.grammar-label{color:var(--blue);font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.grammar-text p{font-size:1.05rem;line-height:2.15;margin:0}
+.grammar-text select{margin:0 3px}
+.audio-panel{padding:17px;border:1px solid #cbd8f0;background:#f4f7ff;border-radius:16px}
+.audio-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button{font:inherit;border:0;border-radius:11px;padding:11px 16px;font-weight:850;cursor:pointer}
+.primary{background:var(--blue);color:#fff}
+.secondary{background:#edf1f7;color:#273752}
+.audio-status{color:var(--muted);font-size:.9rem;margin-top:8px}
+.order-list{display:grid;gap:10px;margin-top:17px}
+.order-row{display:grid;grid-template-columns:92px 1fr;gap:13px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:12px}
+.reading-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:22px;align-items:start}
+.article{font-family:Georgia,"Times New Roman",serif;font-size:1.04rem;line-height:1.72}
+.article h3{font-family:Inter,system-ui,sans-serif;font-size:2rem}
+.article p{margin:.75em 0}
+.fact-box{position:sticky;top:72px;border-radius:16px;background:#eef4ff;border:1px solid #cfdbf2;padding:18px}
+.number-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.number-answer{display:block;border:1px solid var(--line);border-radius:13px;padding:12px;background:#fbfcfe}
+.number-answer strong{display:block;font-size:1.2rem;color:var(--blue);margin-bottom:7px}
+.number-answer textarea{min-height:90px}
+.open-list{display:grid;gap:13px;margin-top:16px}
+.open-item{border:1px solid var(--line);border-radius:14px;padding:14px}
+.open-item label{display:block;margin-bottom:8px}
+.rubbish-title{display:flex;align-items:center;gap:16px;padding:20px;border-radius:17px;background:linear-gradient(135deg,#172746,#2458c6);color:white;margin-bottom:18px}
+.rubbish-icon{font-size:3rem}
+.rubbish-title h3{font-size:2.25rem;margin:0;line-height:1}
+.glossary{border-left:4px solid var(--blue);padding:10px 14px;background:#f5f8ff;border-radius:0 12px 12px 0;margin:18px 0}
+.tf-list{display:grid;gap:10px;margin-top:22px}
+.tf-row{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px}
+.tf-number{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#edf2fb;color:var(--blue);font-weight:900}
+.tf-options{display:flex;gap:7px;flex-wrap:wrap}
+.tf-options input{position:absolute;opacity:0;pointer-events:none}
+.tf-options span{display:inline-block;padding:7px 10px;border:1px solid #cbd6e5;border-radius:9px;background:#fff;cursor:pointer;font-weight:800;font-size:.88rem}
+.tf-options input:checked+span{background:var(--blue);border-color:var(--blue);color:#fff}
+.submit-panel{padding:26px;margin-top:18px}
+.button-row{display:flex;gap:10px;flex-wrap:wrap}
+.message{min-height:1.5em;margin-top:12px;font-weight:800}
+.message.error{color:var(--red)} .message.ok{color:var(--green)} .message.info{color:var(--muted)}
+.small{font-size:.88rem;color:var(--muted)}
+@media(max-width:780px){
+  .page{padding:10px 10px 45px}
+  .hero,.section,.submit-panel{border-radius:16px;padding:18px 14px}
+  .student-grid,.question-grid,.reading-layout{grid-template-columns:1fr}
+  .number-grid{grid-template-columns:repeat(2,1fr)}
+  .fact-box{position:static}
+  .grammar-text p{line-height:2.35}
+  .tf-row{grid-template-columns:32px 1fr}
+  .tf-options{grid-column:2}
+}
+@media print{.top-progress,.section-nav,.submit-panel,.audio-panel{display:none}body{background:white}.section,.hero{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="top-progress"><div class="progress-inner"><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-text" id="progressText">0%</div></div></div>
+<main class="page">
+<header class="hero">
+  <p class="eyebrow">English assessment</p>
+  <h1>English Level Test</h1>
+  <p>Complete the questions, grammar, listening and reading sections. Your work is saved automatically on this device.</p>
+  <div class="student-grid">
+    <div class="field"><label for="studentName">Student’s full name *</label><input id="studentName" name="student_name" type="text" required></div>
+    <div class="field"><label for="testDate">Date</label><input id="testDate" name="test_date" type="text" readonly></div>
+  </div>
+</header>
+
+<nav class="section-nav" aria-label="Test sections">
+  <a href="#questions">Questions</a><a href="#grammar">Grammar</a><a href="#listening">Listening</a>
+  <a href="#cashless">Reading 1</a><a href="#rubbish">Reading 2</a>
+</nav>
+
+<form id="testForm" novalidate>
+<section class="section" id="questions">
+  <div class="section-head"><div class="section-number">1</div><div><h2>Questions</h2><p class="section-description">Choose the missing word, then give a short personal answer.</p></div></div>
+  <div class="question-grid">
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">1</span>Where
+          <select name="q01_missing" aria-label="Question 1 missing word" required><option value="" selected disabled>Choose…</option><option value="are">are</option><option value="do">do</option><option value="were">were</option><option value="I don’t know">I don’t know</option></select>
+          you from?
+        </div>
+        <label for="q01_answer">Your short answer</label>
+        <textarea id="q01_answer" name="q01_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">2</span>Where
+          <select name="q02_missing" aria-label="Question 2 missing word" required><option value="" selected disabled>Choose…</option><option value="were">were</option><option value="did">did</option><option value="are">are</option><option value="I don’t know">I don’t know</option></select>
+          you born?
+        </div>
+        <label for="q02_answer">Your short answer</label>
+        <textarea id="q02_answer" name="q02_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">3</span>Where do you
+          <select name="q03_missing" aria-label="Question 3 missing word" required><option value="" selected disabled>Choose…</option><option value="live">live</option><option value="living">living</option><option value="lived">lived</option><option value="I don’t know">I don’t know</option></select>
+          ?
+        </div>
+        <label for="q03_answer">Your short answer</label>
+        <textarea id="q03_answer" name="q03_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">4</span>Do you
+          <select name="q04_missing" aria-label="Question 4 missing word" required><option value="" selected disabled>Choose…</option><option value="live">live</option><option value="stay">stay</option><option value="living">living</option><option value="I don’t know">I don’t know</option></select>
+          in a house or a flat?
+        </div>
+        <label for="q04_answer">Your short answer</label>
+        <textarea id="q04_answer" name="q04_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">5</span>Do you
+          <select name="q05_missing" aria-label="Question 5 missing word" required><option value="" selected disabled>Choose…</option><option value="have">have</option><option value="has">has</option><option value="having">having</option><option value="I don’t know">I don’t know</option></select>
+          any brothers or sisters?
+        </div>
+        <label for="q05_answer">Your short answer</label>
+        <textarea id="q05_answer" name="q05_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">6</span>What do you
+          <select name="q06_missing" aria-label="Question 6 missing word" required><option value="" selected disabled>Choose…</option><option value="do">do</option><option value="work">work</option><option value="doing">doing</option><option value="I don’t know">I don’t know</option></select>
+          ?
+        </div>
+        <label for="q06_answer">Your short answer</label>
+        <textarea id="q06_answer" name="q06_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">7</span>What time do you
+          <select name="q07_missing" aria-label="Question 7 missing word" required><option value="" selected disabled>Choose…</option><option value="get">get</option><option value="go">go</option><option value="stand">stand</option><option value="I don’t know">I don’t know</option></select>
+          up during the week?
+        </div>
+        <label for="q07_answer">Your short answer</label>
+        <textarea id="q07_answer" name="q07_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">8</span>Where do you usually
+          <select name="q08_missing" aria-label="Question 8 missing word" required><option value="" selected disabled>Choose…</option><option value="have">have</option><option value="do">do</option><option value="eat at">eat at</option><option value="I don’t know">I don’t know</option></select>
+          lunch?
+        </div>
+        <label for="q08_answer">Your short answer</label>
+        <textarea id="q08_answer" name="q08_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">9</span>Where did you
+          <select name="q09_missing" aria-label="Question 9 missing word" required><option value="" selected disabled>Choose…</option><option value="learn">learn</option><option value="learned">learned</option><option value="learning">learning</option><option value="I don’t know">I don’t know</option></select>
+          English before?
+        </div>
+        <label for="q09_answer">Your short answer</label>
+        <textarea id="q09_answer" name="q09_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">10</span>Can you
+          <select name="q10_missing" aria-label="Question 10 missing word" required><option value="" selected disabled>Choose…</option><option value="speak">speak</option><option value="say">say</option><option value="talk">talk</option><option value="I don’t know">I don’t know</option></select>
+          any other languages?
+        </div>
+        <label for="q10_answer">Your short answer</label>
+        <textarea id="q10_answer" name="q10_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">11</span>What kind of music do you
+          <select name="q11_missing" aria-label="Question 11 missing word" required><option value="" selected disabled>Choose…</option><option value="listen">listen</option><option value="hear">hear</option><option value="watch">watch</option><option value="I don’t know">I don’t know</option></select>
+          to?
+        </div>
+        <label for="q11_answer">Your short answer</label>
+        <textarea id="q11_answer" name="q11_answer" rows="2"></textarea>
+      </article>
+    
+      <article class="question-card">
+        <div class="question-line"><span class="q-number">12</span>What did you
+          <select name="q12_missing" aria-label="Question 12 missing word" required><option value="" selected disabled>Choose…</option><option value="do">do</option><option value="did">did</option><option value="done">done</option><option value="I don’t know">I don’t know</option></select>
+          last weekend?
+        </div>
+        <label for="q12_answer">Your short answer</label>
+        <textarea id="q12_answer" name="q12_answer" rows="2"></textarea>
+      </article>
+    </div>
+</section>
+
+<section class="section" id="grammar">
+  <div class="section-head"><div class="section-number">2</div><div><h2>Grammar in context</h2><p class="section-description">Read four short texts and choose the best option in each gap. “I don’t know” is available when you are unsure.</p></div></div>
+  <div class="grammar-grid">
+<article class="grammar-text">
+  <div class="grammar-label">Text A · Work and plans</div>
+  <h3>A busy week</h3>
+  <p>
+    Emma normally <select name="g01" aria-label="Present Simple" required><option value="" selected disabled>Choose…</option><option value="works">works</option><option value="is working">is working</option><option value="has worked">has worked</option><option value="I don’t know">I don’t know</option></select> at a software company, but this month she <select name="g02" aria-label="Present Continuous" required><option value="" selected disabled>Choose…</option><option value="works">works</option><option value="is working">is working</option><option value="worked">worked</option><option value="I don’t know">I don’t know</option></select> from home.
+    She <select name="g03" aria-label="Stative verbs" required><option value="" selected disabled>Choose…</option><option value="knows">knows</option><option value="is knowing">is knowing</option><option value="has been knowing">has been knowing</option><option value="I don’t know">I don’t know</option></select> that the change is temporary. On Thursday she <select name="g04" aria-label="Future arrangement" required><option value="" selected disabled>Choose…</option><option value="meets">meets</option><option value="is meeting">is meeting</option><option value="met">met</option><option value="I don’t know">I don’t know</option></select> an important client,
+    and she <select name="g05" aria-label="Be going to" required><option value="" selected disabled>Choose…</option><option value="is going to give">is going to give</option><option value="gives">gives</option><option value="gave">gave</option><option value="I don’t know">I don’t know</option></select> a short presentation. Her colleague says, “Don’t worry, I <select name="g06" aria-label="Will for an offer" required><option value="" selected disabled>Choose…</option><option value="will help">will help</option><option value="am helping">am helping</option><option value="helped">helped</option><option value="I don’t know">I don’t know</option></select> you
+    with the slides.” If the meeting <select name="g07" aria-label="First conditional" required><option value="" selected disabled>Choose…</option><option value="finishes">finishes</option><option value="will finish">will finish</option><option value="finished">finished</option><option value="I don’t know">I don’t know</option></select> early, they will have lunch together. Emma will
+    email the final report as soon as she <select name="g08" aria-label="Future time clause" required><option value="" selected disabled>Choose…</option><option value="gets">gets</option><option value="will get">will get</option><option value="got">got</option><option value="I don’t know">I don’t know</option></select> home.
+  </p>
+</article>
+
+<article class="grammar-text">
+  <div class="grammar-label">Text B · A journey</div>
+  <h3>The trip that went wrong</h3>
+  <p>
+    Last summer Alex <select name="g09" aria-label="Past Simple" required><option value="" selected disabled>Choose…</option><option value="travelled">travelled</option><option value="has travelled">has travelled</option><option value="was travelling">was travelling</option><option value="I don’t know">I don’t know</option></select> to Madrid. While he <select name="g10" aria-label="Past Continuous" required><option value="" selected disabled>Choose…</option><option value="was waiting">was waiting</option><option value="waited">waited</option><option value="had waited">had waited</option><option value="I don’t know">I don’t know</option></select> at the gate, the departure screen
+    suddenly changed. By the time he found the correct gate, the plane <select name="g11" aria-label="Past Perfect" required><option value="" selected disabled>Choose…</option><option value="had left">had left</option><option value="left">left</option><option value="has left">has left</option><option value="I don’t know">I don’t know</option></select>. He <select name="g12" aria-label="Used to" required><option value="" selected disabled>Choose…</option><option value="used to travel">used to travel</option><option value="was used to travel">was used to travel</option><option value="uses to travel">uses to travel</option><option value="I don’t know">I don’t know</option></select>
+    everywhere by car, so airports were still unfamiliar to him. He <select name="g13" aria-label="Past obligation" required><option value="" selected disabled>Choose…</option><option value="had to">had to</option><option value="must">must</option><option value="has to">has to</option><option value="I don’t know">I don’t know</option></select> spend the night
+    near the airport, but eventually he <select name="g14" aria-label="Past ability" required><option value="" selected disabled>Choose…</option><option value="was able to">was able to</option><option value="could to">could to</option><option value="can">can</option><option value="I don’t know">I don’t know</option></select> find a room. The second hotel was <select name="g15" aria-label="Comparatives" required><option value="" selected disabled>Choose…</option><option value="cheaper">cheaper</option><option value="more cheap">more cheap</option><option value="the cheapest">the cheapest</option><option value="I don’t know">I don’t know</option></select>
+    than the first, and its bed was <select name="g16" aria-label="Superlatives" required><option value="" selected disabled>Choose…</option><option value="the most comfortable">the most comfortable</option><option value="more comfortable">more comfortable</option><option value="most comfortable">most comfortable</option><option value="I don’t know">I don’t know</option></select> one he had slept in during the whole trip.
+  </p>
+</article>
+
+<article class="grammar-text">
+  <div class="grammar-label">Text C · Study and progress</div>
+  <h3>Learning new skills</h3>
+  <p>
+    There were <select name="g17" aria-label="Quantifiers / too" required><option value="" selected disabled>Choose…</option><option value="too many">too many</option><option value="too much">too much</option><option value="enough">enough</option><option value="I don’t know">I don’t know</option></select> students in the first classroom, and it was not <select name="g18" aria-label="Enough" required><option value="" selected disabled>Choose…</option><option value="quiet enough">quiet enough</option><option value="enough quiet">enough quiet</option><option value="too quiet">too quiet</option><option value="I don’t know">I don’t know</option></select> for a speaking
+    lesson. Sofia <select name="g19" aria-label="Present Perfect Simple" required><option value="" selected disabled>Choose…</option><option value="has completed">has completed</option><option value="has been completing">has been completing</option><option value="completed">completed</option><option value="I don’t know">I don’t know</option></select> three online courses so far, and she <select name="g20" aria-label="Present Perfect Continuous" required><option value="" selected disabled>Choose…</option><option value="has been learning">has been learning</option><option value="learned">learned</option><option value="is learning">is learning</option><option value="I don’t know">I don’t know</option></select> English seriously
+    for the last two years. She has not taken a B2 exam <select name="g21" aria-label="Already / yet" required><option value="" selected disabled>Choose…</option><option value="yet">yet</option><option value="already">already</option><option value="just">just</option><option value="I don’t know">I don’t know</option></select>. Her latest learning app
+    <select name="g22" aria-label="Passive voice" required><option value="" selected disabled>Choose…</option><option value="was designed">was designed</option><option value="designed">designed</option><option value="was designing">was designing</option><option value="I don’t know">I don’t know</option></select> by a small international team. The app, <select name="g23" aria-label="Relative clauses" required><option value="" selected disabled>Choose…</option><option value="which">which</option><option value="who">who</option><option value="where">where</option><option value="I don’t know">I don’t know</option></select> gives students daily speaking
+    prompts, sent her a notification saying that her new lesson <select name="g24" aria-label="Reported speech" required><option value="" selected disabled>Choose…</option><option value="had arrived">had arrived</option><option value="has arrived">has arrived</option><option value="arrives">arrives</option><option value="I don’t know">I don’t know</option></select>.
+  </p>
+</article>
+
+<article class="grammar-text">
+  <div class="grammar-label">Text D · Technology and communication</div>
+  <h3>A practical course</h3>
+  <p>
+    Sofia enjoys <select name="g25" aria-label="Verb pattern: -ing" required><option value="" selected disabled>Choose…</option><option value="solving">solving</option><option value="to solve">to solve</option><option value="solve">solve</option><option value="I don’t know">I don’t know</option></select> technical problems and hopes <select name="g26" aria-label="Verb pattern: to-infinitive" required><option value="" selected disabled>Choose…</option><option value="to work">to work</option><option value="working">working</option><option value="work">work</option><option value="I don’t know">I don’t know</option></select> abroad one day.
+    If she <select name="g27" aria-label="Second conditional" required><option value="" selected disabled>Choose…</option><option value="were">were</option><option value="will be">will be</option><option value="is">is</option><option value="I don’t know">I don’t know</option></select> more confident, she would speak more during meetings. Before her next trip,
+    she asks, “What time <select name="g28" aria-label="Question formation" required><option value="" selected disabled>Choose…</option><option value="does the train leave">does the train leave</option><option value="the train leaves">the train leaves</option><option value="does leave the train">does leave the train</option><option value="I don’t know">I don’t know</option></select>?” She has enrolled on <select name="g29" aria-label="Articles and noun phrases" required><option value="" selected disabled>Choose…</option><option value="a three-day">a three-day</option><option value="the three-days">the three-days</option><option value="three day">three day</option><option value="I don’t know">I don’t know</option></select> programming course.
+    Coding requires accuracy, <select name="g30" aria-label="Similarities and contrasts" required><option value="" selected disabled>Choose…</option><option value="whereas">whereas</option><option value="both">both</option><option value="neither">neither</option><option value="I don’t know">I don’t know</option></select> speaking requires quick decisions. Students <select name="g31" aria-label="Must / mustn&#x27;t / don&#x27;t have to" required><option value="" selected disabled>Choose…</option><option value="mustn&#x27;t">mustn&#x27;t</option><option value="don&#x27;t have to">don&#x27;t have to</option><option value="can&#x27;t to">can&#x27;t to</option><option value="I don’t know">I don’t know</option></select>
+    share their account passwords. The teacher’s final instruction is simple: “<select name="g32" aria-label="Advice and imperatives" required><option value="" selected disabled>Choose…</option><option value="Back up">Back up</option><option value="To back up">To back up</option><option value="Backing up">Backing up</option><option value="I don’t know">I don’t know</option></select> your
+    files before you install the update.”
+  </p>
+</article>
+</div>
+</section>
+
+<section class="section" id="listening">
+  <div class="section-head"><div class="section-number">3</div><div><h2>Listening</h2><p class="section-description">Listen to Track 3.1 and put the events in the correct order. Use every number from 1 to 8 once.</p></div></div>
+  <div class="audio-panel">
+    <div class="audio-row">
+      <button type="button" class="primary" id="playAudio">Play recording</button>
+      <button type="button" class="secondary" id="chooseAudio">Choose audio file</button>
+      <span id="playsLeft" class="small">Two complete plays are available.</span>
+    </div>
+    <input id="audioPicker" type="file" accept="audio/*,.mp3" hidden>
+    <audio id="audio" preload="metadata" src="Track_3.1.mp3"></audio>
+    <div id="audioStatus" class="audio-status">The file should be named <strong>Track_3.1.mp3</strong> and placed in the same folder as this HTML file.</div>
+  </div>
+  <div class="order-list">
+      <div class="order-row">
+        <select name="l2_01" aria-label="Everybody shouted and jumped up and down." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>Everybody shouted and jumped up and down.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_02" aria-label="He moved slowly out of the capsule." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>He moved slowly out of the capsule.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_03" aria-label="A large balloon took him up into space." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>A large balloon took him up into space.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_04" aria-label="He got down on his knees." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>He got down on his knees.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_05" aria-label="He made the jump." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>He made the jump.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_06" aria-label="He fell too fast and suddenly began to turn round and round." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>He fell too fast and suddenly began to turn round and round.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_07" aria-label="He landed safely." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>He landed safely.</div>
+      </div>
+    
+      <div class="order-row">
+        <select name="l2_08" aria-label="He parachuted down towards the desert." required><option value="" selected disabled>Choose…</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="I don’t know">I don’t know</option></select>
+        <div>He parachuted down towards the desert.</div>
+      </div>
+    </div>
+</section>
+
+<section class="section" id="cashless">
+  <div class="section-head"><div class="section-number">4</div><div><h2>Reading 1</h2><p class="section-description">Read the article and answer the questions.</p></div></div>
+  <div class="reading-layout">
+    <article class="article">
+      <h3>The end of money?</h3>
+      <p>In 1661, Sweden became the first European country to use bank notes. Now it could be one of the first countries to stop using cash. In most Swedish cities, buses don’t take any cash. Instead, you pay for your ticket by card or mobile phone before you get on. Some businesses only take cards, and there are banks which don’t deal with any notes or coins.</p>
+      <p>In a cashless society, you don’t need to worry about having enough change for the bus. A society without cash is also safer. Statistics show that since the decrease in the cash economy, the number of bank robberies dropped from 110 in 2008 to only 16 in 2011.</p>
+      <p>However, not all Swedes like the idea. Elderly people, who may need help with the technology, say their lives are now harder. Small businesses are also unhappy because they have to pay a little money to the bank each time somebody pays them using a card.</p>
+      <p>It is not just richer countries that are becoming cashless. In Kenya, fewer than 20% of people have a bank account, while more than 95% have a mobile phone. With a mobile banking system called M-Pesa, people can use credit on their phones to pay in shops, pay bills and school fees, and receive their salary.</p>
+      <p>People save time because they no longer need to travel long distances to pay a bill. They also carry less cash, so there is less danger of robbery. Kenya has led a revolution in mobile banking, and other developing countries have followed its example.</p>
+    </article>
+    <aside class="fact-box"><strong>Reading focus</strong><p class="small">Find exact facts, explain numbers and identify advantages and disadvantages.</p></aside>
+  </div>
+  <div class="number-grid">
+    <label class="number-answer"><strong>1661</strong><textarea name="cash_1661"></textarea></label>
+    <label class="number-answer"><strong>110</strong><textarea name="cash_110"></textarea></label>
+    <label class="number-answer"><strong>16</strong><textarea name="cash_16"></textarea></label>
+    <label class="number-answer"><strong>20%</strong><textarea name="cash_20"></textarea></label>
+    <label class="number-answer"><strong>95%</strong><textarea name="cash_95"></textarea></label>
+  </div>
+  <div class="open-list">
+    <div class="open-item"><label for="cash_q2">Which two groups in Sweden do not agree with a cashless society? Why?</label><textarea id="cash_q2" name="cash_q2" rows="3"></textarea></div>
+    <div class="open-item"><label for="cash_q3">What are the benefits of paying with a mobile phone in Kenya?</label><textarea id="cash_q3" name="cash_q3" rows="3"></textarea></div>
+    <div class="open-item"><label for="cash_q4">Would you like to live in a cashless society? Why or why not?</label><textarea id="cash_q4" name="cash_q4" rows="3"></textarea></div>
+  </div>
+</section>
+
+<section class="section" id="rubbish">
+  <div class="section-head"><div class="section-number">5</div><div><h2>Reading 2</h2><p class="section-description">Read the article, then decide whether the statements are true or false.</p></div></div>
+  <div class="rubbish-title"><div class="rubbish-icon">♻</div><div><h3>Rubbish Food</h3><div>Shopping, packaging and environmental waste</div></div></div>
+  <article class="article">
+<p>There are laws of nature that we can’t ignore, like gravity and waste. We know what goes up must come down and, similarly, we can’t avoid the fact that everything we produce and consume leads to waste. In the case of my supermarket shopping, there’s loads of waste. Professor Liam Taylor, an expert on the environment, is trying to convince me I could waste less.</p>
+
+<p>From my shopping basket, he picks up a polystyrene tray of six New Zealand kiwi fruits covered in clear plastic. “These probably caused three tons of carbon dioxide by being flown twelve thousand miles. To make things worse, this kind of plastic is almost impossible to recycle. What’s wrong with local apples?”</p>
+
+<p>“Nothing,” I weakly reply. “I just prefer kiwis.”</p>
+
+<p>“Hmm. Well, if you must have them, eat Italian ones, and buy them with no packaging.”</p>
+
+<p>He looks at the bottles of water and cans of cola. Before he can say anything, I say, “I’m always careful to recycle those.”</p>
+
+<p>“Well, that’s good, but the aluminium in those cans is bad. They have to mine four tonnes of rock to get one tonne of aluminium, and the transport costs of the cans and glass bottles are higher because they are heavier than plastic. Anyway, what’s wrong with having tap water? It’s much more efficient.”</p>
+
+<p>“I … er … prefer …” The professor’s look stops me from finishing the sentence.</p>
+
+<p>“If you must have soft drinks, buy them in recyclable plastic bottles and get the largest size, because they use less plastic than lots of small bottles. The same is true of those small boxes of cereal.”</p>
+
+<p>The next problem is the amount of meat I’ve bought. He tells me the chicken is OK, but generally meat is bad for the environment.</p>
+
+<p>“Firstly, cows and sheep produce a lot of natural gas which causes global warming. Secondly, they are an inefficient way to get food energy. Better to be vegetarian, especially if the vegetables are locally grown and you don’t eat too many dairy products.”</p>
+
+<p>I am becoming depressed as all my favourite things get crossed off my shopping list. “What about those cakes?” I say. “They were made in the supermarket bakery and the packaging is biodegradable, so they must be OK.”</p>
+
+<p>He laughs. “Well, I guess the cake is, but forget about biodegradable!” Apparently, a team of archaeologists recently investigated sites where rubbish had been buried. They found newspapers that were thirty years old, and which you could still read, next to perfectly preserved sausages.</p>
+
+<p>I feel slightly sick and very, very guilty.</p>
+</article>
+  <div class="glossary"><strong>biodegradable</strong>: able to break down naturally and safely become part of the earth or water.</div>
+  <div class="tf-list">
+      <div class="tf-row">
+        <div class="tf-number">1</div>
+        <div class="tf-statement">100% efficiency is impossible.</div>
+        <div class="tf-options" role="group" aria-label="Statement 1">
+          <label><input type="radio" name="rf01" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf01" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf01" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">2</div>
+        <div class="tf-statement">The writer lives in New Zealand.</div>
+        <div class="tf-options" role="group" aria-label="Statement 2">
+          <label><input type="radio" name="rf02" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf02" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf02" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">3</div>
+        <div class="tf-statement">The writer does not recycle anything.</div>
+        <div class="tf-options" role="group" aria-label="Statement 3">
+          <label><input type="radio" name="rf03" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf03" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf03" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">4</div>
+        <div class="tf-statement">Producing aluminium is very inefficient.</div>
+        <div class="tf-options" role="group" aria-label="Statement 4">
+          <label><input type="radio" name="rf04" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf04" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf04" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">5</div>
+        <div class="tf-statement">Plastic bottles reduce transport costs.</div>
+        <div class="tf-options" role="group" aria-label="Statement 5">
+          <label><input type="radio" name="rf05" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf05" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf05" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">6</div>
+        <div class="tf-statement">Tap water is better for the environment than bottled water.</div>
+        <div class="tf-options" role="group" aria-label="Statement 6">
+          <label><input type="radio" name="rf06" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf06" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf06" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">7</div>
+        <div class="tf-statement">The writer has bought a lot of meat.</div>
+        <div class="tf-options" role="group" aria-label="Statement 7">
+          <label><input type="radio" name="rf07" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf07" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf07" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">8</div>
+        <div class="tf-statement">Eating a lot of cheese is bad for the environment.</div>
+        <div class="tf-options" role="group" aria-label="Statement 8">
+          <label><input type="radio" name="rf08" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf08" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf08" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    
+      <div class="tf-row">
+        <div class="tf-number">9</div>
+        <div class="tf-statement">The sausages that were found were about thirty years old.</div>
+        <div class="tf-options" role="group" aria-label="Statement 9">
+          <label><input type="radio" name="rf09" value="True" required><span>True</span></label>
+          <label><input type="radio" name="rf09" value="False"><span>False</span></label>
+          <label><input type="radio" name="rf09" value="I don’t know"><span>I don’t know</span></label>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="submit-panel">
+  <h2>Finish the test</h2>
+  <p>Check your answers and send them to your teacher. You can also download a backup copy.</p>
+  <div class="button-row">
+    <button class="primary" type="submit" id="submitButton">Send answers</button>
+    <button class="secondary" type="button" id="downloadButton">Download backup</button>
+  </div>
+  <div class="message info" id="message" aria-live="polite"></div>
+</section>
+</form>
+</main>
+
+<script>
+/*
+TEACHER SETUP
+1. Deploy the supplied Apps Script as a Web app.
+2. Paste its /exec URL below.
+3. Upload this HTML file and Track_3.1.mp3 to the same GitHub folder.
+*/
+const APPS_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const TEST_ID = "english-level-test-rebuilt-01";
+const ANSWER_KEY = {"questions": {"q01_missing": "are", "q02_missing": "were", "q03_missing": "live", "q04_missing": "live", "q05_missing": "have", "q06_missing": "do", "q07_missing": "get", "q08_missing": "have", "q09_missing": "learn", "q10_missing": "speak", "q11_missing": "listen", "q12_missing": "do"}, "grammar": {"g01": "works", "g02": "is working", "g03": "knows", "g04": "is meeting", "g05": "is going to give", "g06": "will help", "g07": "finishes", "g08": "gets", "g09": "travelled", "g10": "was waiting", "g11": "had left", "g12": "used to travel", "g13": "had to", "g14": "was able to", "g15": "cheaper", "g16": "the most comfortable", "g17": "too many", "g18": "quiet enough", "g19": "has completed", "g20": "has been learning", "g21": "yet", "g22": "was designed", "g23": "which", "g24": "had arrived", "g25": "solving", "g26": "to work", "g27": "were", "g28": "does the train leave", "g29": "a three-day", "g30": "whereas", "g31": "mustn't", "g32": "Back up"}, "listening": {"l2_01": "8", "l2_02": "2", "l2_03": "1", "l2_04": "3", "l2_05": "4", "l2_06": "5", "l2_07": "7", "l2_08": "6"}, "rubbish_food": {"rf01": "True", "rf02": "False", "rf03": "False", "rf04": "True", "rf05": "True", "rf06": "True", "rf07": "True", "rf08": "True", "rf09": "True"}};
+const GRAMMAR_TOPICS = {"g01": "Present Simple", "g02": "Present Continuous", "g03": "Stative verbs", "g04": "Future arrangement", "g05": "Be going to", "g06": "Will for an offer", "g07": "First conditional", "g08": "Future time clause", "g09": "Past Simple", "g10": "Past Continuous", "g11": "Past Perfect", "g12": "Used to", "g13": "Past obligation", "g14": "Past ability", "g15": "Comparatives", "g16": "Superlatives", "g17": "Quantifiers / too", "g18": "Enough", "g19": "Present Perfect Simple", "g20": "Present Perfect Continuous", "g21": "Already / yet", "g22": "Passive voice", "g23": "Relative clauses", "g24": "Reported speech", "g25": "Verb pattern: -ing", "g26": "Verb pattern: to-infinitive", "g27": "Second conditional", "g28": "Question formation", "g29": "Articles and noun phrases", "g30": "Similarities and contrasts", "g31": "Must / mustn't / don't have to", "g32": "Advice and imperatives"};
+const DRAFT_KEY = TEST_ID + "-draft";
+const START_KEY = TEST_ID + "-started";
+const ATTEMPT_KEY = TEST_ID + "-current-attempt";
+
+const form = document.getElementById("testForm");
+const message = document.getElementById("message");
+const audio = document.getElementById("audio");
+const picker = document.getElementById("audioPicker");
+let completePlays = 0;
+let playStartedAtZero = false;
+
+function uid() {
+  if (crypto && crypto.randomUUID) return crypto.randomUUID();
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+function getAttemptId() {
+  let id = sessionStorage.getItem(ATTEMPT_KEY);
+  if (!id) { id = uid(); sessionStorage.setItem(ATTEMPT_KEY, id); }
+  return id;
+}
+if (!localStorage.getItem(START_KEY)) localStorage.setItem(START_KEY, new Date().toISOString());
+document.getElementById("testDate").value = new Intl.DateTimeFormat("en-GB", {dateStyle:"long"}).format(new Date());
+
+function formDataObject() {
+  const data = {};
+  new FormData(form).forEach((value,key) => {
+    if (Object.prototype.hasOwnProperty.call(data,key)) {
+      data[key] = Array.isArray(data[key]) ? [...data[key], value] : [data[key], value];
+    } else data[key] = value;
+  });
+  data.student_name = document.getElementById("studentName").value.trim();
+  data.test_date = document.getElementById("testDate").value;
+  return data;
+}
+function saveDraft() {
+  localStorage.setItem(DRAFT_KEY, JSON.stringify(formDataObject()));
+  updateProgress();
+}
+function restoreDraft() {
+  const raw = localStorage.getItem(DRAFT_KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([key,value]) => {
+      if (key === "student_name") { document.getElementById("studentName").value = value || ""; return; }
+      const els = form.querySelectorAll(`[name="${CSS.escape(key)}"]`);
+      els.forEach(el => {
+        if (el.type === "radio") el.checked = el.value === value;
+        else if (!Array.isArray(value)) el.value = value;
+      });
+    });
+  } catch(e) {}
+}
+function updateProgress() {
+  const fields = [...form.querySelectorAll("select,textarea,input[type=text],input[type=radio]")].filter(el => !el.hidden);
+  const groups = new Map();
+  fields.forEach(el => {
+    const key = el.type === "radio" ? "radio:" + el.name : el;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(el);
+  });
+  let done = 0;
+  groups.forEach(group => {
+    const first = group[0];
+    if (first.type === "radio") { if (group.some(x => x.checked)) done++; }
+    else if ((first.value || "").trim()) done++;
+  });
+  const pct = groups.size ? Math.round(done / groups.size * 100) : 0;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressText").textContent = pct + "%";
+}
+form.addEventListener("input", saveDraft);
+form.addEventListener("change", saveDraft);
+document.getElementById("studentName").addEventListener("input", saveDraft);
+
+function scoreSection(answers, key, prefixTopics) {
+  let score = 0; const detail = {};
+  Object.entries(key).forEach(([name,correct]) => {
+    const given = answers[name] || "";
+    const ok = given === correct;
+    if (ok) score++;
+    detail[name] = {answer:given, correct_answer:correct, is_correct:ok};
+    if (prefixTopics && prefixTopics[name]) detail[name].topic = prefixTopics[name];
+  });
+  return {score, maximum:Object.keys(key).length, detail};
+}
+function buildPayload() {
+  const answerData = formDataObject();
+  const q = scoreSection(answerData, ANSWER_KEY.questions);
+  const grammar = scoreSection(answerData, ANSWER_KEY.grammar, GRAMMAR_TOPICS);
+  const listening = scoreSection(answerData, ANSWER_KEY.listening);
+  const rubbish = scoreSection(answerData, ANSWER_KEY.rubbish_food);
+  const objectiveScore = q.score + grammar.score + listening.score + rubbish.score;
+  const objectiveMax = q.maximum + grammar.maximum + listening.maximum + rubbish.maximum;
+  return {
+    submission_id:getAttemptId(),
+    test_id:TEST_ID,
+    test_title:"English Level Test — rebuilt",
+    submitted_at:new Date().toISOString(),
+    started_at:localStorage.getItem(START_KEY) || "",
+    duration_minutes:Math.max(0,Math.round((Date.now()-Date.parse(localStorage.getItem(START_KEY)||new Date().toISOString()))/60000)),
+    student_name:answerData.student_name,
+    test_date:answerData.test_date,
+    objective_score:objectiveScore,
+    objective_maximum:objectiveMax,
+    objective_percentage:Math.round(objectiveScore/objectiveMax*100),
+    section_scores:{questions:q, grammar, listening, rubbish_food:rubbish},
+    answers:answerData,
+    user_agent:navigator.userAgent
+  };
+}
+function validateListeningOrder() {
+  const values = Object.keys(ANSWER_KEY.listening).map(k => form.elements[k]?.value || "");
+  const chosen = values.filter(Boolean).filter(v => v !== "I don’t know");
+  return new Set(chosen).size === chosen.length;
+}
+function setMessage(text,type="info") {
+  message.textContent = text;
+  message.className = "message " + type;
+}
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = document.getElementById("studentName").value.trim();
+  if (!name) { setMessage("Please enter the student’s full name.", "error"); document.getElementById("studentName").focus(); return; }
+  if (!validateListeningOrder()) { setMessage("In the listening task, each number may be used only once.", "error"); return; }
+  if (!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/")) {
+    setMessage("The teacher has not connected the Google Sheets receiver yet. Download a backup instead.", "error"); return;
+  }
+  const button = document.getElementById("submitButton");
+  button.disabled = true; setMessage("Sending answers…","info");
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(buildPayload())
+    });
+    setMessage("The answers have been sent. The teacher should confirm that a new row appeared in Google Sheets.", "ok");
+    localStorage.removeItem(DRAFT_KEY);
+    localStorage.removeItem(START_KEY);
+    sessionStorage.removeItem(ATTEMPT_KEY);
+  } catch(err) {
+    setMessage("The answers could not be sent. Download the backup and give it to the teacher.", "error");
+  } finally { button.disabled = false; }
+});
+document.getElementById("downloadButton").addEventListener("click", () => {
+  const payload = buildPayload();
+  const blob = new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = (payload.student_name || "student").replace(/[^a-z0-9_-]+/gi,"_") + "_english_test.json";
+  a.click(); URL.revokeObjectURL(a.href);
+});
+document.getElementById("playAudio").addEventListener("click", async () => {
+  if (completePlays >= 2) { setMessage("The recording has already been played twice.", "error"); return; }
+  try {
+    if (audio.ended || audio.currentTime < .25) { audio.currentTime = 0; playStartedAtZero = true; }
+    await audio.play();
+    document.getElementById("audioStatus").textContent = "Playing Track 3.1…";
+  } catch(e) {
+    document.getElementById("audioStatus").textContent = "The browser could not load Track_3.1.mp3. Choose the file manually.";
+    picker.click();
+  }
+});
+audio.addEventListener("ended", () => {
+  if (playStartedAtZero) completePlays++;
+  playStartedAtZero = false;
+  document.getElementById("playsLeft").textContent = completePlays >= 2 ? "No complete plays left." : (2-completePlays) + " complete play" + (2-completePlays===1?"":"s") + " left.";
+  document.getElementById("audioStatus").textContent = "Recording finished.";
+});
+document.getElementById("chooseAudio").addEventListener("click", () => picker.click());
+picker.addEventListener("change", e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  audio.src = URL.createObjectURL(file); audio.load();
+  document.getElementById("audioStatus").textContent = "Selected: " + file.name;
+});
+restoreDraft(); updateProgress();
+</script>
+</body>
+</html>
