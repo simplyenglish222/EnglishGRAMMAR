@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<script>
+window.safeStorage=(()=>{
+  try{
+    const s=window.localStorage,t='__prepositions_storage_test__';
+    s.setItem(t,'1');s.removeItem(t);window.courseStorageAvailable=true;return s;
+  }catch(e){
+    window.courseStorageAvailable=false;
+    const memory={};
+    return{
+      getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,
+      setItem:(k,v)=>{memory[k]=String(v)},
+      removeItem:k=>{delete memory[k]},
+      clear:()=>{Object.keys(memory).forEach(k=>delete memory[k])}
+    };
+  }
+})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#17395d" name="theme-color"/><title>11. Предлоги в устойчивых выражениях</title><style>
+:root{
+  --navy:#17395d;--navy2:#0d2a47;--blue:#2f73b7;--blueSoft:#eaf3fb;
+  --teal:#2b8176;--tealSoft:#eaf7f3;--gold:#aa7920;--goldSoft:#fff7df;
+  --ink:#172434;--muted:#627184;--line:#d8e3ec;--bg:#f4f8fb;--paper:#fff;
+  --good:#17764a;--goodBg:#eaf8f1;--bad:#b33c38;--badBg:#fff0ef;
+  --shadow:0 15px 42px rgba(20,53,84,.09)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.56 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.skip{position:fixed;top:-70px;left:12px;background:#fff;padding:10px 14px;border-radius:10px;z-index:3000}
+.skip:focus{top:12px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:292px;background:#fff;border-right:1px solid var(--line);z-index:1000;padding:22px 18px max(18px,env(safe-area-inset-bottom));overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;padding:4px 6px 18px;border-bottom:1px solid var(--line)}
+.brand-mark{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--navy),var(--blue));color:#fff;font-weight:950}
+.brand strong{display:block;color:var(--navy);font-size:1.04rem}
+.brand small{color:var(--muted)}
+.progress-box{margin:17px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fbfdff}
+.progress-head{display:flex;justify-content:space-between;color:var(--navy);font-weight:850}
+.progress-track{height:9px;background:#e6edf3;border-radius:999px;margin:9px 0;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),#62b79b);transition:.25s}
+.progress-note{font-size:.78rem;color:var(--muted)}
+.nav-title{margin:4px 8px 8px;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;font-weight:900}
+.course-nav a{display:flex;gap:10px;padding:10px 11px;margin:3px 0;border-radius:11px;text-decoration:none;color:#34475a;font-weight:720;font-size:.9rem}
+.course-nav a:hover{background:#f3f7fb}
+.course-nav a.active{background:var(--blueSoft);color:var(--navy);outline:1px solid #bfd7eb}
+.nav-num{min-width:25px;color:var(--blue);font-weight:950}
+.side-tools{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.side-tools label{display:block;font-weight:850;color:var(--navy);font-size:.86rem;margin-bottom:7px}
+.side-tools textarea{width:100%;min-height:95px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdff}
+.tool-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.tool-btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);padding:9px;font-weight:800;font-size:.82rem}
+.reset{width:100%;margin-top:8px;color:var(--bad)}
+.menu-btn{display:none;position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:1400;border:0;border-radius:12px;padding:10px 13px;background:var(--navy);color:#fff;box-shadow:var(--shadow);font-weight:850}
+.overlay{display:none}
+.page{margin-left:292px;min-height:100vh}
+.content{max-width:1230px;margin:0 auto;padding:38px 30px 70px}
+.hero{background:linear-gradient(135deg,#fff 0%,#f8fbfe 65%,#edf7f4 100%);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:var(--shadow)}
+.eyebrow{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--blueSoft);color:var(--blue);font-weight:900;font-size:.77rem;text-transform:uppercase;letter-spacing:.08em}
+.hero h1{font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;margin:15px 0 12px;color:var(--navy2)}
+.hero p{max-width:880px;color:var(--muted);font-size:1.05rem;margin:0}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{padding:7px 11px;border-radius:999px;border:1px solid #cfdee9;background:rgba(255,255,255,.86);font-size:.82rem;font-weight:800;color:var(--navy)}
+.section{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}
+.section h2{margin:0 0 8px;color:var(--navy);font-size:1.5rem}
+.intro{color:var(--muted);margin:0 0 18px}
+.expr-groups{display:grid;gap:16px}
+.expr-group{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.expr-group h3{margin:0;padding:13px 16px;background:#edf5fb;color:var(--navy);font-size:1.08rem}
+.expr-row{display:grid;grid-template-columns:34px minmax(230px,.8fr) 1fr 44px;gap:11px;align-items:center;padding:11px 14px;border-top:1px solid var(--line)}
+.expr-row:first-of-type{border-top:0}
+.expr-row input{width:20px;height:20px}
+.expr-en{font-weight:900;color:var(--navy)}
+.expr-ru{color:#46596b}
+.audio-btn,.check-btn,.small-btn,.model-btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);padding:8px 11px;font-weight:850}
+.audio-btn{color:var(--blue);padding:7px 10px}
+.check-btn{background:var(--navy);color:#fff;border-color:var(--navy)}
+.exercise-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:15px}
+.exercise-actions{display:flex;gap:8px;flex-wrap:wrap}
+.item-list{display:grid;gap:10px}
+.item-card{border:1px solid var(--line);border-radius:14px;padding:14px 15px;background:#fff}
+.item-row{display:flex;gap:10px;align-items:flex-start}
+.item-no{flex:none;width:29px;height:29px;border-radius:9px;background:#edf4f8;color:var(--navy);display:grid;place-items:center;font-weight:950}
+.item-main{flex:1;min-width:0}
+.sentence{font-size:1rem}
+.blank{width:145px;max-width:100%;border:1px solid #bfcfda;border-radius:8px;padding:7px 9px;margin:2px 4px;background:#fbfdff}
+.blank:focus,textarea:focus{outline:3px solid rgba(45,112,178,.16);border-color:var(--blue)}
+.item-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.feedback{display:none;margin-top:9px;padding:10px 12px;border-radius:10px}
+.feedback.show{display:block}
+.feedback.good{background:var(--goodBg);color:var(--good)}
+.feedback.bad{background:var(--badBg);color:var(--bad)}
+.test-block{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+.test-block h3{color:var(--navy);margin:0 0 6px}
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid #cfe0e9;background:#f5fafb;border-radius:13px;margin:12px 0 16px}
+.word-bank span{padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:999px;font-weight:850;color:var(--navy)}
+.bottom-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px}
+.bottom-nav a{flex:1;text-decoration:none;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:13px;color:var(--navy);font-weight:850}
+.bottom-nav a:last-child{text-align:right}
+.footer{margin-top:20px;text-align:center;color:var(--muted);font-size:.85rem}
+.toast{position:fixed;right:20px;bottom:20px;z-index:3000;background:var(--navy2);color:#fff;border-radius:11px;padding:11px 15px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:none}
+@media(max-width:850px){.expr-row{grid-template-columns:30px 1fr 42px}.expr-ru{grid-column:2/4}}
+@media(max-width:760px){
+ .menu-btn{display:block}.sidebar{transform:translateX(-105%);transition:.25s;width:min(88vw,330px);padding-top:max(68px,env(safe-area-inset-top))}
+ .menu-open .sidebar{transform:none}.menu-open .overlay{display:block;position:fixed;inset:0;background:rgba(4,22,38,.44);z-index:900}
+ .page{margin-left:0}.content{padding:74px 14px 55px}.hero{padding:22px 18px;border-radius:18px}.section{padding:18px 14px}
+ .bottom-nav{flex-direction:column}.bottom-nav a:last-child{text-align:left}.blank{width:112px}.exercise-head{display:block}.exercise-actions{margin-top:10px}
+ button,.blank,.side-tools textarea{min-height:44px}
+}
+
+.diag-card{margin-top:24px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid var(--line,#d8e3ec);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}
+.diag-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.diag-card h2{margin:0 0 7px;color:var(--navy,#17395d);font-size:1.5rem}
+.diag-intro{margin:0;color:var(--muted,#627184);max-width:850px}
+.diag-note{display:inline-flex;margin-top:12px;padding:6px 10px;border-radius:999px;background:var(--goldSoft,#fff7df);color:#815b16;font-size:.8rem;font-weight:850}
+.diag-list{display:grid;gap:12px;margin-top:18px}
+.diag-question{border:1px solid var(--line,#d8e3ec);border-radius:14px;padding:15px;background:#fff}
+.diag-question legend{font-weight:850;color:var(--ink,#172434);padding:0 4px}
+.diag-options{display:grid;gap:8px;margin-top:11px}
+.diag-option{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;border:1px solid #dce6ee;border-radius:10px;background:#fbfdff;cursor:pointer}
+.diag-option:hover{border-color:#a9c7dd;background:#f5f9fc}
+.diag-option input{margin-top:3px;accent-color:var(--blue,#2f73b7)}
+.diag-question.diag-correct{border-color:#8dccaa;background:var(--goodBg,#eaf8f1)}
+.diag-question.diag-wrong{border-color:#e6aba8;background:var(--badBg,#fff0ef)}
+.diag-feedback{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.78)}
+.diag-feedback.show{display:block}
+.diag-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.diag-btn{border:1px solid var(--line,#d8e3ec);border-radius:11px;padding:10px 14px;background:#fff;color:var(--navy,#17395d);font-weight:850}
+.diag-btn.primary{background:var(--navy,#17395d);border-color:var(--navy,#17395d);color:#fff}
+.diag-btn.theory{display:none;background:var(--teal,#2b8176);border-color:var(--teal,#2b8176);color:#fff}
+.diag-result{display:none;margin-top:17px;padding:15px 17px;border-radius:14px;background:var(--blueSoft,#eaf3fb);color:var(--navy,#17395d)}
+.diag-result.show{display:block}
+.diag-result strong{font-size:1.12rem}
+.diag-topics{margin:8px 0 0;padding-left:20px}
+@media(max-width:760px){.diag-card{padding:19px 15px}.diag-head{display:block}.diag-actions{display:grid;grid-template-columns:1fr}.diag-btn{width:100%;min-height:44px}}
+
+
+/* Финальная проверка совместимости и мобильной вёрстки */
+img{max-width:100%;height:auto}
+.hero,.section,.item-card,.translation-card,.picture-card,.theory-card{min-width:0}
+.sentence,.ru-text,.example,.expr-en,.expr-ru,.intro{overflow-wrap:anywhere}
+button{touch-action:manipulation}
+.back-top{
+  position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:850;
+  width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:14px;
+  background:var(--navy,#17395d);color:#fff;font-weight:950;font-size:1.1rem;
+  box-shadow:0 10px 28px rgba(16,47,80,.22);opacity:0;transform:translateY(12px);
+  pointer-events:none;transition:.2s
+}
+.back-top.show{opacity:.94;transform:none;pointer-events:auto}
+@media(max-width:760px){
+  .diag-option{min-height:44px;align-items:center}
+  .audio-btn,.check-btn,.small-btn,.model-btn,.tool-btn,.diag-btn{min-height:44px}
+  input[type=radio],input[type=checkbox]{width:20px;height:20px;flex:none}
+  .theory-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .back-top{right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+
+.expr-tools{margin:14px 0 18px;padding:15px;border:1px solid var(--line);border-radius:14px;background:#f8fbfd}
+.expr-search-label{display:block;margin-bottom:6px;color:var(--navy);font-weight:850}
+.expr-search{width:100%;max-width:520px;border:1px solid #bfd0dc;border-radius:10px;padding:10px 12px;background:#fff}
+.expr-search:focus{outline:3px solid rgba(45,112,178,.16);border-color:var(--blue)}
+.expr-tool-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:11px}
+.expr-filter{border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--navy);padding:8px 12px;font-weight:850}
+.expr-filter.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.expr-count{margin-left:auto;color:var(--muted);font-weight:800}
+.translations-hidden .expr-ru{filter:blur(5px);user-select:none}
+.translations-hidden .expr-row:hover .expr-ru,.translations-hidden .expr-row:focus-within .expr-ru{filter:none}
+.expr-row[hidden],.expr-group[hidden]{display:none!important}
+@media(max-width:760px){.expr-tool-row{display:grid;grid-template-columns:1fr 1fr}.expr-filter{border-radius:11px}.expr-count{grid-column:1/-1;margin-left:0}}
+
+/* === Final unified sidebar === */
+.sidebar{
+  background:#123b55 !important;
+  color:#edf6fb !important;
+  border-right:0 !important;
+  box-shadow:10px 0 30px rgba(12,39,58,.12) !important;
+}
+.sidebar .brand{border-bottom-color:rgba(255,255,255,.12)!important}
+.sidebar .brand strong,.sidebar .brand-title{color:#fff!important}
+.sidebar .brand small,.sidebar .brand-sub{color:#c5d8e4!important}
+.sidebar .brand-mark{background:#319487!important;color:#fff!important}
+.sidebar .progress-box,.sidebar .course-progress,.sidebar .progress-card{
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.14)!important;
+  color:#fff!important
+}
+.sidebar .progress-head{color:#fff!important}
+.sidebar .progress-track{background:rgba(255,255,255,.16)!important}
+.sidebar .progress-note{color:#cfdee7!important}
+.sidebar .nav-title{color:#a9c0cf!important}
+.sidebar .course-nav a,.sidebar .nav a{
+  color:#e3eef4!important;
+  border-color:transparent!important;
+  background:transparent!important
+}
+.sidebar .course-nav a:hover,.sidebar .nav a:hover{background:rgba(255,255,255,.075)!important}
+.sidebar .course-nav a.active,.sidebar .nav a.active{
+  background:rgba(62,181,166,.17)!important;
+  border:1px solid rgba(82,205,188,.45)!important;
+  color:#fff!important
+}
+.sidebar .nav-num,.sidebar .num{
+  color:#eaf6f8!important;
+  background:rgba(255,255,255,.10)!important
+}
+.sidebar a.active .nav-num,.sidebar a.active .num{background:#319487!important;color:#fff!important}
+.sidebar .side-tools,.sidebar .sidebar-tools,.sidebar .tools{
+  border-top-color:rgba(255,255,255,.12)!important
+}
+.sidebar .side-tools label,.sidebar .notes-label,.sidebar .tools label{color:#dbe8ef!important}
+.sidebar textarea{
+  color:#fff!important;background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar textarea::placeholder{color:#b5cad7!important}
+.sidebar .tool-btn{
+  color:#eef7fb!important;background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar .tool-btn:hover{background:rgba(255,255,255,.13)!important}
+.sidebar .tool-btn.reset,.sidebar .tool-btn.danger{color:#ffd3d0!important;border-color:rgba(255,180,176,.28)!important}
+.sidebar .subnav,.sidebar .course-subnav{
+  margin:3px 0 9px 35px!important;padding:2px 0 2px 9px!important;
+  border-left:2px solid rgba(116,214,200,.34)!important
+}
+.sidebar .subnav a,.sidebar .course-subnav a{
+  display:block!important;padding:5px 7px!important;margin:1px 0!important;
+  font-size:.77rem!important;line-height:1.28!important;color:#bed4df!important;
+  border:0!important;border-radius:8px!important
+}
+.sidebar .subnav a:hover,.sidebar .course-subnav a:hover{
+  color:#fff!important;background:rgba(255,255,255,.07)!important
+}
+.ru-hint{color:#865b13;font-weight:800}
+.nb-box{
+  margin:18px 0 0;padding:17px 18px;border:1px solid #b9d9ee;border-left:5px solid #327eb9;
+  border-radius:14px;background:#eef7ff;color:#26455f
+}
+.nb-box h3{margin:0 0 9px!important;color:#153d62!important}
+.nb-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.nb-grid>div{padding:12px;border-radius:11px;background:rgba(255,255,255,.72)}
+.nb-grid p{margin:5px 0}
+@media(max-width:720px){.nb-grid{grid-template-columns:1fr}}
+
+.usage-tag{font-size:.7rem;padding:2px 6px;border-radius:999px;background:#fff3d8;color:#825a17;font-weight:800;vertical-align:middle}
+
+.learning-path{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(82,114,137,.16)}
+.learning-step{padding:6px 9px;border-radius:9px;background:#f3f7fa;color:#486276;font-size:.78rem;font-weight:800}
+@media(max-width:600px){.learning-path{display:grid;grid-template-columns:1fr 1fr}.learning-step{font-size:.76rem}}
+
+.practice-round{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}.practice-round h3{margin:0 0 7px;color:var(--navy)}.practice-score{padding:8px 12px;border-radius:999px;background:var(--tealSoft);color:var(--teal);font-weight:900;white-space:nowrap}.practice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.practice-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;min-width:0}.practice-ru{font-weight:850;color:var(--navy);font-size:1.02rem}.practice-hint{margin-top:4px;color:var(--muted);font-size:.87rem}.practice-answer{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--goodBg);color:#245e45}.practice-answer.show{display:block}.practice-input{width:min(330px,100%);border:1px solid #bfcfda;border-radius:9px;padding:8px 10px;background:#fbfdff}.practice-options{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.practice-option{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;color:var(--navy);font-weight:800}.practice-option.selected{outline:2px solid var(--blue);background:var(--blueSoft)}.practice-feedback{display:none;margin-top:9px;padding:10px 12px;border-radius:10px}.practice-feedback.show{display:block}.practice-feedback.good{background:var(--goodBg);color:var(--good)}.practice-feedback.bad{background:var(--badBg);color:var(--bad)}@media(max-width:760px){.practice-grid{grid-template-columns:1fr}.practice-score{display:inline-flex;margin-top:10px}.practice-input{min-height:44px}.practice-option{min-height:44px}}
+</style>
+<script>
+try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+window.addEventListener('pageshow',()=>requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'})));
+</script>
+</head><body>
+<a class="skip" href="#main">Перейти к содержанию</a>
+<button aria-controls="sidebar" aria-expanded="false" class="menu-btn" id="menuBtn">☰ Разделы</button><div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar"><div class="brand"><div class="brand-mark">ПР</div><div><strong>Предлоги английского языка</strong><small>Интерактивный курс</small></div></div>
+<div class="progress-box"><div class="progress-head"><span>Прогресс раздела</span><span id="progressText">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-note">Ответы и заметки сохраняются автоматически.</div></div>
+<div class="nav-title">Все разделы</div><nav class="course-nav"><a href="01_definition_prepositions.html"><span class="nav-num">01</span><span>Определение предлога</span></a><a href="02_place.html"><span class="nav-num">02</span><span>Предлоги места</span></a><a href="03_direction.html"><span class="nav-num">03</span><span>Направление и движение</span></a><a href="04_confused.html"><span class="nav-num">04</span><span>Предлоги, которые часто путают</span></a><a href="05_revision_place.html"><span class="nav-num">05</span><span>Повторение: место и направление</span></a><a href="06_transport.html"><span class="nav-num">06</span><span>Предлоги и транспорт</span></a><a href="07_time.html"><span class="nav-num">07</span><span>Предлоги времени</span></a><a href="08_abstract_relations.html"><span class="nav-num">08</span><span>Абстрактные отношения</span></a><a href="09_composite.html"><span class="nav-num">09</span><span>Составные предлоги</span></a><a href="10_revision.html"><span class="nav-num">10</span><span>Общее повторение</span></a><a class="active" href="11_set_expressions.html"><span class="nav-num">11</span><span>Устойчивые выражения</span></a><div class="course-subnav"><a href="#intro-test">Вводный тест</a><a href="#expression-reference">Справочник</a><a href="#active-practice">Активная практика</a><a href="#practice-speak">Скажите вслух</a><a href="#practice-choice">Контекст</a></div><a href="12_tests.html"><span class="nav-num">12</span><span>Итоговые тесты</span></a></nav>
+<div class="side-tools"><label for="notes">Личные заметки</label><textarea id="notes" placeholder="Запишите правило или пример..."></textarea>
+<div class="tool-row"><button class="tool-btn" id="exportBtn">Экспорт</button><button class="tool-btn" id="importBtn">Импорт</button></div>
+<button class="tool-btn reset" id="resetBtn">Сбросить раздел</button><input accept="application/json" hidden="" id="importFile" type="file"/></div></aside>
+<main class="page" id="main"><div class="content"><header class="hero"><span class="eyebrow">Раздел 11</span><h1>Устойчивые выражения с предлогами</h1><p>Систематизированный список устойчивых сочетаний с предлогами. Отмечайте выученные выражения; отметки сохраняются в браузере.</p>
+<div class="hero-meta"><span class="pill">Основные и справочные выражения</span><span class="pill">Русские переводы</span><span class="pill">Аудио</span><span class="pill">Автосохранение</span></div><div class="learning-path"><span class="learning-step">Диагностика</span><span class="learning-step">Теория</span><span class="learning-step">Контраст</span><span class="learning-step">Практика</span><span class="learning-step">Повторение</span></div></header>
+<section aria-labelledby="diag-title" class="diag-card" id="intro-test">
+<div class="diag-head"><div>
+<h2 id="diag-title">Вводный тест: знакомы ли вам эти выражения?</h2>
+<p class="diag-intro">Ответьте до чтения теории. После завершения вы увидите объяснения и темы, которым стоит уделить особое внимание.</p>
+<span class="diag-note">Результат не учитывается в основном прогрессе главы</span>
+</div></div>
+<div class="diag-list" id="diagList"></div>
+<div class="diag-actions">
+<button class="diag-btn primary" id="diagFinish" type="button">Завершить вводный тест</button>
+<button class="diag-btn" id="diagReset" type="button">Пройти заново</button>
+<button class="diag-btn theory" id="diagTheory" type="button">Перейти к теории</button>
+</div>
+<div aria-live="polite" class="diag-result" id="diagResult" role="status"></div>
+</section>
+<section class="section" id="expression-reference"><h2>Устойчивые выражения</h2><div class="callout"><strong>Как учить:</strong> сначала отфильтруйте «Не изучено» и скройте переводы. Выражения, помеченные «формально/редко», полезно узнавать, но не обязательно активно использовать на уровне B1.</div>
+<p class="intro">Читайте сочетание целиком: значение устойчивого выражения не всегда выводится из значения отдельного предлога.</p>
+<div aria-label="Инструменты повторения" class="expr-tools">
+<label class="expr-search-label" for="exprSearch">Найти выражение</label>
+<input class="expr-search" id="exprSearch" placeholder="Например: by heart или наизусть" type="search"/>
+<div class="expr-tool-row">
+<button aria-pressed="true" class="expr-filter active" data-expr-filter="all" type="button">Все</button>
+<button aria-pressed="false" class="expr-filter" data-expr-filter="unlearned" type="button">Не изучено</button>
+<button aria-pressed="false" class="expr-filter" data-expr-filter="learned" type="button">Изучено</button>
+<button aria-pressed="false" class="expr-filter" id="toggleTranslations" type="button">Скрыть переводы</button>
+<span class="expr-count" id="exprCount"></span>
+</div>
+</div>
+<div class="expr-groups" id="exprGroups"><article class="expr-group"><h3>ABOUT</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="1" type="checkbox"/>
+<div class="expr-en">to be about</div><div class="expr-ru">собираться сделать что-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to be about">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="2" type="checkbox"/>
+<div class="expr-en">to bring about</div><div class="expr-ru">приводить к чему-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to bring about">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="3" type="checkbox"/>
+<div class="expr-en">above all</div><div class="expr-ru">главным образом; больше всего</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="above all">🔊</button></div></article><article class="expr-group"><h3>ABOVE</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="4" type="checkbox"/>
+<div class="expr-en">above measure <small class="usage-tag">редко</small></div><div class="expr-ru">свыше меры</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="above measure">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="5" type="checkbox"/>
+<div class="expr-en">above suspicion</div><div class="expr-ru">вне подозрений</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="above suspicion">🔊</button></div></article><article class="expr-group"><h3>AFTER</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="6" type="checkbox"/>
+<div class="expr-en">after all</div><div class="expr-ru">в конце концов</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="after all">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="7" type="checkbox"/>
+<div class="expr-en">the day after tomorrow</div><div class="expr-ru">послезавтра</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="the day after tomorrow">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="8" type="checkbox"/>
+<div class="expr-en">long / soon after</div><div class="expr-ru">спустя долгое время / вскоре</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="long / soon after">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="9" type="checkbox"/>
+<div class="expr-en">name after somebody</div><div class="expr-ru">назвать в честь кого-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="name after somebody">🔊</button></div></article><article class="expr-group"><h3>ALONG</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="10" type="checkbox"/>
+<div class="expr-en">come along</div><div class="expr-ru">идёмте</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="come along">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="11" type="checkbox"/>
+<div class="expr-en">get along</div><div class="expr-ru">ладить</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="get along">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="12" type="checkbox"/>
+<div class="expr-en">all along</div><div class="expr-ru">с самого начала</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="all along">🔊</button></div></article><article class="expr-group"><h3>AT</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="13" type="checkbox"/>
+<div class="expr-en">at the age of</div><div class="expr-ru">в возрасте</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at the age of">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="14" type="checkbox"/>
+<div class="expr-en">not at all</div><div class="expr-ru">вовсе не; совсем нет</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="not at all">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="15" type="checkbox"/>
+<div class="expr-en">at all costs</div><div class="expr-ru">любой ценой</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at all costs">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="16" type="checkbox"/>
+<div class="expr-en">at dinner / lunch / tea</div><div class="expr-ru">за обедом / ланчем / чаем</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at dinner / lunch / tea">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="17" type="checkbox"/>
+<div class="expr-en">at the expense of</div><div class="expr-ru">за счёт кого-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at the expense of">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="18" type="checkbox"/>
+<div class="expr-en">at the end</div><div class="expr-ru">в конце</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at the end">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="19" type="checkbox"/>
+<div class="expr-en">at first</div><div class="expr-ru">сначала</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at first">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="20" type="checkbox"/>
+<div class="expr-en">at once</div><div class="expr-ru">сразу же</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at once">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="21" type="checkbox"/>
+<div class="expr-en">at any rate</div><div class="expr-ru">во всяком случае</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at any rate">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="22" type="checkbox"/>
+<div class="expr-en">at a time</div><div class="expr-ru">за один раз</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at a time">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="23" type="checkbox"/>
+<div class="expr-en">at a speed of</div><div class="expr-ru">со скоростью</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at a speed of">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="24" type="checkbox"/>
+<div class="expr-en">at this / that / the same time</div><div class="expr-ru">в это / то / то же самое время</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at this / that / the same time">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="25" type="checkbox"/>
+<div class="expr-en">at somebody’s disposal / service <small class="usage-tag">формально</small></div><div class="expr-ru">в распоряжении кого-либо; к чьим-либо услугам</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at somebody’s disposal / service">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="26" type="checkbox"/>
+<div class="expr-en">at home</div><div class="expr-ru">дома</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="at home">🔊</button></div></article><article class="expr-group"><h3>BEFORE</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="27" type="checkbox"/>
+<div class="expr-en">the day before yesterday</div><div class="expr-ru">позавчера</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="the day before yesterday">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="28" type="checkbox"/>
+<div class="expr-en">long before</div><div class="expr-ru">задолго до</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="long before">🔊</button></div></article><article class="expr-group"><h3>BEHIND</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="29" type="checkbox"/>
+<div class="expr-en">be behind time <small class="usage-tag">менее обычно</small></div><div class="expr-ru">опаздывать</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="be behind time">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="30" type="checkbox"/>
+<div class="expr-en">behind one’s back</div><div class="expr-ru">за спиной кого-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="behind one’s back">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="31" type="checkbox"/>
+<div class="expr-en">be behind somebody</div><div class="expr-ru">отставать от кого-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="be behind somebody">🔊</button></div></article><article class="expr-group"><h3>BY</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="32" type="checkbox"/>
+<div class="expr-en">by accident / chance</div><div class="expr-ru">случайно</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by accident / chance">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="33" type="checkbox"/>
+<div class="expr-en">by heart</div><div class="expr-ru">наизусть</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by heart">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="34" type="checkbox"/>
+<div class="expr-en">by land / sea / air</div><div class="expr-ru">сухопутным / морским / воздушным путём</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by land / sea / air">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="35" type="checkbox"/>
+<div class="expr-en">by means of</div><div class="expr-ru">посредством</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by means of">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="36" type="checkbox"/>
+<div class="expr-en">by no means</div><div class="expr-ru">ни в коем случае</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by no means">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="37" type="checkbox"/>
+<div class="expr-en">by the way</div><div class="expr-ru">между прочим</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by the way">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="38" type="checkbox"/>
+<div class="expr-en">step by step</div><div class="expr-ru">шаг за шагом</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="step by step">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="39" type="checkbox"/>
+<div class="expr-en">by retail <small class="usage-tag">редко</small></div><div class="expr-ru">в розницу</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by retail">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="40" type="checkbox"/>
+<div class="expr-en">six by eight metres</div><div class="expr-ru">шесть на восемь метров</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="six by eight metres">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="41" type="checkbox"/>
+<div class="expr-en">by six metres</div><div class="expr-ru">на шесть метров больше или меньше</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="by six metres">🔊</button></div></article><article class="expr-group"><h3>DOWN</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="42" type="checkbox"/>
+<div class="expr-en">up and down</div><div class="expr-ru">взад и вперёд; вверх и вниз</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="up and down">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="43" type="checkbox"/>
+<div class="expr-en">down to</div><div class="expr-ru">вплоть до</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="down to">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="44" type="checkbox"/>
+<div class="expr-en">upside down</div><div class="expr-ru">вверх дном</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="upside down">🔊</button></div></article><article class="expr-group"><h3>FOR</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="45" type="checkbox"/>
+<div class="expr-en">for ever / for good</div><div class="expr-ru">навсегда</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="for ever / for good">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="46" type="checkbox"/>
+<div class="expr-en">for example / instance</div><div class="expr-ru">например</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="for example / instance">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="47" type="checkbox"/>
+<div class="expr-en">for ages</div><div class="expr-ru">целую вечность</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="for ages">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="48" type="checkbox"/>
+<div class="expr-en">for the time being</div><div class="expr-ru">в настоящее время</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="for the time being">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="49" type="checkbox"/>
+<div class="expr-en">to go for a walk</div><div class="expr-ru">идти на прогулку</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to go for a walk">🔊</button></div></article><article class="expr-group"><h3>IN</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="50" type="checkbox"/>
+<div class="expr-en">in any case</div><div class="expr-ru">во всяком случае</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in any case">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="51" type="checkbox"/>
+<div class="expr-en">in conclusion</div><div class="expr-ru">в заключение</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in conclusion">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="52" type="checkbox"/>
+<div class="expr-en">in the direction of</div><div class="expr-ru">в направлении</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in the direction of">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="53" type="checkbox"/>
+<div class="expr-en">in exchange</div><div class="expr-ru">в обмен</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in exchange">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="54" type="checkbox"/>
+<div class="expr-en">in fact</div><div class="expr-ru">в действительности</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in fact">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="55" type="checkbox"/>
+<div class="expr-en">in general</div><div class="expr-ru">вообще</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in general">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="56" type="checkbox"/>
+<div class="expr-en">in the meantime</div><div class="expr-ru">тем временем</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in the meantime">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="57" type="checkbox"/>
+<div class="expr-en">in part</div><div class="expr-ru">частично</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in part">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="58" type="checkbox"/>
+<div class="expr-en">in ink / pencil</div><div class="expr-ru">чернилами / карандашом</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in ink / pencil">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="59" type="checkbox"/>
+<div class="expr-en">in Russian / English</div><div class="expr-ru">на русском / английском языке</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in Russian / English">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="60" type="checkbox"/>
+<div class="expr-en">in sight</div><div class="expr-ru">в поле зрения</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in sight">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="61" type="checkbox"/>
+<div class="expr-en">in stock</div><div class="expr-ru">на складе; в запасе</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in stock">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="62" type="checkbox"/>
+<div class="expr-en">in return</div><div class="expr-ru">взамен</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="in return">🔊</button></div></article><article class="expr-group"><h3>ON</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="63" type="checkbox"/>
+<div class="expr-en">on the average <small class="usage-tag">менее обычно</small></div><div class="expr-ru">в среднем</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on the average">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="64" type="checkbox"/>
+<div class="expr-en">on business</div><div class="expr-ru">по делу; в командировку</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on business">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="65" type="checkbox"/>
+<div class="expr-en">on board</div><div class="expr-ru">на борту</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on board">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="66" type="checkbox"/>
+<div class="expr-en">on condition that</div><div class="expr-ru">при условии, что</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on condition that">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="67" type="checkbox"/>
+<div class="expr-en">on the contrary</div><div class="expr-ru">наоборот</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on the contrary">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="68" type="checkbox"/>
+<div class="expr-en">on demand</div><div class="expr-ru">по требованию</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on demand">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="69" type="checkbox"/>
+<div class="expr-en">on the one / other hand</div><div class="expr-ru">с одной / с другой стороны</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on the one / other hand">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="70" type="checkbox"/>
+<div class="expr-en">on the part of</div><div class="expr-ru">со стороны кого-либо</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on the part of">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="71" type="checkbox"/>
+<div class="expr-en">on purpose</div><div class="expr-ru">специально</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on purpose">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="72" type="checkbox"/>
+<div class="expr-en">on sale</div><div class="expr-ru">в продаже</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on sale">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="73" type="checkbox"/>
+<div class="expr-en">on the whole</div><div class="expr-ru">в общем</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="on the whole">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="74" type="checkbox"/>
+<div class="expr-en">and so on</div><div class="expr-ru">и так далее</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="and so on">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="75" type="checkbox"/>
+<div class="expr-en">later on</div><div class="expr-ru">позже</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="later on">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="76" type="checkbox"/>
+<div class="expr-en">be on</div><div class="expr-ru">идти — о фильме или пьесе</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="be on">🔊</button></div></article><article class="expr-group"><h3>OUT OF</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="77" type="checkbox"/>
+<div class="expr-en">out of date</div><div class="expr-ru">устаревший</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="out of date">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="78" type="checkbox"/>
+<div class="expr-en">out of doors <small class="usage-tag">менее обычно</small></div><div class="expr-ru">на улице; на открытом воздухе</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="out of doors">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="79" type="checkbox"/>
+<div class="expr-en">out of necessity</div><div class="expr-ru">по необходимости</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="out of necessity">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="80" type="checkbox"/>
+<div class="expr-en">out of pity</div><div class="expr-ru">из жалости</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="out of pity">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="81" type="checkbox"/>
+<div class="expr-en">out of order</div><div class="expr-ru">не работает</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="out of order">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="82" type="checkbox"/>
+<div class="expr-en">out of use</div><div class="expr-ru">вышедший из употребления</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="out of use">🔊</button></div></article><article class="expr-group"><h3>TO</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="83" type="checkbox"/>
+<div class="expr-en">to my disappointment / sorrow / joy</div><div class="expr-ru">к моему разочарованию / горю / радости</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to my disappointment / sorrow / joy">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="84" type="checkbox"/>
+<div class="expr-en">to the end</div><div class="expr-ru">до конца</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to the end">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="85" type="checkbox"/>
+<div class="expr-en">to the right / left</div><div class="expr-ru">направо / налево</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to the right / left">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="86" type="checkbox"/>
+<div class="expr-en">to and fro <small class="usage-tag">менее обычно</small></div><div class="expr-ru">взад и вперёд</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to and fro">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="87" type="checkbox"/>
+<div class="expr-en">to the North / South</div><div class="expr-ru">на север / юг</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="to the North / South">🔊</button></div></article><article class="expr-group"><h3>UNDER</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="88" type="checkbox"/>
+<div class="expr-en">be under construction / repair</div><div class="expr-ru">строиться / ремонтироваться</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="be under construction / repair">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="89" type="checkbox"/>
+<div class="expr-en">under the circumstances</div><div class="expr-ru">при этих обстоятельствах</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="under the circumstances">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="90" type="checkbox"/>
+<div class="expr-en">under the agreement / contract <small class="usage-tag">формально</small></div><div class="expr-ru">по соглашению / контракту</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="under the agreement / contract">🔊</button></div></article><article class="expr-group"><h3>UP</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="91" type="checkbox"/>
+<div class="expr-en">up to</div><div class="expr-ru">вплоть до</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="up to">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="92" type="checkbox"/>
+<div class="expr-en">up-to-date</div><div class="expr-ru">современный</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="up-to-date">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="93" type="checkbox"/>
+<div class="expr-en">be up</div><div class="expr-ru">встать; уже не спать</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="be up">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="94" type="checkbox"/>
+<div class="expr-en">The time is up.</div><div class="expr-ru">Время истекло.</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="The time is up.">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="95" type="checkbox"/>
+<div class="expr-en">What’s up?</div><div class="expr-ru">Что случилось?</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="What’s up?">🔊</button></div></article><article class="expr-group"><h3>WITHIN</h3><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="96" type="checkbox"/>
+<div class="expr-en">within reach / sight / hearing</div><div class="expr-ru">в пределах достижимости / видимости / слышимости</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="within reach / sight / hearing">🔊</button></div><div class="expr-row"><input aria-label="Отметить выражение изученным" data-learned="97" type="checkbox"/>
+<div class="expr-en">within three miles of</div><div class="expr-ru">в трёх милях от</div>
+<button aria-label="Прослушать" class="audio-btn" data-speak="within three miles of">🔊</button></div></article></div></section><section class="section" id="active-practice"><div class="exercise-head"><div><h2>Активная практика</h2><p class="intro">Сначала попробуйте восстановить выражение самостоятельно, затем проверьте себя. Здесь собраны наиболее полезные сочетания для активного употребления.</p></div><div class="practice-score" id="exprPracticeScore">Практика: 0%</div></div><div class="practice-round" id="practice-fill"><h3>Раунд A — восстановите выражение</h3><p class="intro">Введите всё устойчивое выражение, а не только отдельный предлог.</p><div class="item-list" id="exprFillList"></div></div><div class="practice-round" id="practice-speak"><h3>Раунд B — скажите вслух</h3><p class="intro">Сначала произнесите английское выражение самостоятельно. Затем откройте ответ и прослушайте пример.</p><div class="practice-grid" id="exprSpeakList"></div></div><div class="practice-round" id="practice-choice"><h3>Раунд C — выражение в контексте</h3><p class="intro">Выберите выражение, которое естественно завершает предложение.</p><div class="item-list" id="exprChoiceList"></div></div></section>
+<div class="bottom-nav"><a href="10_revision.html">← Раздел 10</a><a href="12_tests.html">Раздел 12 →</a></div>
+<div class="footer">Отмеченные выражения сохраняются автоматически.</div></div></main><div class="toast" id="toast"></div>
+<script>
+const STORAGE_KEY='englishPrepositionsCourseV1';
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function merge(a,b){if(!b||typeof b!=='object')return a;Object.keys(b).forEach(k=>{if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k]))a[k]=merge(a[k]||{},b[k]);else a[k]=b[k]});return a}
+function norm(s){return String(s||'').trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function attr(s){return esc(s).replace(/"/g,'&quot;')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2200)}
+function setupShell(){
+ const notes=document.getElementById('notes');notes.value=unit().notes||'';notes.addEventListener('input',()=>{unit().notes=notes.value;save()});
+ const b=document.getElementById('menuBtn'),o=document.getElementById('overlay');const open=x=>{document.body.classList.toggle('menu-open',x);b.setAttribute('aria-expanded',String(x))};
+ b.onclick=()=>open(!document.body.classList.contains('menu-open'));o.onclick=()=>open(false);document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false)});
+ document.getElementById('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='english-prepositions-progress.json';a.click();URL.revokeObjectURL(u)};
+ const file=document.getElementById('importFile');document.getElementById('importBtn').onclick=()=>file.click();file.onchange=async()=>{try{state=merge(clone(DEFAULT),JSON.parse(await file.files[0].text()));safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));location.reload()}catch(e){toast('Не удалось импортировать файл.')}};
+ document.getElementById('resetBtn').onclick=()=>{if(confirm('Сбросить ответы и заметки этого раздела?')){state.units[UNIT_ID]=clone(DEFAULT.units[UNIT_ID]);safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));location.reload()}};
+ document.addEventListener('click',e=>{const x=e.target.closest('[data-speak]');if(!x)return;if(!('speechSynthesis' in window))return toast('Озвучивание не поддерживается этим браузером.');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(x.dataset.speak);u.lang='en-GB';u.rate=.92;speechSynthesis.speak(u)});
+ let st;window.addEventListener('scroll',()=>{clearTimeout(st);st=setTimeout(()=>{unit().scrollY=window.scrollY;save()},180)},{passive:true});setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'auto'}),0)
+}
+</script>
+<script>
+const UNIT_ID='11-set-expressions';
+const TOTAL=97;
+const DEFAULT={version:1,currentUnit:UNIT_ID,units:{[UNIT_ID]:{learned:{},practice:{fillAnswers:{},fillCorrect:{},speakRevealed:{},choiceSelected:{},choiceCorrect:{}},notes:'',scrollY:0}}};
+let state;try{state=merge(clone(DEFAULT),JSON.parse(safeStorage.getItem(STORAGE_KEY)||'{}'))}catch(e){state=clone(DEFAULT)}if(!state.units[UNIT_ID])state.units[UNIT_ID]=clone(DEFAULT.units[UNIT_ID]);
+const unit=()=>state.units[UNIT_ID];
+function save(){state.currentUnit=UNIT_ID;safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));updateProgress()}
+document.querySelectorAll('[data-learned]').forEach(c=>{c.checked=!!unit().learned[c.dataset.learned];c.onchange=()=>{unit().learned[c.dataset.learned]=c.checked;save()}});
+function updateProgress(){const learned=Object.values(unit().learned||{}).filter(Boolean).length;const pr=unit().practice||{};const practiceDone=Object.values(pr.fillCorrect||{}).filter(Boolean).length+Object.values(pr.speakRevealed||{}).filter(Boolean).length+Object.values(pr.choiceCorrect||{}).filter(Boolean).length;const practiceTotal=34;const p=Math.round((learned+practiceDone)/(TOTAL+practiceTotal)*100);document.getElementById('progressText').textContent=p+'%';document.getElementById('progressFill').style.width=p+'%';const ps=document.getElementById('exprPracticeScore');if(ps)ps.textContent='Практика: '+Math.round(practiceDone/practiceTotal*100)+'%'}
+setupShell();save();
+</script>
+<script>
+(()=>{
+ const KEY='englishPrepositionsDiagnosticsV1';
+ const UNIT="11-set-expressions";
+ const QUESTIONS=[{"id": "q1", "topic": "by", "q": "Что означает <strong>learn by heart</strong>?", "options": ["учить наизусть", "учить постепенно", "учить случайно"], "answer": 0, "ex": "<strong>By heart</strong> означает «наизусть»."}, {"id": "q2", "topic": "at", "q": "Что означает <strong>at once</strong>?", "options": ["иногда", "сразу же", "в конце"], "answer": 1, "ex": "<strong>At once</strong> означает «сразу же»."}, {"id": "q3", "topic": "on", "q": "Что означает <strong>on purpose</strong>?", "options": ["случайно", "специально", "в среднем"], "answer": 1, "ex": "<strong>On purpose</strong> означает «намеренно, специально»."}, {"id": "q4", "topic": "out of", "q": "The lift is <strong>out of order</strong>. Что это значит?", "options": ["лифт не работает", "лифт переполнен", "лифт устарел"], "answer": 0, "ex": "<strong>Out of order</strong> означает «не работает, неисправен»."}, {"id": "q5", "topic": "for", "q": "Что означает <strong>for good</strong>?", "options": ["ради добра", "навсегда", "для примера"], "answer": 1, "ex": "<strong>For good</strong> означает «навсегда»."}, {"id": "q6", "topic": "in", "q": "Что означает <strong>in fact</strong>?", "options": ["в действительности", "в заключение", "частично"], "answer": 0, "ex": "<strong>In fact</strong> означает «на самом деле»."}, {"id": "q7", "topic": "by", "q": "Что означает <strong>by chance</strong>?", "options": ["по требованию", "случайно", "любой ценой"], "answer": 1, "ex": "<strong>By chance</strong> означает «случайно»."}, {"id": "q8", "topic": "up", "q": "Как переводится <strong>What’s up?</strong>?", "options": ["Который час?", "Что случилось?", "Куда идти?"], "answer": 1, "ex": "Разговорное <strong>What’s up?</strong> означает «Что случилось?» или «Как дела?»."}];
+ let store={units:{}};
+ try{store=JSON.parse(safeStorage.getItem(KEY)||'{"units":{}}')}catch(e){}
+ if(!store.units)store.units={};
+ let d=store.units[UNIT]||{answers:{},completed:false,score:0};
+ const list=document.getElementById('diagList'),finish=document.getElementById('diagFinish'),
+ reset=document.getElementById('diagReset'),theory=document.getElementById('diagTheory'),
+ result=document.getElementById('diagResult');
+ const save=()=>{store.units[UNIT]=d;safeStorage.setItem(KEY,JSON.stringify(store))};
+ function render(){
+   list.innerHTML=QUESTIONS.map((q,i)=>`<fieldset class="diag-question" id="diag-${q.id}">
+     <legend>${i+1}. ${q.q}</legend>
+     <div class="diag-options">${q.options.map((o,n)=>`<label class="diag-option"><input type="radio" name="diag-${q.id}" value="${n}" ${Number(d.answers[q.id])===n?'checked':''}><span>${o}</span></label>`).join('')}</div>
+     <div class="diag-feedback" id="diag-fb-${q.id}"></div>
+   </fieldset>`).join('');
+   list.querySelectorAll('input[type=radio]').forEach(inp=>inp.addEventListener('change',()=>{
+     const id=inp.name.replace('diag-','');d.answers[id]=Number(inp.value);d.completed=false;save();clearFeedback();
+   }));
+   if(d.completed)showResults(false);
+ }
+ function clearFeedback(){
+   document.querySelectorAll('.diag-question').forEach(x=>x.classList.remove('diag-correct','diag-wrong'));
+   document.querySelectorAll('.diag-feedback').forEach(x=>{x.classList.remove('show');x.innerHTML=''});
+   result.classList.remove('show');result.innerHTML='';theory.style.display='none';
+ }
+ function showResults(scroll=true){
+   const unanswered=QUESTIONS.filter(q=>!Number.isInteger(d.answers[q.id]));
+   if(unanswered.length){result.className='diag-result show';result.innerHTML=`Сначала ответьте на все вопросы. Осталось: <strong>${unanswered.length}</strong>.`;if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+   let score=0;const weak=[];
+   QUESTIONS.forEach(q=>{
+     const ok=Number(d.answers[q.id])===q.answer;if(ok)score++;else weak.push(q.topic);
+     const box=document.getElementById('diag-'+q.id),fb=document.getElementById('diag-fb-'+q.id);
+     box.classList.remove('diag-correct','diag-wrong');box.classList.add(ok?'diag-correct':'diag-wrong');
+     fb.classList.add('show');fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${q.ex}`;
+   });
+   d.completed=true;d.score=score;save();
+   const unique=[...new Set(weak)];
+   let advice=unique.length?`<p>Обратите особое внимание на:</p><ul class="diag-topics">${unique.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p>Базовые различия уже усвоены. Используйте теорию для систематизации и закрепления.</p>';
+   result.className='diag-result show';result.innerHTML=`<strong>Результат: ${score} из ${QUESTIONS.length}</strong>${advice}`;
+   theory.style.display='inline-flex';if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ finish.addEventListener('click',()=>showResults(true));
+ reset.addEventListener('click',()=>{d={answers:{},completed:false,score:0};save();render();clearFeedback();window.scrollTo({top:document.getElementById('intro-test').offsetTop-20,behavior:'smooth'})});
+ theory.addEventListener('click',()=>{const next=document.getElementById('intro-test').nextElementSibling;if(next)next.scrollIntoView({behavior:'smooth',block:'start'})});
+ render();
+})();
+</script>
+<script>
+(()=>{
+ const FILL=[{"id": "pfill-1", "text": "I had to learn the poem ___ before the performance.", "answer": "by heart", "comment": "by heart = наизусть."}, {"id": "pfill-2", "text": "We met completely ___ at a small café in Gdańsk.", "answer": "by chance", "comment": "by chance = случайно."}, {"id": "pfill-3", "text": "Please call the doctor ___.", "answer": "at once", "comment": "at once = сразу же."}, {"id": "pfill-4", "text": "He left the window open ___.", "answer": "on purpose", "comment": "on purpose = намеренно, специально."}, {"id": "pfill-5", "text": "___, the second route is much shorter.", "answer": "in fact", "comment": "in fact = на самом деле, в действительности."}, {"id": "pfill-6", "text": "___, the new schedule works quite well.", "answer": "on the whole", "comment": "on the whole = в целом, в общем."}, {"id": "pfill-7", "text": "The lift is ___ again, so we have to use the stairs.", "answer": "out of order", "comment": "out of order = неисправен, не работает."}, {"id": "pfill-8", "text": "After ten years abroad, she returned home ___.", "answer": "for good", "comment": "for good = навсегда."}, {"id": "pfill-9", "text": "___, I found the new software confusing, but it soon became easy.", "answer": "at first", "comment": "at first = сначала."}, {"id": "pfill-10", "text": "___, have you booked the tickets yet?", "answer": "by the way", "comment": "by the way = между прочим, кстати."}, {"id": "pfill-11", "text": "The blue model is back ___, so you can order it today.", "answer": "in stock", "comment": "in stock = в наличии / на складе."}, {"id": "pfill-12", "text": "The new sports centre is still ___.", "answer": "under construction", "comment": "under construction = строится."}];
+ const SPEAK=[{"id": "pspeak-1", "ru": "наизусть", "answer": "by heart", "example": "I learned the dialogue by heart."}, {"id": "pspeak-2", "ru": "случайно", "answer": "by chance / by accident", "example": "We met by chance."}, {"id": "pspeak-3", "ru": "любой ценой", "answer": "at all costs", "example": "We should avoid that mistake at all costs."}, {"id": "pspeak-4", "ru": "сразу же", "answer": "at once", "example": "Please reply at once."}, {"id": "pspeak-5", "ru": "на самом деле", "answer": "in fact", "example": "In fact, the shop closes at eight."}, {"id": "pspeak-6", "ru": "в целом", "answer": "on the whole", "example": "On the whole, I enjoyed the course."}, {"id": "pspeak-7", "ru": "специально, намеренно", "answer": "on purpose", "example": "She did not break it on purpose."}, {"id": "pspeak-8", "ru": "не работает, неисправен", "answer": "out of order", "example": "The ticket machine is out of order."}, {"id": "pspeak-9", "ru": "навсегда", "answer": "for good", "example": "He left the city for good."}, {"id": "pspeak-10", "ru": "между прочим, кстати", "answer": "by the way", "example": "By the way, Marta called this morning."}, {"id": "pspeak-11", "ru": "в настоящее время", "answer": "for the time being", "example": "For the time being, I am working from home."}, {"id": "pspeak-12", "ru": "по требованию", "answer": "on demand", "example": "The recording is available on demand."}];
+ const CHOICE=[{"id": "pchoice-1", "text": "I met Nora completely ___.", "options": ["by chance", "on purpose", "at once"], "answer": "by chance", "comment": "By chance = случайно."}, {"id": "pchoice-2", "text": "The lift is ___ again.", "options": ["out of order", "out of date", "in stock"], "answer": "out of order", "comment": "Out of order = неисправен; out of date = устарел."}, {"id": "pchoice-3", "text": "___, the plan worked better than we expected.", "options": ["On the whole", "By the way", "At once"], "answer": "On the whole", "comment": "On the whole = в целом."}, {"id": "pchoice-4", "text": "We must keep the data safe ___.", "options": ["at all costs", "in return", "at first"], "answer": "at all costs", "comment": "At all costs = любой ценой."}, {"id": "pchoice-5", "text": "The pedestrian bridge is still ___.", "options": ["under construction", "on sale", "in sight"], "answer": "under construction", "comment": "Under construction = находится в процессе строительства."}, {"id": "pchoice-6", "text": "She decided to move to the coast ___.", "options": ["for good", "for example", "in part"], "answer": "for good", "comment": "For good = навсегда."}, {"id": "pchoice-7", "text": "He left the lights on ___.", "options": ["on purpose", "by heart", "in general"], "answer": "on purpose", "comment": "On purpose = намеренно."}, {"id": "pchoice-8", "text": "___, I thought the task would be difficult.", "options": ["At first", "In conclusion", "For ages"], "answer": "At first", "comment": "At first = сначала."}, {"id": "pchoice-9", "text": "The replacement parts are finally ___.", "options": ["in stock", "on board", "out of use"], "answer": "in stock", "comment": "In stock = имеются в наличии."}, {"id": "pchoice-10", "text": "___, regular practice matters more than one perfect lesson.", "options": ["In conclusion", "Out of order", "At home"], "answer": "In conclusion", "comment": "In conclusion = в заключение."}];
+ const u=unit();if(!u.practice)u.practice={fillAnswers:{},fillCorrect:{},speakRevealed:{},choiceSelected:{},choiceCorrect:{}};
+ const pr=u.practice;
+ const n=s=>String(s||'').trim().toLowerCase().replace(/[’]/g,"'").replace(/\s+/g,' ');
+ const escAttr=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const fill=document.getElementById('exprFillList'),speak=document.getElementById('exprSpeakList'),choice=document.getElementById('exprChoiceList');
+ function renderFill(){
+   fill.innerHTML=FILL.map((x,i)=>{
+     const input='<input class="practice-input" data-pfill="'+x.id+'" value="'+escAttr(pr.fillAnswers[x.id]||'')+'" aria-label="Введите устойчивое выражение">';
+     const sentence=x.text.replace('___',input);
+     const spoken=x.text.replace('___',x.answer);
+     return '<article class="item-card"><div class="item-row"><span class="item-no">'+(i+1)+'</span><div class="item-main"><div class="sentence">'+sentence+'</div><div class="item-actions"><button class="check-btn" data-pfill-check="'+x.id+'">Проверить</button><button class="audio-btn" data-speak="'+escAttr(spoken)+'">🔊</button></div><div class="practice-feedback" id="pff-'+x.id+'"></div></div></div></article>';
+   }).join('');
+   fill.querySelectorAll('[data-pfill]').forEach(inp=>inp.oninput=()=>{pr.fillAnswers[inp.dataset.pfill]=inp.value;pr.fillCorrect[inp.dataset.pfill]=false;save()});
+   fill.querySelectorAll('[data-pfill-check]').forEach(b=>b.onclick=()=>{const x=FILL.find(z=>z.id===b.dataset.pfillCheck),v=pr.fillAnswers[x.id]||'',ok=n(v)===n(x.answer),fb=document.getElementById('pff-'+x.id);pr.fillCorrect[x.id]=ok;fb.className='practice-feedback show '+(ok?'good':'bad');fb.innerHTML=ok?'<strong>Верно.</strong> '+x.comment:'<strong>Пока неверно.</strong> Правильный ответ: <b>'+x.answer+'</b><br>'+x.comment;save()});
+ }
+ function renderSpeak(){
+   speak.innerHTML=SPEAK.map((x,i)=>'<article class="practice-card"><div class="practice-ru">'+(i+1)+'. '+x.ru+'</div><div class="practice-hint">Попробуйте сказать выражение вслух.</div><div class="item-actions"><button class="model-btn" data-pspeak="'+x.id+'">'+(pr.speakRevealed[x.id]?'Скрыть ответ':'Показать ответ')+'</button></div><div class="practice-answer '+(pr.speakRevealed[x.id]?'show':'')+'" id="psa-'+x.id+'"><strong>'+x.answer+'</strong><br>'+x.example+' <button class="audio-btn" data-speak="'+escAttr(x.example)+'">🔊</button></div></article>').join('');
+   speak.querySelectorAll('[data-pspeak]').forEach(b=>b.onclick=()=>{const id=b.dataset.pspeak;pr.speakRevealed[id]=!pr.speakRevealed[id];save();renderSpeak()});
+ }
+ function renderChoice(){
+   choice.innerHTML=CHOICE.map((x,i)=>{const sel=pr.choiceSelected[x.id]||'';return '<article class="item-card"><div class="item-row"><span class="item-no">'+(i+1)+'</span><div class="item-main"><div class="sentence">'+x.text+'</div><div class="practice-options">'+x.options.map(o=>'<button type="button" class="practice-option '+(sel===o?'selected':'')+'" data-pchoice="'+x.id+'" data-value="'+escAttr(o)+'">'+o+'</button>').join('')+'</div><div class="item-actions"><button class="check-btn" data-pchoice-check="'+x.id+'">Проверить</button></div><div class="practice-feedback" id="pcf-'+x.id+'"></div></div></div></article>'}).join('');
+   choice.querySelectorAll('[data-pchoice]').forEach(b=>b.onclick=()=>{pr.choiceSelected[b.dataset.pchoice]=b.dataset.value;pr.choiceCorrect[b.dataset.pchoice]=false;save();renderChoice()});
+   choice.querySelectorAll('[data-pchoice-check]').forEach(b=>b.onclick=()=>{const x=CHOICE.find(z=>z.id===b.dataset.pchoiceCheck),ok=pr.choiceSelected[x.id]===x.answer,fb=document.getElementById('pcf-'+x.id);pr.choiceCorrect[x.id]=ok;fb.className='practice-feedback show '+(ok?'good':'bad');fb.innerHTML=ok?'<strong>Верно.</strong> '+x.comment:'<strong>Пока неверно.</strong> Правильный ответ: <b>'+x.answer+'</b><br>'+x.comment;save()});
+ }
+ renderFill();renderSpeak();renderChoice();updateProgress();
+})();
+</script><button aria-label="Вернуться наверх" class="back-top" id="backTop" type="button">↑</button>
+<script>
+(()=>{
+  const b=document.getElementById('backTop');if(!b)return;
+  const sync=()=>b.classList.toggle('show',window.scrollY>700);
+  window.addEventListener('scroll',sync,{passive:true});sync();
+  b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+</script>
+<script>
+(()=>{
+  const groups=[...document.querySelectorAll('.expr-group')];
+  const rows=[...document.querySelectorAll('.expr-row')];
+  const search=document.getElementById('exprSearch'),count=document.getElementById('exprCount'),
+        toggle=document.getElementById('toggleTranslations'),container=document.getElementById('exprGroups');
+  let filter=unit().exprFilter||'all';
+  let hide=!!unit().hideTranslations;
+  function apply(){
+    const q=(search.value||'').trim().toLowerCase();
+    let visible=0;
+    rows.forEach(row=>{
+      const learned=!!unit().learned[row.querySelector('[data-learned]').dataset.learned];
+      const statusOk=filter==='all'||(filter==='learned'&&learned)||(filter==='unlearned'&&!learned);
+      const textOk=!q||row.innerText.toLowerCase().includes(q);
+      row.hidden=!(statusOk&&textOk);if(!row.hidden)visible++;
+    });
+    groups.forEach(g=>g.hidden=![...g.querySelectorAll('.expr-row')].some(r=>!r.hidden));
+    container.classList.toggle('translations-hidden',hide);
+    toggle.textContent=hide?'Показать переводы':'Скрыть переводы';
+    toggle.setAttribute('aria-pressed',String(hide));
+    document.querySelectorAll('[data-expr-filter]').forEach(b=>{const on=b.dataset.exprFilter===filter;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))});
+    count.textContent=`Показано: ${visible} из ${rows.length}`;
+  }
+  search.addEventListener('input',apply);
+  document.querySelectorAll('[data-expr-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.exprFilter;unit().exprFilter=filter;save();apply()}));
+  toggle.addEventListener('click',()=>{hide=!hide;unit().hideTranslations=hide;save();apply()});
+  rows.forEach(r=>r.querySelector('[data-learned]').addEventListener('change',apply));
+  apply();
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+  if(!location.hash) requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'}));
+});
+</script>
+</body></html>

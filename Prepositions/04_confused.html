@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<script>
+window.safeStorage=(()=>{
+  try{
+    const s=window.localStorage,t='__prepositions_storage_test__';
+    s.setItem(t,'1');s.removeItem(t);window.courseStorageAvailable=true;return s;
+  }catch(e){
+    window.courseStorageAvailable=false;
+    const memory={};
+    return{
+      getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,
+      setItem:(k,v)=>{memory[k]=String(v)},
+      removeItem:k=>{delete memory[k]},
+      clear:()=>{Object.keys(memory).forEach(k=>delete memory[k])}
+    };
+  }
+})();
+</script>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#17395d" name="theme-color"/><title>Раздел 4. Предлоги, которые часто путают</title><style>
+:root{--navy:#17395d;--navy2:#0d2a47;--blue:#2d70b2;--blueSoft:#eaf3fb;--teal:#2b8176;--tealSoft:#eaf7f3;--gold:#aa7b23;--goldSoft:#fff7e4;--ink:#182534;--muted:#627184;--line:#d8e3ec;--bg:#f4f8fb;--paper:#fff;--good:#18784c;--goodBg:#eaf8f1;--bad:#b5413d;--badBg:#fff0ef;--shadow:0 15px 42px rgba(20,53,84,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit}.skip{position:fixed;top:-70px;left:12px;background:#fff;padding:10px 14px;border-radius:10px;z-index:3000}.skip:focus{top:12px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:292px;background:#fff;border-right:1px solid var(--line);z-index:1000;padding:22px 18px max(18px,env(safe-area-inset-bottom));overflow:auto}.brand{display:flex;gap:12px;align-items:center;padding:4px 6px 18px;border-bottom:1px solid var(--line)}.brand-mark{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--navy),var(--blue));color:#fff;font-weight:950}.brand strong{display:block;color:var(--navy);font-size:1.04rem}.brand small{color:var(--muted)}
+.progress-box{margin:17px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fbfdff}.progress-head{display:flex;justify-content:space-between;color:var(--navy);font-weight:850}.progress-track{height:9px;background:#e6edf3;border-radius:999px;margin:9px 0;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),#62b79b);transition:.25s}.progress-note{font-size:.78rem;color:var(--muted)}.nav-title{margin:4px 8px 8px;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;font-weight:900}.course-nav a{display:flex;gap:10px;padding:10px 11px;margin:3px 0;border-radius:11px;text-decoration:none;color:#34475a;font-weight:720;font-size:.9rem}.course-nav a:hover{background:#f3f7fb}.course-nav a.active{background:var(--blueSoft);color:var(--navy);outline:1px solid #bfd7eb}.course-nav a[data-disabled=true]{opacity:.58}.nav-num{min-width:25px;color:var(--blue);font-weight:950}.side-tools{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.side-tools label{display:block;font-weight:850;color:var(--navy);font-size:.86rem;margin-bottom:7px}.side-tools textarea{width:100%;min-height:95px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdff}.tool-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.tool-btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);padding:9px;font-weight:800;font-size:.82rem}.tool-btn:hover{background:#f3f7fb}.reset{width:100%;margin-top:8px;color:var(--bad)}
+.menu-btn{display:none;position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:1400;border:0;border-radius:12px;padding:10px 13px;background:var(--navy);color:#fff;box-shadow:var(--shadow);font-weight:850}.overlay{display:none}.page{margin-left:292px;min-height:100vh}.content{max-width:1230px;margin:0 auto;padding:38px 30px 70px}.hero{background:linear-gradient(135deg,#fff 0%,#f7fbfe 65%,#eaf5f2 100%);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:var(--shadow);overflow:hidden;position:relative}.eyebrow{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--blueSoft);color:var(--blue);font-weight:900;font-size:.77rem;text-transform:uppercase;letter-spacing:.08em}.hero h1{font-size:clamp(2rem,4vw,3.25rem);line-height:1.08;margin:15px 0 12px;color:var(--navy2);max-width:920px}.hero p{max-width:860px;color:var(--muted);font-size:1.05rem}.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{padding:7px 11px;border-radius:999px;border:1px solid #cfdee9;background:rgba(255,255,255,.82);font-size:.82rem;font-weight:800;color:var(--navy)}.route-art{height:125px;margin-top:22px;border-radius:18px;background:linear-gradient(160deg,#e8f3fb,#f5fbf8);border:1px solid #d2e2eb;position:relative;overflow:hidden}.route-art:before{content:"";position:absolute;left:7%;right:7%;top:50%;height:5px;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:999px;transform:rotate(-4deg);box-shadow:120px -28px 0 -1px #7db8d9,280px 18px 0 -1px #68ae97}.route-art:after{content:"➜";position:absolute;right:7%;top:25%;font-size:4rem;color:var(--teal);transform:rotate(-5deg)}
+.section{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}.section h2{margin:0 0 8px;color:var(--navy);font-size:1.5rem}.section h3{color:var(--navy);margin:24px 0 8px}.intro{color:var(--muted);margin:0 0 18px}.callout{padding:15px 17px;border-left:4px solid var(--teal);background:var(--tealSoft);border-radius:0 13px 13px 0;margin:14px 0}.callout.warn{border-color:var(--gold);background:var(--goldSoft)}.theory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.theory-card{border:1px solid var(--line);border-radius:15px;padding:16px;background:linear-gradient(180deg,#fff,#fbfdff)}.theory-card h3{margin:0 0 4px;font-size:1.08rem}.theory-card .ru{color:var(--teal);font-weight:850}.example{margin-top:9px;padding:9px 11px;border-radius:10px;background:var(--blueSoft)}.theory-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}.theory-table th,.theory-table td{padding:11px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}.theory-table th{background:#eef5fb;color:var(--navy);text-align:left}.theory-table tr:last-child td{border-bottom:0}.theory-table th:last-child,.theory-table td:last-child{border-right:0}
+.exercise-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:15px}.exercise-head h2{margin:0}.exercise-actions{display:flex;gap:8px;flex-wrap:wrap}.small-btn,.check-btn,.model-btn,.audio-btn{border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px 11px;font-weight:850;color:var(--navy)}.check-btn{background:var(--navy);color:#fff;border-color:var(--navy)}.audio-btn{color:var(--blue);padding:7px 10px}.small-btn:hover,.model-btn:hover,.audio-btn:hover{background:#f2f7fb}.word-bank{display:flex;flex-wrap:wrap;gap:8px;padding:13px;border:1px solid #cfe0e9;background:#f5fafb;border-radius:13px;margin:12px 0 16px}.word-bank span{padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:999px;font-weight:800;color:var(--navy)}.item-list{display:grid;gap:10px}.item-card{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:#fff}.item-row{display:flex;gap:10px;align-items:flex-start}.item-no{flex:none;width:28px;height:28px;border-radius:9px;background:#edf4f8;color:var(--navy);display:grid;place-items:center;font-weight:950}.item-main{flex:1;min-width:0}.sentence{font-size:1rem}.blank{width:118px;max-width:100%;border:1px solid #bfcfda;border-radius:8px;padding:7px 9px;margin:2px 4px;background:#fbfdff}.blank:focus,textarea:focus{outline:3px solid rgba(45,112,178,.16);border-color:var(--blue)}.item-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.feedback{display:none;margin-top:9px;padding:10px 12px;border-radius:10px}.feedback.show{display:block}.feedback.good{background:var(--goodBg);color:var(--good)}.feedback.bad{background:var(--badBg);color:var(--bad)}
+.choice-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}.choice{border:1px solid #c6d5df;border-radius:10px;background:#fff;padding:8px 13px;font-weight:850;color:var(--navy)}.choice.selected{outline:2px solid var(--blue);background:var(--blueSoft)}.choice.correct{background:var(--goodBg);border-color:#8acaaa;color:var(--good)}.choice.wrong{background:var(--badBg);border-color:#e2a8a5;color:var(--bad)}
+.picture-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.picture-card{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#fff}.picture-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.picture-body{padding:12px}.picture-body textarea{width:100%;min-height:70px;resize:vertical;border:1px solid #c4d3dd;border-radius:9px;padding:9px}.translation-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.translation-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}.ru-text{font-weight:750}.translation-card textarea{width:100%;min-height:74px;margin-top:9px;resize:vertical;border:1px solid #c4d3dd;border-radius:9px;padding:9px}.model{display:none;margin-top:9px;padding:10px 12px;background:var(--goodBg);color:#245e45;border-radius:10px}.model.show{display:block}.passage{padding:18px;border:1px solid var(--line);border-radius:14px;background:#fbfdff;font-size:1.02rem}.bottom-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px}.bottom-nav a{flex:1;text-decoration:none;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:13px;color:var(--navy);font-weight:850}.bottom-nav a:last-child{text-align:right}.footer{margin-top:20px;text-align:center;color:var(--muted);font-size:.85rem}.toast{position:fixed;right:20px;bottom:20px;z-index:3000;background:var(--navy2);color:#fff;border-radius:11px;padding:11px 15px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
+@media(max-width:1020px){.theory-grid{grid-template-columns:1fr}.picture-grid{grid-template-columns:repeat(3,1fr)}.translation-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.menu-btn{display:block}.sidebar{transform:translateX(-105%);transition:.25s;width:min(88vw,330px);padding-top:max(68px,env(safe-area-inset-top))}.menu-open .sidebar{transform:none}.menu-open .overlay{display:block;position:fixed;inset:0;background:rgba(4,22,38,.44);z-index:900}.page{margin-left:0}.content{padding:74px 14px 55px}.hero{padding:22px 18px;border-radius:18px}.section{padding:18px 14px;border-radius:16px}.picture-grid{grid-template-columns:1fr 1fr}.exercise-head{display:block}.exercise-actions{margin-top:10px}.theory-table{font-size:.88rem}.theory-table th,.theory-table td{padding:9px 8px}.blank{width:105px}.bottom-nav{flex-direction:column}.bottom-nav a:last-child{text-align:left}}
+@media(max-width:460px){.picture-grid{grid-template-columns:1fr}.item-row{gap:7px}.item-no{width:25px;height:25px}.blank{display:inline-block;width:98px}.hero h1{font-size:2rem}}
+
+.diag-card{margin-top:24px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid var(--line,#d8e3ec);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}
+.diag-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.diag-card h2{margin:0 0 7px;color:var(--navy,#17395d);font-size:1.5rem}
+.diag-intro{margin:0;color:var(--muted,#627184);max-width:850px}
+.diag-note{display:inline-flex;margin-top:12px;padding:6px 10px;border-radius:999px;background:var(--goldSoft,#fff7df);color:#815b16;font-size:.8rem;font-weight:850}
+.diag-list{display:grid;gap:12px;margin-top:18px}
+.diag-question{border:1px solid var(--line,#d8e3ec);border-radius:14px;padding:15px;background:#fff}
+.diag-question legend{font-weight:850;color:var(--ink,#172434);padding:0 4px}
+.diag-options{display:grid;gap:8px;margin-top:11px}
+.diag-option{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;border:1px solid #dce6ee;border-radius:10px;background:#fbfdff;cursor:pointer}
+.diag-option:hover{border-color:#a9c7dd;background:#f5f9fc}
+.diag-option input{margin-top:3px;accent-color:var(--blue,#2f73b7)}
+.diag-question.diag-correct{border-color:#8dccaa;background:var(--goodBg,#eaf8f1)}
+.diag-question.diag-wrong{border-color:#e6aba8;background:var(--badBg,#fff0ef)}
+.diag-feedback{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.78)}
+.diag-feedback.show{display:block}
+.diag-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.diag-btn{border:1px solid var(--line,#d8e3ec);border-radius:11px;padding:10px 14px;background:#fff;color:var(--navy,#17395d);font-weight:850}
+.diag-btn.primary{background:var(--navy,#17395d);border-color:var(--navy,#17395d);color:#fff}
+.diag-btn.theory{display:none;background:var(--teal,#2b8176);border-color:var(--teal,#2b8176);color:#fff}
+.diag-result{display:none;margin-top:17px;padding:15px 17px;border-radius:14px;background:var(--blueSoft,#eaf3fb);color:var(--navy,#17395d)}
+.diag-result.show{display:block}
+.diag-result strong{font-size:1.12rem}
+.diag-topics{margin:8px 0 0;padding-left:20px}
+@media(max-width:760px){.diag-card{padding:19px 15px}.diag-head{display:block}.diag-actions{display:grid;grid-template-columns:1fr}.diag-btn{width:100%;min-height:44px}}
+
+
+/* Финальная проверка совместимости и мобильной вёрстки */
+img{max-width:100%;height:auto}
+.hero,.section,.item-card,.translation-card,.picture-card,.theory-card{min-width:0}
+.sentence,.ru-text,.example,.expr-en,.expr-ru,.intro{overflow-wrap:anywhere}
+button{touch-action:manipulation}
+.back-top{
+  position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:850;
+  width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:14px;
+  background:var(--navy,#17395d);color:#fff;font-weight:950;font-size:1.1rem;
+  box-shadow:0 10px 28px rgba(16,47,80,.22);opacity:0;transform:translateY(12px);
+  pointer-events:none;transition:.2s
+}
+.back-top.show{opacity:.94;transform:none;pointer-events:auto}
+@media(max-width:760px){
+  .diag-option{min-height:44px;align-items:center}
+  .audio-btn,.check-btn,.small-btn,.model-btn,.tool-btn,.diag-btn{min-height:44px}
+  input[type=radio],input[type=checkbox]{width:20px;height:20px;flex:none}
+  .theory-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .back-top{right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+
+/* === Final unified sidebar === */
+.sidebar{
+  background:#123b55 !important;
+  color:#edf6fb !important;
+  border-right:0 !important;
+  box-shadow:10px 0 30px rgba(12,39,58,.12) !important;
+}
+.sidebar .brand{border-bottom-color:rgba(255,255,255,.12)!important}
+.sidebar .brand strong,.sidebar .brand-title{color:#fff!important}
+.sidebar .brand small,.sidebar .brand-sub{color:#c5d8e4!important}
+.sidebar .brand-mark{background:#319487!important;color:#fff!important}
+.sidebar .progress-box,.sidebar .course-progress,.sidebar .progress-card{
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.14)!important;
+  color:#fff!important
+}
+.sidebar .progress-head{color:#fff!important}
+.sidebar .progress-track{background:rgba(255,255,255,.16)!important}
+.sidebar .progress-note{color:#cfdee7!important}
+.sidebar .nav-title{color:#a9c0cf!important}
+.sidebar .course-nav a,.sidebar .nav a{
+  color:#e3eef4!important;
+  border-color:transparent!important;
+  background:transparent!important
+}
+.sidebar .course-nav a:hover,.sidebar .nav a:hover{background:rgba(255,255,255,.075)!important}
+.sidebar .course-nav a.active,.sidebar .nav a.active{
+  background:rgba(62,181,166,.17)!important;
+  border:1px solid rgba(82,205,188,.45)!important;
+  color:#fff!important
+}
+.sidebar .nav-num,.sidebar .num{
+  color:#eaf6f8!important;
+  background:rgba(255,255,255,.10)!important
+}
+.sidebar a.active .nav-num,.sidebar a.active .num{background:#319487!important;color:#fff!important}
+.sidebar .side-tools,.sidebar .sidebar-tools,.sidebar .tools{
+  border-top-color:rgba(255,255,255,.12)!important
+}
+.sidebar .side-tools label,.sidebar .notes-label,.sidebar .tools label{color:#dbe8ef!important}
+.sidebar textarea{
+  color:#fff!important;background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar textarea::placeholder{color:#b5cad7!important}
+.sidebar .tool-btn{
+  color:#eef7fb!important;background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar .tool-btn:hover{background:rgba(255,255,255,.13)!important}
+.sidebar .tool-btn.reset,.sidebar .tool-btn.danger{color:#ffd3d0!important;border-color:rgba(255,180,176,.28)!important}
+.sidebar .subnav,.sidebar .course-subnav{
+  margin:3px 0 9px 35px!important;padding:2px 0 2px 9px!important;
+  border-left:2px solid rgba(116,214,200,.34)!important
+}
+.sidebar .subnav a,.sidebar .course-subnav a{
+  display:block!important;padding:5px 7px!important;margin:1px 0!important;
+  font-size:.77rem!important;line-height:1.28!important;color:#bed4df!important;
+  border:0!important;border-radius:8px!important
+}
+.sidebar .subnav a:hover,.sidebar .course-subnav a:hover{
+  color:#fff!important;background:rgba(255,255,255,.07)!important
+}
+.ru-hint{color:#865b13;font-weight:800}
+.nb-box{
+  margin:18px 0 0;padding:17px 18px;border:1px solid #b9d9ee;border-left:5px solid #327eb9;
+  border-radius:14px;background:#eef7ff;color:#26455f
+}
+.nb-box h3{margin:0 0 9px!important;color:#153d62!important}
+.nb-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.nb-grid>div{padding:12px;border-radius:11px;background:rgba(255,255,255,.72)}
+.nb-grid p{margin:5px 0}
+@media(max-width:720px){.nb-grid{grid-template-columns:1fr}}
+
+
+.adaptation-note{margin:14px 0 0;padding:10px 13px;border-radius:11px;background:#f2f7fb;border:1px solid #d8e5ee;color:#587084;font-size:.82rem}
+
+.learning-path{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(82,114,137,.16)}
+.learning-step{padding:6px 9px;border-radius:9px;background:#f3f7fa;color:#486276;font-size:.78rem;font-weight:800}
+@media(max-width:600px){.learning-path{display:grid;grid-template-columns:1fr 1fr}.learning-step{font-size:.76rem}}
+</style>
+<script>
+try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+window.addEventListener('pageshow',()=>requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'})));
+</script>
+</head><body><a class="skip" href="#main">Перейти к содержанию</a><button aria-expanded="false" class="menu-btn" id="menuBtn">☰ Разделы</button><div class="overlay" id="overlay"></div><aside class="sidebar"><div class="brand"><div class="brand-mark">ПР</div><div><strong>Предлоги</strong><small>Интерактивный курс</small></div></div><div class="progress-box"><div class="progress-head"><span>Прогресс раздела</span><span id="progressText">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-note">Ответы и заметки сохраняются автоматически.</div></div><div class="nav-title">Разделы курса</div><nav class="course-nav"><a class="" href="01_definition_prepositions.html"><span class="nav-num">01</span><span>Определение предлога</span></a><a class="" href="02_place.html"><span class="nav-num">02</span><span>Предлоги места</span></a><a class="" href="03_direction.html"><span class="nav-num">03</span><span>Направление и движение</span></a><a class="active" href="04_confused.html"><span class="nav-num">04</span><span>Предлоги, которые часто путают</span></a><div class="course-subnav"><a href="#intro-test">Вводный тест</a><a href="#between">Between / among</a><a href="#beside">Beside / besides / except</a><a href="#across">Across / over / through</a><a href="#ininto">In / into</a></div><a class="" href="05_revision_place.html"><span class="nav-num">05</span><span>Повторение: место и направление</span></a><a class="" href="06_transport.html"><span class="nav-num">06</span><span>Предлоги и транспорт</span></a><a class="" href="07_time.html"><span class="nav-num">07</span><span>Предлоги времени</span></a><a class="" href="08_abstract_relations.html"><span class="nav-num">08</span><span>Абстрактные отношения</span></a><a class="" href="09_composite.html"><span class="nav-num">09</span><span>Составные предлоги</span></a><a class="" href="10_revision.html"><span class="nav-num">10</span><span>Общее повторение</span></a><a class="" href="11_set_expressions.html"><span class="nav-num">11</span><span>Устойчивые выражения</span></a><a class="" href="12_tests.html"><span class="nav-num">12</span><span>Итоговые тесты</span></a></nav><div class="side-tools"><label for="notes">Личные заметки</label><textarea id="notes" placeholder="Запишите правило или трудный пример..."></textarea><div class="tool-row"><button class="tool-btn" id="exportBtn">Экспорт</button><button class="tool-btn" id="importBtn">Импорт</button></div><button class="tool-btn reset" id="resetBtn">Сбросить раздел</button><input accept="application/json" hidden="" id="importFile" type="file"/></div></aside><main class="page" id="main"><div class="content">
+<header class="hero"><span class="eyebrow">Раздел 04</span><h1>Предлоги, которые часто путают</h1><p>Раздел систематизирует четыре группы: <strong>between / among</strong>, <strong>beside / besides / except</strong>, <strong>across / over / through</strong> и <strong>in / into</strong>.</p><div class="hero-meta"><span class="pill">сравнительные правила</span><span class="pill">выбор из двух вариантов</span><span class="pill">перевод</span><span class="pill">автосохранение</span></div><div class="learning-path"><span class="learning-step">Диагностика</span><span class="learning-step">Теория</span><span class="learning-step">Контраст</span><span class="learning-step">Практика</span><span class="learning-step">Повторение</span></div></header>
+<section aria-labelledby="diag-title" class="diag-card" id="intro-test">
+<div class="diag-head"><div>
+<h2 id="diag-title">Вводный тест: предлоги, которые легко перепутать</h2>
+<p class="diag-intro">Ответьте до чтения теории. После завершения вы увидите объяснения и темы, которым стоит уделить особое внимание.</p>
+<span class="diag-note">Результат не учитывается в основном прогрессе главы</span>
+</div></div>
+<div class="diag-list" id="diagList"></div>
+<div class="diag-actions">
+<button class="diag-btn primary" id="diagFinish" type="button">Завершить вводный тест</button>
+<button class="diag-btn" id="diagReset" type="button">Пройти заново</button>
+<button class="diag-btn theory" id="diagTheory" type="button">Перейти к теории</button>
+</div>
+<div aria-live="polite" class="diag-result" id="diagResult" role="status"></div>
+</section>
+<section class="section" id="between"><h2>Between и among</h2><div class="theory-grid"><article class="theory-card"><h3>between</h3><div class="ru">между отдельными людьми, предметами или группами</div><div class="example">The cabin stands <strong>between</strong> the lake, the road and two wooded hills.</div></article><article class="theory-card"><h3>among</h3><div class="ru">среди, внутри группы или массы</div><div class="example">I noticed her <strong>among</strong> the tourists.</div></article></div><div class="callout"><strong>Between</strong> возможно и с количеством больше двух, когда объекты рассматриваются отдельно: <em>divide the work between teaching, writing and administration</em>.</div></section>
+<section class="section" id="ex14"><div class="exercise-head"><div><h2>Сравнение: between или among?</h2><p class="intro">Выберите between или among.</p></div></div><div class="item-list" id="ex14List"></div></section>
+<section class="section" id="beside"><h2>Beside, besides и except</h2><table class="theory-table"><thead><tr><th>Слово</th><th>Значение</th><th>Пример</th></tr></thead><tbody><tr><td><strong>beside</strong></td><td>рядом с, возле</td><td>We sat beside the water.</td></tr><tr><td><strong>besides</strong></td><td>кроме того; в дополнение к</td><td>Besides French, she speaks Italian.</td></tr><tr><td><strong>except</strong></td><td>за исключением</td><td>Everyone came except Maks.</td></tr></tbody></table><div class="callout warn"><strong>Кроме:</strong> <em>except</em> исключает элемент; <em>besides</em> добавляет ещё один элемент.</div></section>
+<section class="section" id="ex15"><div class="exercise-head"><div><h2>Значение в контексте: beside, besides, except</h2><p class="intro">Выберите правильный вариант из скобок.</p></div></div><div class="item-list" id="ex15List"></div></section>
+<section class="section" id="ex16"><div class="exercise-head"><div><h2>Контекст: beside / besides</h2><p class="intro">Вставьте beside или besides.</p></div><button class="small-btn" id="showEx16">Показать ответы</button></div><div class="item-list" id="ex16List"></div></section>
+<section class="section" id="ex17"><div class="exercise-head"><div><h2>RU → EN: исключение и добавление</h2><p class="intro">Переведите предложения с русского языка на английский.</p></div></div><div class="translation-grid" id="ex17List"></div></section>
+<section class="section" id="across"><h2>Across, over и through</h2><div class="theory-grid"><article class="theory-card"><h3>across</h3><div class="ru">с одной стороны на другую по поверхности или большой территории</div><div class="example">She swam across the river.</div></article><article class="theory-card"><h3>over</h3><div class="ru">над, через препятствие; по большой территории</div><div class="example">He jumped over the fence.</div></article><article class="theory-card"><h3>through</h3><div class="ru">сквозь туннель, трубу или плотную среду</div><div class="example">The road goes through a forest.</div></article></div><div class="callout"><strong>Across</strong> подчёркивает переход с одной стороны на другую; <strong>through</strong> — движение внутри пространства. Поэтому с park возможны оба, но смысловой фокус отличается.</div></section>
+<section class="section" id="ex18"><div class="exercise-head"><div><h2>Маршрут: across, over, through</h2><p class="intro">Вставьте across, over или through.</p></div><button class="small-btn" id="showEx18">Показать ответы</button></div><div class="item-list" id="ex18List"></div></section>
+<section class="section" id="ininto"><h2>In и into</h2><p><strong>In</strong> описывает положение внутри пространства, когда переход снаружи внутрь не подразумевается. <strong>Into</strong> используется при проникновении или движении внутрь.</p><div class="theory-grid"><article class="theory-card"><h3>in</h3><div class="example">He spent the afternoon walking <strong>in</strong> the garden.</div></article><article class="theory-card"><h3>into</h3><div class="example">She walked <strong>into</strong> the room.</div></article></div><div class="callout warn">Когда объект не назван, употребляется наречие <strong>in</strong>: <em>Come in!</em></div></section>
+<section class="section" id="ex19"><div class="exercise-head"><div><h2>Положение или движение? in / into</h2><p class="intro">Выберите in или into.</p></div></div><div class="item-list" id="ex19List"></div></section>
+<div class="bottom-nav"><a href="03_direction.html">← Раздел 3. Направление</a><a href="05_revision_place.html">Раздел 5. Повторение →</a></div>
+<div class="footer">Сравнивайте смысл целого предложения, а не русский предлог отдельно.</div></div></main><div class="toast" id="toast"></div><script>window.UNIT_ID="04-confused";
+const COURSE_KEY='englishPrepositionsCourseV1';
+const UNIT_ID=window.UNIT_ID;
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function merge(a,b){if(!b||typeof b!=='object')return a;Object.keys(b).forEach(k=>{if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k]))a[k]=merge(a[k]||{},b[k]);else a[k]=b[k]});return a}
+const base={version:1,currentUnit:UNIT_ID,units:{[UNIT_ID]:{answers:{},choices:{},translations:{},models:{},notes:'',scrollY:0,updatedAt:null}}};
+let state;try{state=merge(clone(base),JSON.parse(safeStorage.getItem(COURSE_KEY)||'{}'))}catch(e){state=clone(base)}
+if(!state.units[UNIT_ID])state.units[UNIT_ID]=clone(base.units[UNIT_ID]);
+const unit=()=>state.units[UNIT_ID];
+function save(){unit().updatedAt=new Date().toISOString();state.currentUnit=UNIT_ID;safeStorage.setItem(COURSE_KEY,JSON.stringify(state));updateProgress()}
+function norm(s){return String(s||'').trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ')}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function escapeAttr(s){return escapeHtml(s).replace(/"/g,'&quot;')}
+function makeBlank(id,idx,answerSet){const val=((unit().answers[id]||[])[idx]||'');return `<input class="blank" data-item="${id}" data-index="${idx}" value="${escapeAttr(val)}" aria-label="Ответ ${idx+1}">`}
+function renderTemplate(item){return item.template.replace(/\{\{(\d+)\}\}/g,(_,n)=>makeBlank(item.id,Number(n),item.answers[Number(n)]))}
+function isFilled(item){const v=unit().answers[item.id]||[];return item.answers.every((_,i)=>norm(v[i]))}
+function isCorrect(item){const v=unit().answers[item.id]||[];return item.answers.every((set,i)=>set.map(norm).includes(norm(v[i])))}
+function modelSentence(item){return item.template.replace(/\{\{(\d+)\}\}/g,(_,n)=>item.answers[Number(n)][0])}
+function attachBlankEvents(root,allItems){root.querySelectorAll('.blank').forEach(inp=>inp.addEventListener('input',()=>{const id=inp.dataset.item,i=Number(inp.dataset.index);if(!unit().answers[id])unit().answers[id]=[];unit().answers[id][i]=inp.value;save()}));root.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>showBlankFeedback(b.dataset.check,allItems)));root.querySelectorAll('[data-speak]').forEach(b=>b.addEventListener('click',()=>speak(b.dataset.speak)))}
+function showBlankFeedback(id,items){const item=items.find(x=>x.id===id);const fb=document.getElementById('fb-'+id);if(!isFilled(item)){fb.className='feedback show bad';fb.textContent='Заполните все пропуски в этом пункте.';return}const ok=isCorrect(item);fb.className='feedback show '+(ok?'good':'bad');fb.innerHTML=ok?`<strong>Верно.</strong> ${item.comment||''}`:`<strong>Пока неверно.</strong> Правильный ответ: <b>${escapeHtml(modelSentence(item))}</b>${item.comment?'<br>'+escapeHtml(item.comment):''}`;save()}
+function renderBlankItems(target,items,start=1){const root=document.getElementById(target);root.innerHTML=items.map((item,i)=>`<article class="item-card"><div class="item-row"><span class="item-no">${start+i}</span><div class="item-main"><div class="sentence">${renderTemplate(item)}</div><div class="item-actions"><button class="check-btn" data-check="${item.id}">Проверить</button><button class="audio-btn" data-speak="${escapeAttr(modelSentence(item))}">🔊</button></div><div class="feedback" id="fb-${item.id}"></div></div></div></article>`).join('');attachBlankEvents(root,items)}
+function renderTranslations(target,items){const root=document.getElementById(target);root.innerHTML=items.map((item,i)=>{const val=unit().translations[item.id]||'',shown=!!unit().models[item.id];return `<article class="translation-card"><div class="ru-text"><span class="item-no">${i+1}</span> ${item.ru}</div><textarea data-translation="${item.id}" placeholder="Введите перевод...">${escapeHtml(val)}</textarea><div class="item-actions"><button class="model-btn" data-model="${item.id}">${shown?'Скрыть образец':'Показать образец'}</button><button class="audio-btn" data-speak="${escapeAttr(item.model)}">🔊 Прослушать</button></div><div class="model ${shown?'show':''}" id="model-${item.id}">${item.model}</div></article>`}).join('');root.querySelectorAll('[data-translation]').forEach(t=>t.addEventListener('input',()=>{unit().translations[t.dataset.translation]=t.value;save()}));root.querySelectorAll('[data-model]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.model;unit().models[id]=!unit().models[id];document.getElementById('model-'+id).classList.toggle('show',unit().models[id]);b.textContent=unit().models[id]?'Скрыть образец':'Показать образец';save()}));root.querySelectorAll('[data-speak]').forEach(b=>b.addEventListener('click',()=>speak(b.dataset.speak)))}
+function renderChoices(target,items){const root=document.getElementById(target);root.innerHTML=items.map((item,i)=>{const saved=unit().choices[item.id];return `<article class="item-card" data-choice-card="${item.id}"><div class="item-row"><span class="item-no">${i+1}</span><div class="item-main"><div class="sentence">${item.sentence}</div><div class="choice-grid">${item.options.map((o,j)=>`<button class="choice ${saved===j?'selected':''}" data-choice="${item.id}" data-choice-index="${j}">${o}</button>`).join('')}</div><div class="feedback" id="choice-fb-${item.id}"></div></div></div></article>`}).join('');root.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>{unit().choices[b.dataset.choice]=Number(b.dataset.choiceIndex);showChoice(b.dataset.choice,items);save()}));items.forEach(x=>{if(Number.isInteger(unit().choices[x.id]))showChoice(x.id,items)})}
+function showChoice(id,items){const item=items.find(x=>x.id===id),value=unit().choices[id],card=document.querySelector(`[data-choice-card="${id}"]`),fb=document.getElementById('choice-fb-'+id);card.querySelectorAll('[data-choice]').forEach(b=>{const j=Number(b.dataset.choiceIndex);b.classList.remove('selected','correct','wrong');if(j===value)b.classList.add('selected');if(j===item.correct)b.classList.add('correct');if(j===value&&j!==item.correct)b.classList.add('wrong')});const ok=value===item.correct;fb.className='feedback show '+(ok?'good':'bad');fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${item.explanation}`}
+function showGroupAnswers(items){items.forEach(item=>{if(!unit().answers[item.id])unit().answers[item.id]=[];item.answers.forEach((set,i)=>unit().answers[item.id][i]=set[0])});save();location.reload()}
+function speak(text){if(!('speechSynthesis' in window)){toast('Озвучивание не поддерживается этим браузером.');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.92;speechSynthesis.speak(u)}
+function updateProgress(){const total=window.PROGRESS_TOTAL();const done=window.PROGRESS_DONE();const p=total?Math.round(done/total*100):0;document.getElementById('progressText').textContent=p+'%';document.getElementById('progressFill').style.width=p+'%'}
+function setupShell(){const menu=document.getElementById('menuBtn'),overlay=document.getElementById('overlay');const set=o=>{document.body.classList.toggle('menu-open',o);menu.setAttribute('aria-expanded',String(o))};menu.addEventListener('click',()=>set(!document.body.classList.contains('menu-open')));overlay.addEventListener('click',()=>set(false));document.addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});document.querySelectorAll('.course-nav a[data-disabled=true]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();toast('Этот раздел ещё не создан.')}));const notes=document.getElementById('notes');notes.value=unit().notes||'';notes.addEventListener('input',()=>{unit().notes=notes.value;save()});document.getElementById('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='english-prepositions-progress.json';a.click();URL.revokeObjectURL(url)});const fi=document.getElementById('importFile');document.getElementById('importBtn').addEventListener('click',()=>fi.click());fi.addEventListener('change',async()=>{try{state=merge(clone(base),JSON.parse(await fi.files[0].text()));safeStorage.setItem(COURSE_KEY,JSON.stringify(state));location.reload()}catch(e){toast('Не удалось импортировать прогресс.')}});document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Сбросить ответы и заметки этого раздела?')){state.units[UNIT_ID]=clone(base.units[UNIT_ID]);save();location.reload()}});let ticking=false;window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{unit().scrollY=window.scrollY;safeStorage.setItem(COURSE_KEY,JSON.stringify(state));ticking=false});ticking=true}});setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'auto'}),0)}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200)}
+
+const EX14=[{"id":"c-ex14-1","sentence":"The missing key was eventually found ___ the papers on my desk.","options":["between","among"],"correct":1,"explanation":"Бумаги образуют группу/массу: among the papers."},{"id":"c-ex14-2","sentence":"The three hikers divided the food ___ themselves.","options":["between","among"],"correct":1,"explanation":"Для распределения чего-либо внутри группы из трёх и более людей естественно among: divide the food among themselves."},{"id":"c-ex14-3","sentence":"The disagreement came ___ two close friends.","options":["between","among"],"correct":0,"explanation":"Речь об отношениях двух отдельных людей: between."},{"id":"c-ex14-4","sentence":"___ the residents and the developers, opinions were sharply divided.","options":["Between","Among"],"correct":0,"explanation":"Сопоставляются две отдельные группы: between."},{"id":"c-ex14-5","sentence":"___ all the proposals, this one seems the most practical.","options":["Between","Among"],"correct":1,"explanation":"Выбор внутри группы предложений: among."},{"id":"c-ex14-6","sentence":"We had a short break ___ the two sessions.","options":["between","among"],"correct":0,"explanation":"Два отдельных этапа: between the two sessions."}];const EX15=[{"id":"c-ex15-1","sentence":"The dog lay ___ its owner’s chair.","options":["beside","besides"],"correct":0,"explanation":"Beside = рядом с."},{"id":"c-ex15-2","sentence":"___ the caretaker, two electricians were working in the house.","options":["Beside","Besides"],"correct":1,"explanation":"Besides = в дополнение к: кроме смотрителя, там были ещё два электрика."},{"id":"c-ex15-3","sentence":"Wild flowers grew ___ the lake.","options":["beside","besides"],"correct":0,"explanation":"Beside = рядом с озером."},{"id":"c-ex15-4","sentence":"How many people ___ you are joining the trip?","options":["beside","besides"],"correct":1,"explanation":"Besides you = помимо вас, в дополнение к вам."},{"id":"c-ex15-5","sentence":"May I sit ___ you during the talk?","options":["beside","besides"],"correct":0,"explanation":"Beside you = рядом с вами."},{"id":"c-ex15-6","sentence":"___ tea, we served coffee and fresh juice.","options":["Beside","Besides"],"correct":1,"explanation":"Besides = кроме того, в дополнение к чаю."},{"id":"c-ex15-7","sentence":"I like every colour ___ bright orange.","options":["except","besides"],"correct":0,"explanation":"Except исключает один элемент из группы."},{"id":"c-ex15-8","sentence":"Split the last sandwich ___ you two.","options":["between","among"],"correct":0,"explanation":"Для двух людей — between."},{"id":"c-ex15-9","sentence":"The campsite lies ___ the lake, the road and two wooded hills.","options":["between","among"],"correct":0,"explanation":"Between возможно с несколькими отдельными ориентирами, если они воспринимаются по отдельности."},{"id":"c-ex15-10","sentence":"I recognised you ___ the crowd.","options":["between","among"],"correct":1,"explanation":"Внутри группы людей — among."},{"id":"c-ex15-11","sentence":"The shop is open every day ___ Sunday.","options":["except","besides"],"correct":0,"explanation":"Воскресенье исключается: except Sunday."},{"id":"c-ex15-12","sentence":"Everyone arrived on time ___ me.","options":["except","besides"],"correct":0,"explanation":"Говорящий — единственное исключение."},{"id":"c-ex15-13","sentence":"Three other students chose the same topic ___ me.","options":["beside","besides"],"correct":1,"explanation":"Besides me = помимо меня, ещё трое."},{"id":"c-ex15-14","sentence":"My glasses were everywhere ___ where I expected them to be.","options":["except","besides"],"correct":0,"explanation":"Except = везде, кроме нужного места."}];const EX16=[{"id":"c-ex16-1","template":"Who is the woman sitting {{0}} Maks?","answers":[["beside"]]},{"id":"c-ex16-2","template":"{{0}} languages, we have to study literature and history.","answers":[["Besides"]]},{"id":"c-ex16-3","template":"Who else was at the theatre {{0}} Nora and Alex?","answers":[["besides"]]},{"id":"c-ex16-4","template":"I do not like this jacket; {{0}}, it is too expensive.","answers":[["besides"]]},{"id":"c-ex16-5","template":"“Perhaps you will be lucky this time,” he said as he settled himself {{0}} her in the car.","answers":[["beside"]]},{"id":"c-ex16-6","template":"It is too late to go out, and {{0}}, you have not finished your work.","answers":[["besides"]]},{"id":"c-ex16-7","template":"{{0}} the apple tree, we have several tall pear trees in our garden.","answers":[["Besides"]]},{"id":"c-ex16-8","template":"I do not feel like going anywhere. {{0}}, it is starting to rain.","answers":[["Besides"]]},{"id":"c-ex16-9","template":"Do not stand {{0}} that wall; it does not look safe.","answers":[["beside"]]},{"id":"c-ex16-10","template":"I do not like him: he is careless and lazy, and {{0}}, he is impatient.","answers":[["besides"]]}];const EX17=[{"id":"c-ex17-1","ru":"Все закончили работу, кроме Макса.","model":"Everyone finished the work except Max."},{"id":"c-ex17-2","ru":"Кафе открыто каждый день, кроме понедельника.","model":"The café is open every day except Monday."},{"id":"c-ex17-3","ru":"Все ушли, кроме дежурного администратора.","model":"Everyone left except the duty manager."},{"id":"c-ex17-4","ru":"Я пригласил всех соседей, кроме семьи из квартиры 12.","model":"I invited all the neighbours except the family from flat 12."},{"id":"c-ex17-5","ru":"Кроме грамматики, у нас сегодня две задачи по аудированию.","model":"Besides grammar, we have two listening tasks today."},{"id":"c-ex17-6","ru":"На площадке никого не было, кроме двух детей.","model":"There was nobody in the playground except two children."},{"id":"c-ex17-7","ru":"Кроме этого письма, она прислала две фотографии.","model":"Besides this letter, she sent two photographs."},{"id":"c-ex17-8","ru":"Кроме Анны, к проекту присоединились ещё три студента.","model":"Besides Anna, three more students joined the project."},{"id":"c-ex17-9","ru":"Кроме основного маршрута, есть ещё короткая тропа.","model":"Besides the main route, there is a shorter path."},{"id":"c-ex17-10","ru":"Я прочитал все сообщения, кроме последнего.","model":"I read all the messages except the last one."}];const EX18=[{"id":"c-ex18-1","template":"There was a small shop {{0}} the road.","answers":[["across","over"]],"comment":"Across the road — нейтрально «на другой стороне дороги». Over the road встречается в BrE, но across понятнее и универсальнее."},{"id":"c-ex18-2","template":"A new footpath runs {{0}} the valley from east to west.","answers":[["across"]]},{"id":"c-ex18-3","template":"The river is too broad; you cannot swim {{0}} it.","answers":[["across"]]},{"id":"c-ex18-4","template":"We ran {{0}} the field.","answers":[["across"]]},{"id":"c-ex18-5","template":"The pipe is clogged; nothing can flow {{0}} it.","answers":[["through"]]},{"id":"c-ex18-6","template":"On my way to the office I walked {{0}} the park every day.","answers":[["through","across"]],"comment":"Through the park = внутри пространства парка; across the park = с одной стороны парка на другую. Оба варианта возможны при разной мысленной картине."},{"id":"c-ex18-7","template":"Will you row me {{0}} the lake?","answers":[["across"]]},{"id":"c-ex18-8","template":"The River Vistula flows {{0}} Warsaw.","answers":[["through"]]},{"id":"c-ex18-9","template":"While thinking it over, he drew a line {{0}} the sheet of paper.","answers":[["across"]]},{"id":"c-ex18-10","template":"He has travelled all {{0}} Europe.","answers":[["over"]],"comment":"All over Europe = по всей Европе."},{"id":"c-ex18-11","template":"He was looking {{0}} a telescope.","answers":[["through"]]},{"id":"c-ex18-12","template":"She spoke to me {{0}} her shoulder.","answers":[["over"]]},{"id":"c-ex18-13","template":"She passed a comb {{0}} her hair.","answers":[["through"]]},{"id":"c-ex18-14","template":"There is a new bridge {{0}} the river.","answers":[["across","over"]],"comment":"A bridge over the river — очень частотно; across the river тоже подчёркивает соединение двух берегов."},{"id":"c-ex18-15","template":"The road goes {{0}} the forest.","answers":[["through"]]},{"id":"c-ex18-16","template":"I looked {{0}} the hedge but saw nobody.","answers":[["over"]]},{"id":"c-ex18-17","template":"He is famous all {{0}} the world.","answers":[["over"]]}];const EX19=[{"id":"c-ex19-1","sentence":"The coin rolled ___ the box through a narrow slot.","options":["in","into"],"correct":1,"explanation":"Into показывает движение снаружи внутрь коробки."},{"id":"c-ex19-2","sentence":"He pushed the metal rod ___ the narrow opening until it disappeared.","options":["in","into"],"correct":1,"explanation":"Into подчёркивает движение снаружи внутрь отверстия."},{"id":"c-ex19-3","sentence":"The dog ran ___ the kitchen when it heard the food bowl.","options":["in","into"],"correct":1,"explanation":"Есть переход из одного пространства в другое: into the kitchen."},{"id":"c-ex19-4","sentence":"The children are playing ___ the garden.","options":["in","into"],"correct":0,"explanation":"Они уже находятся внутри сада: in the garden."},{"id":"c-ex19-5","sentence":"The spare key is ___ my jacket pocket.","options":["in","into"],"correct":0,"explanation":"Положение внутри: in my pocket."},{"id":"c-ex19-6","sentence":"The car crossed the border and drove ___ Italy.","options":["in","into"],"correct":1,"explanation":"Движение через границу внутрь страны: into Italy."},{"id":"c-ex19-7","sentence":"How did the cat get ___? The door was locked.","options":["in","into"],"correct":0,"explanation":"Объект не назван: get in. Into требует существительного: get into the room."},{"id":"c-ex19-8","sentence":"Divide the cake ___ six equal pieces.","options":["in","into"],"correct":1,"explanation":"Устойчивое сочетание: divide something into parts/pieces."},{"id":"c-ex19-9","sentence":"“Let me ___,” she called from the hallway.","options":["in","into"],"correct":0,"explanation":"Без названного объекта используется наречие in: let me in."},{"id":"c-ex19-10","sentence":"He opened the door, walked ___ the room and sat by the window.","options":["in","into"],"correct":1,"explanation":"После opened the door речь о переходе внутрь комнаты: into the room. In the room описывало бы движение уже внутри."}];
+renderChoices('ex14List',EX14);renderChoices('ex15List',EX15);renderBlankItems('ex16List',EX16,1);renderTranslations('ex17List',EX17);renderBlankItems('ex18List',EX18,1);renderChoices('ex19List',EX19);document.getElementById('showEx16').onclick=()=>showGroupAnswers(EX16);document.getElementById('showEx18').onclick=()=>showGroupAnswers(EX18);window.PROGRESS_TOTAL=()=>EX14.length+EX15.length+EX16.length+EX17.length+EX18.length+EX19.length;window.PROGRESS_DONE=()=>{let n=0;[...EX14,...EX15,...EX19].forEach(x=>{if(Number.isInteger(unit().choices[x.id]))n++});[...EX16,...EX18].forEach(x=>{if(isFilled(x))n++});EX17.forEach(x=>{if(norm(unit().translations[x.id]).length>3)n++});return n};setupShell();save();
+</script>
+<script>
+(()=>{
+ const KEY='englishPrepositionsDiagnosticsV1';
+ const UNIT="04-confused";
+ const QUESTIONS=[{"id": "q1", "topic": "between / among", "q": "The village lies ___ three mountains.", "options": ["between", "among"], "answer": 0, "ex": "Горы рассматриваются как отдельные ориентиры, поэтому возможно <strong>between</strong>."}, {"id": "q2", "topic": "between / among", "q": "She felt comfortable ___ friends.", "options": ["between", "among"], "answer": 1, "ex": "Положение внутри группы выражается предлогом <strong>among</strong>."}, {"id": "q3", "topic": "beside / besides / except", "q": "Come and sit ___ me.", "options": ["beside", "besides", "except"], "answer": 0, "ex": "<strong>Beside</strong> означает «рядом с»."}, {"id": "q4", "topic": "beside / besides / except", "q": "Everyone came ___ Pavel.", "options": ["beside", "besides", "except"], "answer": 2, "ex": "<strong>Except</strong> исключает Павла из всей группы."}, {"id": "q5", "topic": "beside / besides / except", "q": "___ English, she speaks Polish and German.", "options": ["Beside", "Besides", "Except"], "answer": 1, "ex": "<strong>Besides</strong> означает «кроме того; в дополнение»."}, {"id": "q6", "topic": "across / over / through", "q": "The hikers walked ___ the forest.", "options": ["across", "over", "through"], "answer": 2, "ex": "Они двигались внутри леса: <strong>through the forest</strong>."}, {"id": "q7", "topic": "across / over / through", "q": "A plane flew ___ the city.", "options": ["across", "over", "through"], "answer": 1, "ex": "Самолёт находился над городом: <strong>over the city</strong>."}, {"id": "q8", "topic": "in / into", "q": "The ball rolled ___ the room from the hallway.", "options": ["in", "into"], "answer": 1, "ex": "Глагол описывает движение внутрь: <strong>put ... into</strong>."}];
+ let store={units:{}};
+ try{store=JSON.parse(safeStorage.getItem(KEY)||'{"units":{}}')}catch(e){}
+ if(!store.units)store.units={};
+ let d=store.units[UNIT]||{answers:{},completed:false,score:0};
+ const list=document.getElementById('diagList'),finish=document.getElementById('diagFinish'),
+ reset=document.getElementById('diagReset'),theory=document.getElementById('diagTheory'),
+ result=document.getElementById('diagResult');
+ const save=()=>{store.units[UNIT]=d;safeStorage.setItem(KEY,JSON.stringify(store))};
+ function render(){
+   list.innerHTML=QUESTIONS.map((q,i)=>`<fieldset class="diag-question" id="diag-${q.id}">
+     <legend>${i+1}. ${q.q}</legend>
+     <div class="diag-options">${q.options.map((o,n)=>`<label class="diag-option"><input type="radio" name="diag-${q.id}" value="${n}" ${Number(d.answers[q.id])===n?'checked':''}><span>${o}</span></label>`).join('')}</div>
+     <div class="diag-feedback" id="diag-fb-${q.id}"></div>
+   </fieldset>`).join('');
+   list.querySelectorAll('input[type=radio]').forEach(inp=>inp.addEventListener('change',()=>{
+     const id=inp.name.replace('diag-','');d.answers[id]=Number(inp.value);d.completed=false;save();clearFeedback();
+   }));
+   if(d.completed)showResults(false);
+ }
+ function clearFeedback(){
+   document.querySelectorAll('.diag-question').forEach(x=>x.classList.remove('diag-correct','diag-wrong'));
+   document.querySelectorAll('.diag-feedback').forEach(x=>{x.classList.remove('show');x.innerHTML=''});
+   result.classList.remove('show');result.innerHTML='';theory.style.display='none';
+ }
+ function showResults(scroll=true){
+   const unanswered=QUESTIONS.filter(q=>!Number.isInteger(d.answers[q.id]));
+   if(unanswered.length){result.className='diag-result show';result.innerHTML=`Сначала ответьте на все вопросы. Осталось: <strong>${unanswered.length}</strong>.`;if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+   let score=0;const weak=[];
+   QUESTIONS.forEach(q=>{
+     const ok=Number(d.answers[q.id])===q.answer;if(ok)score++;else weak.push(q.topic);
+     const box=document.getElementById('diag-'+q.id),fb=document.getElementById('diag-fb-'+q.id);
+     box.classList.remove('diag-correct','diag-wrong');box.classList.add(ok?'diag-correct':'diag-wrong');
+     fb.classList.add('show');fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${q.ex}`;
+   });
+   d.completed=true;d.score=score;save();
+   const unique=[...new Set(weak)];
+   let advice=unique.length?`<p>Обратите особое внимание на:</p><ul class="diag-topics">${unique.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p>Базовые различия уже усвоены. Используйте теорию для систематизации и закрепления.</p>';
+   result.className='diag-result show';result.innerHTML=`<strong>Результат: ${score} из ${QUESTIONS.length}</strong>${advice}`;
+   theory.style.display='inline-flex';if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ finish.addEventListener('click',()=>showResults(true));
+ reset.addEventListener('click',()=>{d={answers:{},completed:false,score:0};save();render();clearFeedback();window.scrollTo({top:document.getElementById('intro-test').offsetTop-20,behavior:'smooth'})});
+ theory.addEventListener('click',()=>{const next=document.getElementById('intro-test').nextElementSibling;if(next)next.scrollIntoView({behavior:'smooth',block:'start'})});
+ render();
+})();
+</script>
+<button aria-label="Вернуться наверх" class="back-top" id="backTop" type="button">↑</button>
+<script>
+(()=>{
+  const b=document.getElementById('backTop');if(!b)return;
+  const sync=()=>b.classList.toggle('show',window.scrollY>700);
+  window.addEventListener('scroll',sync,{passive:true});sync();
+  b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+  if(!location.hash) requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'}));
+});
+</script>
+</body></html>

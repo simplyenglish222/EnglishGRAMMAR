@@ -1,1 +1,211 @@
+<!doctype html><html lang="ru"><head>
+<script>
+window.safeStorage=(()=>{
+  try{
+    const s=window.localStorage,t='__prepositions_storage_test__';
+    s.setItem(t,'1');s.removeItem(t);window.courseStorageAvailable=true;return s;
+  }catch(e){
+    window.courseStorageAvailable=false;
+    const memory={};
+    return{
+      getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,
+      setItem:(k,v)=>{memory[k]=String(v)},
+      removeItem:k=>{delete memory[k]},
+      clear:()=>{Object.keys(memory).forEach(k=>delete memory[k])}
+    };
+  }
+})();
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17395d"><title>Предлоги английского языка — содержание</title><style>
+:root{
+  --navy:#17395d;--navy2:#0d2a47;--blue:#2f73b7;--blueSoft:#eaf3fb;
+  --teal:#2b8176;--tealSoft:#eaf7f3;--gold:#aa7920;--goldSoft:#fff7df;
+  --ink:#172434;--muted:#627184;--line:#d8e3ec;--bg:#f4f8fb;--paper:#fff;
+  --good:#17764a;--goodBg:#eaf8f1;--bad:#b33c38;--badBg:#fff0ef;
+  --shadow:0 15px 42px rgba(20,53,84,.09)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.56 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.skip{position:fixed;top:-70px;left:12px;background:#fff;padding:10px 14px;border-radius:10px;z-index:3000}
+.skip:focus{top:12px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:292px;background:#fff;border-right:1px solid var(--line);z-index:1000;padding:22px 18px max(18px,env(safe-area-inset-bottom));overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;padding:4px 6px 18px;border-bottom:1px solid var(--line)}
+.brand-mark{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--navy),var(--blue));color:#fff;font-weight:950}
+.brand strong{display:block;color:var(--navy);font-size:1.04rem}
+.brand small{color:var(--muted)}
+.progress-box{margin:17px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fbfdff}
+.progress-head{display:flex;justify-content:space-between;color:var(--navy);font-weight:850}
+.progress-track{height:9px;background:#e6edf3;border-radius:999px;margin:9px 0;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),#62b79b);transition:.25s}
+.progress-note{font-size:.78rem;color:var(--muted)}
+.nav-title{margin:4px 8px 8px;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;font-weight:900}
+.course-nav a{display:flex;gap:10px;padding:10px 11px;margin:3px 0;border-radius:11px;text-decoration:none;color:#34475a;font-weight:720;font-size:.9rem}
+.course-nav a:hover{background:#f3f7fb}
+.course-nav a.active{background:var(--blueSoft);color:var(--navy);outline:1px solid #bfd7eb}
+.nav-num{min-width:25px;color:var(--blue);font-weight:950}
+.side-tools{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.side-tools label{display:block;font-weight:850;color:var(--navy);font-size:.86rem;margin-bottom:7px}
+.side-tools textarea{width:100%;min-height:95px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdff}
+.tool-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.tool-btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);padding:9px;font-weight:800;font-size:.82rem}
+.reset{width:100%;margin-top:8px;color:var(--bad)}
+.menu-btn{display:none;position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:1400;border:0;border-radius:12px;padding:10px 13px;background:var(--navy);color:#fff;box-shadow:var(--shadow);font-weight:850}
+.overlay{display:none}
+.page{margin-left:292px;min-height:100vh}
+.content{max-width:1230px;margin:0 auto;padding:38px 30px 70px}
+.hero{background:linear-gradient(135deg,#fff 0%,#f8fbfe 65%,#edf7f4 100%);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:var(--shadow)}
+.eyebrow{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--blueSoft);color:var(--blue);font-weight:900;font-size:.77rem;text-transform:uppercase;letter-spacing:.08em}
+.hero h1{font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;margin:15px 0 12px;color:var(--navy2)}
+.hero p{max-width:880px;color:var(--muted);font-size:1.05rem;margin:0}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{padding:7px 11px;border-radius:999px;border:1px solid #cfdee9;background:rgba(255,255,255,.86);font-size:.82rem;font-weight:800;color:var(--navy)}
+.section{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}
+.section h2{margin:0 0 8px;color:var(--navy);font-size:1.5rem}
+.intro{color:var(--muted);margin:0 0 18px}
+.expr-groups{display:grid;gap:16px}
+.expr-group{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.expr-group h3{margin:0;padding:13px 16px;background:#edf5fb;color:var(--navy);font-size:1.08rem}
+.expr-row{display:grid;grid-template-columns:34px minmax(230px,.8fr) 1fr 44px;gap:11px;align-items:center;padding:11px 14px;border-top:1px solid var(--line)}
+.expr-row:first-of-type{border-top:0}
+.expr-row input{width:20px;height:20px}
+.expr-en{font-weight:900;color:var(--navy)}
+.expr-ru{color:#46596b}
+.audio-btn,.check-btn,.small-btn,.model-btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);padding:8px 11px;font-weight:850}
+.audio-btn{color:var(--blue);padding:7px 10px}
+.check-btn{background:var(--navy);color:#fff;border-color:var(--navy)}
+.exercise-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:15px}
+.exercise-actions{display:flex;gap:8px;flex-wrap:wrap}
+.item-list{display:grid;gap:10px}
+.item-card{border:1px solid var(--line);border-radius:14px;padding:14px 15px;background:#fff}
+.item-row{display:flex;gap:10px;align-items:flex-start}
+.item-no{flex:none;width:29px;height:29px;border-radius:9px;background:#edf4f8;color:var(--navy);display:grid;place-items:center;font-weight:950}
+.item-main{flex:1;min-width:0}
+.sentence{font-size:1rem}
+.blank{width:145px;max-width:100%;border:1px solid #bfcfda;border-radius:8px;padding:7px 9px;margin:2px 4px;background:#fbfdff}
+.blank:focus,textarea:focus{outline:3px solid rgba(45,112,178,.16);border-color:var(--blue)}
+.item-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.feedback{display:none;margin-top:9px;padding:10px 12px;border-radius:10px}
+.feedback.show{display:block}
+.feedback.good{background:var(--goodBg);color:var(--good)}
+.feedback.bad{background:var(--badBg);color:var(--bad)}
+.test-block{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+.test-block h3{color:var(--navy);margin:0 0 6px}
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid #cfe0e9;background:#f5fafb;border-radius:13px;margin:12px 0 16px}
+.word-bank span{padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:999px;font-weight:850;color:var(--navy)}
+.bottom-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px}
+.bottom-nav a{flex:1;text-decoration:none;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:13px;color:var(--navy);font-weight:850}
+.bottom-nav a:last-child{text-align:right}
+.footer{margin-top:20px;text-align:center;color:var(--muted);font-size:.85rem}
+.toast{position:fixed;right:20px;bottom:20px;z-index:3000;background:var(--navy2);color:#fff;border-radius:11px;padding:11px 15px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:none}
+@media(max-width:850px){.expr-row{grid-template-columns:30px 1fr 42px}.expr-ru{grid-column:2/4}}
+@media(max-width:760px){
+ .menu-btn{display:block}.sidebar{transform:translateX(-105%);transition:.25s;width:min(88vw,330px);padding-top:max(68px,env(safe-area-inset-top))}
+ .menu-open .sidebar{transform:none}.menu-open .overlay{display:block;position:fixed;inset:0;background:rgba(4,22,38,.44);z-index:900}
+ .page{margin-left:0}.content{padding:74px 14px 55px}.hero{padding:22px 18px;border-radius:18px}.section{padding:18px 14px}
+ .bottom-nav{flex-direction:column}.bottom-nav a:last-child{text-align:left}.blank{width:112px}.exercise-head{display:block}.exercise-actions{margin-top:10px}
+ button,.blank,.side-tools textarea{min-height:44px}
+}
 
+.index-page{max-width:1280px;margin:0 auto;padding:34px 22px 65px}
+.index-hero{padding:38px;border-radius:26px;background:linear-gradient(135deg,#102f50,#225e8d 62%,#2d887b);color:#fff;box-shadow:var(--shadow)}
+.index-hero h1{font-size:clamp(2.25rem,5vw,4.25rem);line-height:1.02;margin:10px 0 14px}
+.index-hero p{max-width:850px;color:#e8f1f8;font-size:1.08rem}
+.index-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.index-meta span{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);padding:8px 11px;border-radius:999px;font-weight:800}
+.course-summary{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.course-summary h2{margin:0;color:var(--navy)}
+.course-summary p{margin:5px 0 0;color:var(--muted)}
+.big-progress{min-width:180px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+.card{display:flex;flex-direction:column;min-height:235px;border:1px solid var(--line);border-radius:19px;background:#fff;padding:19px;text-decoration:none;box-shadow:0 10px 28px rgba(20,53,84,.055);transition:.18s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#bdd4e6}
+.card-num{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:var(--blueSoft);color:var(--blue);font-weight:950}
+.card h3{margin:15px 0 8px;color:var(--navy);font-size:1.18rem}
+.card p{margin:0;color:var(--muted);flex:1}
+.card-status{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:17px;padding-top:13px;border-top:1px solid var(--line);font-size:.83rem;font-weight:850}
+.status{color:var(--muted)}.continue{color:var(--blue)}
+.index-footer{margin-top:22px;padding:18px;border-radius:16px;background:#fff;border:1px solid var(--line);color:var(--muted)}
+@media(max-width:970px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.index-page{padding:14px 12px 45px}.index-hero{padding:27px 20px}.cards{grid-template-columns:1fr}.course-summary{grid-template-columns:1fr}.big-progress{min-width:0}}
+
+/* Финальная проверка совместимости и мобильной вёрстки */
+img{max-width:100%;height:auto}
+.hero,.section,.item-card,.translation-card,.picture-card,.theory-card{min-width:0}
+.sentence,.ru-text,.example,.expr-en,.expr-ru,.intro{overflow-wrap:anywhere}
+button{touch-action:manipulation}
+.back-top{
+  position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:850;
+  width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:14px;
+  background:var(--navy,#17395d);color:#fff;font-weight:950;font-size:1.1rem;
+  box-shadow:0 10px 28px rgba(16,47,80,.22);opacity:0;transform:translateY(12px);
+  pointer-events:none;transition:.2s
+}
+.back-top.show{opacity:.94;transform:none;pointer-events:auto}
+@media(max-width:760px){
+  .diag-option{min-height:44px;align-items:center}
+  .audio-btn,.check-btn,.small-btn,.model-btn,.tool-btn,.diag-btn{min-height:44px}
+  input[type=radio],input[type=checkbox]{width:20px;height:20px;flex:none}
+  .theory-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .back-top{right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+.local-mode-note{margin-top:12px;padding:12px 14px;border-radius:12px;background:#fff7df;color:#725316;border:1px solid #ead7a6}
+</style></head><body>
+<main class="index-page"><header class="index-hero"><span class="eyebrow">Интерактивный курс</span><h1>Предлоги английского языка</h1>
+<p>Полный электронный курс для русскоязычных студентов: теория, упражнения, перевод, аудио, проверка и сохранение прогресса.</p>
+<div class="index-meta"><span>11 вводных тестов · 12 готовых разделов</span><span>12 разделов</span><span>Работает без интернета</span><span>Поддержка iPhone</span><span>Автосохранение</span></div></header>
+<section class="course-summary"><div><h2>Ваш прогресс</h2><p id="summaryText">Все 12 разделов готовы. Откройте нужную главу или продолжите обучение.</p></div>
+<div class="big-progress"><div class="progress-head"><span>Начато разделов</span><span id="coursePercent">0%</span></div><div class="progress-track"><div class="progress-fill" id="courseFill"></div></div></div></section>
+<section class="cards"><a class="card" href="01_definition_prepositions.html" data-unit="01-definition">
+<div class="card-num">01</div><h3>Определение предлога</h3><p>Что такое предлог, чем он отличается от наречия и почему русские и английские предлоги не совпадают.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="02_place.html" data-unit="02-place">
+<div class="card-num">02</div><h3>Предлоги места</h3><p>Положение предметов, различия между близкими значениями и отдельный подраздел at, in, on.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="03_direction.html" data-unit="03-direction">
+<div class="card-num">03</div><h3>Направление и движение</h3><p>Движение к цели, внутрь, наружу, вдоль, через и мимо ориентира.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="04_confused.html" data-unit="04-confused">
+<div class="card-num">04</div><h3>Часто путают</h3><p>Between и among; beside, besides и except; across, over и through; in и into.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="05_revision_place.html" data-unit="05-revision-place">
+<div class="card-num">05</div><h3>Повторение места и направления</h3><p>Комплексная практика после разделов о месте и движении.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="06_transport.html" data-unit="06-transport">
+<div class="card-num">06</div><h3>Транспорт</h3><p>By car, on the bus, get into, get out of, get on и get off.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="07_time.html" data-unit="07-time">
+<div class="card-num">07</div><h3>Время</h3><p>At, on, in; for, during, while; before, until, by; since, from, in time и on time.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="08_abstract_relations.html" data-unit="08-abstract-relations">
+<div class="card-num">08</div><h3>Абстрактные отношения</h3><p>By и with; as и like; about и on.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="09_composite.html" data-unit="09-composite">
+<div class="card-num">09</div><h3>Составные предлоги</h3><p>According to, because of, in spite of, instead of и другие сочетания.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="10_revision.html" data-unit="10-revision">
+<div class="card-num">10</div><h3>Общее повторение</h3><p>Большой смешанный блок с пропусками, переводом и диктантом-переводом.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="11_set_expressions.html" data-unit="11-set-expressions">
+<div class="card-num">11</div><h3>Устойчивые выражения</h3><p>Справочник устойчивых сочетаний, активное воспроизведение, контекстная практика и аудио.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a><a class="card" href="12_tests.html" data-unit="12-tests">
+<div class="card-num">12</div><h3>Итоговые тесты</h3><p>Два полных теста по месту, направлению и времени.</p>
+<div class="card-status"><span class="status">Не начат</span><span class="continue">Открыть →</span></div></a></section>
+<div class="index-footer">Все данные сохраняются только в текущем браузере. Для переноса прогресса используйте кнопки экспорта и импорта внутри любого раздела.<div class="local-mode-note" id="localModeNote" hidden><strong>Локальный режим.</strong> Разделы откроются и будут работать, но некоторые браузеры хранят прогресс отдельно для каждого локального HTML-файла. Для единого прогресса по всему курсу разместите папку на GitHub Pages или другом веб-сервере.</div></div></main>
+<script>
+const KEY='englishPrepositionsCourseV1';const DIAG_KEY='englishPrepositionsDiagnosticsV1';
+let state={units:{}};try{state=JSON.parse(safeStorage.getItem(KEY)||'{"units":{}}')}catch(e){}let diag={units:{}};try{diag=JSON.parse(safeStorage.getItem(DIAG_KEY)||'{"units":{}}')}catch(e){}
+function hasActivity(obj){
+ let n=0;
+ function walk(x,k=''){if(!x||typeof x!=='object')return;if(Array.isArray(x)){x.forEach(v=>{if(String(v||'').trim())n++});return}
+ Object.entries(x).forEach(([key,v])=>{if(['notes','scrollY','updatedAt','models','modelShown'].includes(key))return;
+ if(typeof v==='object')walk(v,key);else if(v===true||String(v||'').trim())n++})}
+ walk(obj);return n>0
+}
+let started=0;document.querySelectorAll('[data-unit]').forEach(card=>{const u=state.units?.[card.dataset.unit],d=diag.units?.[card.dataset.unit],status=card.querySelector('.status');
+ if(u&&hasActivity(u)){status.textContent='Начат';status.style.color='#17764a';started++}
+ else if(d?.completed){status.textContent=`Вводный тест: ${d.score}`;status.style.color='#2f73b7';started++}});
+const total=12,p=Math.round(started/total*100);document.getElementById('coursePercent').textContent=p+'%';document.getElementById('courseFill').style.width=p+'%';
+document.getElementById('summaryText').textContent=started?`Начато ${started} из ${total} разделов.`:'Все 12 разделов готовы. Откройте нужную главу или продолжите обучение.';
+</script><script>if(location.protocol==='file:')document.getElementById('localModeNote').hidden=false;</script>
+</body></html>

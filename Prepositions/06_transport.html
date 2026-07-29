@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<script>
+window.safeStorage=(()=>{
+  try{
+    const s=window.localStorage,t='__prepositions_storage_test__';
+    s.setItem(t,'1');s.removeItem(t);window.courseStorageAvailable=true;return s;
+  }catch(e){
+    window.courseStorageAvailable=false;
+    const memory={};
+    return{
+      getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,
+      setItem:(k,v)=>{memory[k]=String(v)},
+      removeItem:k=>{delete memory[k]},
+      clear:()=>{Object.keys(memory).forEach(k=>delete memory[k])}
+    };
+  }
+})();
+</script>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#17395d" name="theme-color"/><title>Раздел 6. Предлоги с видами транспорта</title><style>
+:root{--navy:#17395d;--navy2:#0d2a47;--blue:#2f73b7;--blueSoft:#eaf3fb;--teal:#2b8176;--tealSoft:#eaf7f3;--gold:#a97922;--goldSoft:#fff7e3;--ink:#182534;--muted:#627184;--line:#d8e3ec;--bg:#f4f8fb;--paper:#fff;--good:#17764a;--goodBg:#eaf8f1;--bad:#b23d39;--badBg:#fff0ef;--shadow:0 15px 42px rgba(20,53,84,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit}.skip{position:fixed;top:-70px;left:12px;background:#fff;padding:10px 14px;border-radius:10px;z-index:3000}.skip:focus{top:12px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:292px;background:#fff;border-right:1px solid var(--line);z-index:1000;padding:22px 18px max(18px,env(safe-area-inset-bottom));overflow:auto}.brand{display:flex;gap:12px;align-items:center;padding:4px 6px 18px;border-bottom:1px solid var(--line)}.brand-mark{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--navy),var(--blue));color:#fff;font-weight:950}.brand strong{display:block;color:var(--navy);font-size:1.04rem}.brand small{color:var(--muted)}
+.progress-box{margin:17px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fbfdff}.progress-head{display:flex;justify-content:space-between;color:var(--navy);font-weight:850}.progress-track{height:9px;background:#e6edf3;border-radius:999px;margin:9px 0;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),#62b79b);transition:.25s}.progress-note{font-size:.78rem;color:var(--muted)}.nav-title{margin:4px 8px 8px;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;font-weight:900}.course-nav a{display:flex;gap:10px;padding:10px 11px;margin:3px 0;border-radius:11px;text-decoration:none;color:#34475a;font-weight:720;font-size:.9rem}.course-nav a:hover{background:#f3f7fb}.course-nav a.active{background:var(--blueSoft);color:var(--navy);outline:1px solid #bfd7eb}.course-nav a[data-disabled=true]{opacity:.55}.nav-num{min-width:25px;color:var(--blue);font-weight:950}.side-tools{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.side-tools label{display:block;font-weight:850;color:var(--navy);font-size:.86rem;margin-bottom:7px}.side-tools textarea{width:100%;min-height:95px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdff}.tool-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.tool-btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);padding:9px;font-weight:800;font-size:.82rem}.tool-btn:hover{background:#f3f7fb}.reset{width:100%;margin-top:8px;color:var(--bad)}
+.menu-btn{display:none;position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:1400;border:0;border-radius:12px;padding:10px 13px;background:var(--navy);color:#fff;box-shadow:var(--shadow);font-weight:850}.overlay{display:none}.page{margin-left:292px;min-height:100vh}.content{max-width:1230px;margin:0 auto;padding:38px 30px 70px}.hero{background:linear-gradient(135deg,#fff 0%,#f8fbfe 65%,#edf7f4 100%);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:var(--shadow)}.eyebrow{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--blueSoft);color:var(--blue);font-weight:900;font-size:.77rem;text-transform:uppercase;letter-spacing:.08em}.hero h1{font-size:clamp(2rem,4vw,3.2rem);line-height:1.08;margin:15px 0 12px;color:var(--navy2);max-width:920px}.hero p{max-width:880px;color:var(--muted);font-size:1.05rem;margin:0}.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{padding:7px 11px;border-radius:999px;border:1px solid #cfdee9;background:rgba(255,255,255,.86);font-size:.82rem;font-weight:800;color:var(--navy)}
+.section{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}.section h2{margin:0 0 8px;color:var(--navy);font-size:1.5rem}.section h3{color:var(--navy);margin:22px 0 8px}.intro{color:var(--muted);margin:0 0 18px}.callout{padding:15px 17px;border-left:4px solid var(--teal);background:var(--tealSoft);border-radius:0 13px 13px 0;margin:14px 0}.callout.warn{border-color:var(--gold);background:var(--goldSoft)}
+.theory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.theory-card{border:1px solid var(--line);border-radius:15px;padding:16px;background:linear-gradient(180deg,#fff,#fbfdff)}.theory-card h3{margin:0 0 5px;font-size:1.08rem}.theory-card p{margin:7px 0}.example{margin-top:9px;padding:9px 11px;border-radius:10px;background:var(--blueSoft)}.theory-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}.theory-table th,.theory-table td{padding:12px 13px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}.theory-table th{background:#eef5fb;color:var(--navy);text-align:left}.theory-table tr:last-child td{border-bottom:0}.theory-table th:last-child,.theory-table td:last-child{border-right:0}.transport-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}.transport-panel{border:1px solid var(--line);border-radius:15px;overflow:hidden}.transport-panel h3{margin:0;padding:13px 15px;background:#eef5fb}.transport-list{padding:15px}.transport-list p{margin:8px 0}.contrast{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}.contrast-card{border-radius:14px;padding:15px;border:1px solid var(--line);background:#fbfdff}.contrast-card strong{color:var(--navy)}
+.exercise-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:15px}.exercise-head h2{margin:0}.exercise-actions{display:flex;gap:8px;flex-wrap:wrap}.small-btn,.check-btn,.model-btn,.audio-btn{border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px 11px;font-weight:850;color:var(--navy)}.check-btn{background:var(--navy);color:#fff;border-color:var(--navy)}.audio-btn{color:var(--blue);padding:7px 10px}.small-btn:hover,.model-btn:hover,.audio-btn:hover{background:#f2f7fb}.word-bank{display:flex;flex-wrap:wrap;gap:8px;padding:13px;border:1px solid #cfe0e9;background:#f5fafb;border-radius:13px;margin:12px 0 16px}.word-bank span{padding:6px 11px;background:#fff;border:1px solid var(--line);border-radius:999px;font-weight:850;color:var(--navy)}
+.item-list{display:grid;gap:10px}.item-card,.translation-card{border:1px solid var(--line);border-radius:14px;padding:14px 15px;background:#fff}.item-row{display:flex;gap:10px;align-items:flex-start}.item-no{flex:none;width:29px;height:29px;border-radius:9px;background:#edf4f8;color:var(--navy);display:grid;place-items:center;font-weight:950}.item-main{flex:1;min-width:0}.sentence{font-size:1rem}.blank{width:118px;max-width:100%;border:1px solid #bfcfda;border-radius:8px;padding:7px 9px;margin:2px 4px;background:#fbfdff}.blank:focus,textarea:focus{outline:3px solid rgba(45,112,178,.16);border-color:var(--blue)}.item-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.feedback{display:none;margin-top:9px;padding:10px 12px;border-radius:10px}.feedback.show{display:block}.feedback.good{background:var(--goodBg);color:var(--good)}.feedback.bad{background:var(--badBg);color:var(--bad)}
+.translation-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.translation-card .ru-text{font-weight:750}.translation-card textarea{width:100%;min-height:78px;margin-top:9px;resize:vertical;border:1px solid #c4d3dd;border-radius:9px;padding:9px}.model{display:none;margin-top:9px;padding:10px 12px;background:var(--goodBg);color:#245e45;border-radius:10px}.model.show{display:block}.subpart{margin-top:18px;padding:10px 13px;border-radius:12px;background:var(--blueSoft);color:var(--navy);font-weight:900}
+.bottom-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px}.bottom-nav a{flex:1;text-decoration:none;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:13px;color:var(--navy);font-weight:850}.bottom-nav a:last-child{text-align:right}.footer{margin-top:20px;text-align:center;color:var(--muted);font-size:.85rem}.toast{position:fixed;right:20px;bottom:20px;z-index:3000;background:var(--navy2);color:#fff;border-radius:11px;padding:11px 15px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
+@media(max-width:1020px){.theory-grid,.transport-pair,.contrast{grid-template-columns:1fr}.translation-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.menu-btn{display:block}.sidebar{transform:translateX(-105%);transition:.25s;width:min(88vw,330px);padding-top:max(68px,env(safe-area-inset-top))}.menu-open .sidebar{transform:none}.overlay{position:fixed;inset:0;background:rgba(12,31,49,.44);z-index:900}.menu-open .overlay{display:block}.page{margin-left:0}.content{padding:76px 14px 55px}.hero{padding:22px 18px;border-radius:19px}.section{padding:19px 15px}.exercise-head{display:block}.exercise-actions{margin-top:10px}.translation-grid{grid-template-columns:1fr}.bottom-nav{flex-direction:column}.bottom-nav a:last-child{text-align:left}.blank{width:106px}.theory-table{font-size:.91rem}.theory-table th,.theory-table td{padding:9px 8px}}
+@media(max-width:390px){body{font-size:15px}.content{padding-left:10px;padding-right:10px}.section{padding:16px 11px}.blank{display:inline-block;width:96px}.translation-card{padding:12px}.hero h1{font-size:2rem}}
+
+.diag-card{margin-top:24px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid var(--line,#d8e3ec);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}
+.diag-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.diag-card h2{margin:0 0 7px;color:var(--navy,#17395d);font-size:1.5rem}
+.diag-intro{margin:0;color:var(--muted,#627184);max-width:850px}
+.diag-note{display:inline-flex;margin-top:12px;padding:6px 10px;border-radius:999px;background:var(--goldSoft,#fff7df);color:#815b16;font-size:.8rem;font-weight:850}
+.diag-list{display:grid;gap:12px;margin-top:18px}
+.diag-question{border:1px solid var(--line,#d8e3ec);border-radius:14px;padding:15px;background:#fff}
+.diag-question legend{font-weight:850;color:var(--ink,#172434);padding:0 4px}
+.diag-options{display:grid;gap:8px;margin-top:11px}
+.diag-option{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;border:1px solid #dce6ee;border-radius:10px;background:#fbfdff;cursor:pointer}
+.diag-option:hover{border-color:#a9c7dd;background:#f5f9fc}
+.diag-option input{margin-top:3px;accent-color:var(--blue,#2f73b7)}
+.diag-question.diag-correct{border-color:#8dccaa;background:var(--goodBg,#eaf8f1)}
+.diag-question.diag-wrong{border-color:#e6aba8;background:var(--badBg,#fff0ef)}
+.diag-feedback{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.78)}
+.diag-feedback.show{display:block}
+.diag-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.diag-btn{border:1px solid var(--line,#d8e3ec);border-radius:11px;padding:10px 14px;background:#fff;color:var(--navy,#17395d);font-weight:850}
+.diag-btn.primary{background:var(--navy,#17395d);border-color:var(--navy,#17395d);color:#fff}
+.diag-btn.theory{display:none;background:var(--teal,#2b8176);border-color:var(--teal,#2b8176);color:#fff}
+.diag-result{display:none;margin-top:17px;padding:15px 17px;border-radius:14px;background:var(--blueSoft,#eaf3fb);color:var(--navy,#17395d)}
+.diag-result.show{display:block}
+.diag-result strong{font-size:1.12rem}
+.diag-topics{margin:8px 0 0;padding-left:20px}
+@media(max-width:760px){.diag-card{padding:19px 15px}.diag-head{display:block}.diag-actions{display:grid;grid-template-columns:1fr}.diag-btn{width:100%;min-height:44px}}
+
+
+/* Финальная проверка совместимости и мобильной вёрстки */
+img{max-width:100%;height:auto}
+.hero,.section,.item-card,.translation-card,.picture-card,.theory-card{min-width:0}
+.sentence,.ru-text,.example,.expr-en,.expr-ru,.intro{overflow-wrap:anywhere}
+button{touch-action:manipulation}
+.back-top{
+  position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:850;
+  width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:14px;
+  background:var(--navy,#17395d);color:#fff;font-weight:950;font-size:1.1rem;
+  box-shadow:0 10px 28px rgba(16,47,80,.22);opacity:0;transform:translateY(12px);
+  pointer-events:none;transition:.2s
+}
+.back-top.show{opacity:.94;transform:none;pointer-events:auto}
+@media(max-width:760px){
+  .diag-option{min-height:44px;align-items:center}
+  .audio-btn,.check-btn,.small-btn,.model-btn,.tool-btn,.diag-btn{min-height:44px}
+  input[type=radio],input[type=checkbox]{width:20px;height:20px;flex:none}
+  .theory-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .back-top{right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+
+/* === Final unified sidebar === */
+.sidebar{
+  background:#123b55 !important;
+  color:#edf6fb !important;
+  border-right:0 !important;
+  box-shadow:10px 0 30px rgba(12,39,58,.12) !important;
+}
+.sidebar .brand{border-bottom-color:rgba(255,255,255,.12)!important}
+.sidebar .brand strong,.sidebar .brand-title{color:#fff!important}
+.sidebar .brand small,.sidebar .brand-sub{color:#c5d8e4!important}
+.sidebar .brand-mark{background:#319487!important;color:#fff!important}
+.sidebar .progress-box,.sidebar .course-progress,.sidebar .progress-card{
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.14)!important;
+  color:#fff!important
+}
+.sidebar .progress-head{color:#fff!important}
+.sidebar .progress-track{background:rgba(255,255,255,.16)!important}
+.sidebar .progress-note{color:#cfdee7!important}
+.sidebar .nav-title{color:#a9c0cf!important}
+.sidebar .course-nav a,.sidebar .nav a{
+  color:#e3eef4!important;
+  border-color:transparent!important;
+  background:transparent!important
+}
+.sidebar .course-nav a:hover,.sidebar .nav a:hover{background:rgba(255,255,255,.075)!important}
+.sidebar .course-nav a.active,.sidebar .nav a.active{
+  background:rgba(62,181,166,.17)!important;
+  border:1px solid rgba(82,205,188,.45)!important;
+  color:#fff!important
+}
+.sidebar .nav-num,.sidebar .num{
+  color:#eaf6f8!important;
+  background:rgba(255,255,255,.10)!important
+}
+.sidebar a.active .nav-num,.sidebar a.active .num{background:#319487!important;color:#fff!important}
+.sidebar .side-tools,.sidebar .sidebar-tools,.sidebar .tools{
+  border-top-color:rgba(255,255,255,.12)!important
+}
+.sidebar .side-tools label,.sidebar .notes-label,.sidebar .tools label{color:#dbe8ef!important}
+.sidebar textarea{
+  color:#fff!important;background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar textarea::placeholder{color:#b5cad7!important}
+.sidebar .tool-btn{
+  color:#eef7fb!important;background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar .tool-btn:hover{background:rgba(255,255,255,.13)!important}
+.sidebar .tool-btn.reset,.sidebar .tool-btn.danger{color:#ffd3d0!important;border-color:rgba(255,180,176,.28)!important}
+.sidebar .subnav,.sidebar .course-subnav{
+  margin:3px 0 9px 35px!important;padding:2px 0 2px 9px!important;
+  border-left:2px solid rgba(116,214,200,.34)!important
+}
+.sidebar .subnav a,.sidebar .course-subnav a{
+  display:block!important;padding:5px 7px!important;margin:1px 0!important;
+  font-size:.77rem!important;line-height:1.28!important;color:#bed4df!important;
+  border:0!important;border-radius:8px!important
+}
+.sidebar .subnav a:hover,.sidebar .course-subnav a:hover{
+  color:#fff!important;background:rgba(255,255,255,.07)!important
+}
+.ru-hint{color:#865b13;font-weight:800}
+.nb-box{
+  margin:18px 0 0;padding:17px 18px;border:1px solid #b9d9ee;border-left:5px solid #327eb9;
+  border-radius:14px;background:#eef7ff;color:#26455f
+}
+.nb-box h3{margin:0 0 9px!important;color:#153d62!important}
+.nb-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.nb-grid>div{padding:12px;border-radius:11px;background:rgba(255,255,255,.72)}
+.nb-grid p{margin:5px 0}
+@media(max-width:720px){.nb-grid{grid-template-columns:1fr}}
+
+
+.adaptation-note{margin:14px 0 0;padding:10px 13px;border-radius:11px;background:#f2f7fb;border:1px solid #d8e5ee;color:#587084;font-size:.82rem}
+
+.learning-path{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(82,114,137,.16)}
+.learning-step{padding:6px 9px;border-radius:9px;background:#f3f7fa;color:#486276;font-size:.78rem;font-weight:800}
+@media(max-width:600px){.learning-path{display:grid;grid-template-columns:1fr 1fr}.learning-step{font-size:.76rem}}
+</style>
+<script>
+try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+window.addEventListener('pageshow',()=>requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'})));
+</script>
+</head><body>
+<a class="skip" href="#main">Перейти к содержанию</a><button aria-expanded="false" class="menu-btn" id="menuBtn">☰ Разделы</button><div class="overlay" id="overlay"></div>
+<aside class="sidebar"><div class="brand"><div class="brand-mark">ПР</div><div><strong>Предлоги</strong><small>Интерактивный курс</small></div></div>
+<div class="progress-box"><div class="progress-head"><span>Прогресс раздела</span><span id="progressText">0%</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-note">Ответы и заметки сохраняются автоматически.</div></div>
+<div class="nav-title">Все разделы</div><nav class="course-nav"><a href="01_definition_prepositions.html"><span class="nav-num">01</span><span>Определение предлога</span></a><a href="02_place.html"><span class="nav-num">02</span><span>Предлоги места</span></a><a href="03_direction.html"><span class="nav-num">03</span><span>Направление и движение</span></a><a href="04_confused.html"><span class="nav-num">04</span><span>Предлоги, которые часто путают</span></a><a href="05_revision_place.html"><span class="nav-num">05</span><span>Повторение: место и направление</span></a><a class="active" href="06_transport.html"><span class="nav-num">06</span><span>Предлоги и транспорт</span></a><div class="course-subnav"><a href="#intro-test">Вводный тест</a><a href="#transport-theory">Теория</a><a href="#transport-ex21">Транспорт: практика</a><a href="#transport-ex22">Посадка и поездка</a></div><a href="07_time.html"><span class="nav-num">07</span><span>Предлоги времени</span></a><a href="08_abstract_relations.html"><span class="nav-num">08</span><span>Абстрактные отношения</span></a><a href="09_composite.html"><span class="nav-num">09</span><span>Составные предлоги</span></a><a href="10_revision.html"><span class="nav-num">10</span><span>Общее повторение</span></a><a href="11_set_expressions.html"><span class="nav-num">11</span><span>Устойчивые выражения</span></a><a href="12_tests.html"><span class="nav-num">12</span><span>Итоговые тесты</span></a></nav>
+<div class="side-tools"><label for="notes">Личные заметки</label><textarea id="notes" placeholder="Запишите трудные случаи и примеры..."></textarea><div class="tool-row"><button class="tool-btn" id="exportBtn">Экспорт</button><button class="tool-btn" id="importBtn">Импорт</button></div><button class="tool-btn reset" id="resetBtn">Сбросить раздел</button><input accept="application/json" hidden="" id="importFile" type="file"/></div></aside>
+<main class="page" id="main"><div class="content"><header class="hero"><span class="eyebrow">Раздел 06</span><h1>Предлоги с видами транспорта</h1><p>Различайте способ передвижения, положение человека в транспорте и глаголы посадки и выхода.</p><div class="hero-meta"><span class="pill">by / in / on / at</span><span class="pill">get in / get on</span><span class="pill">get out of / get off</span><span class="pill">Автосохранение</span></div><div class="learning-path"><span class="learning-step">Диагностика</span><span class="learning-step">Теория</span><span class="learning-step">Контраст</span><span class="learning-step">Практика</span><span class="learning-step">Повторение</span></div></header>
+<section aria-labelledby="diag-title" class="diag-card" id="intro-test">
+<div class="diag-head"><div>
+<h2 id="diag-title">Вводный тест: транспорт</h2>
+<p class="diag-intro">Ответьте до чтения теории. После завершения вы увидите объяснения и темы, которым стоит уделить особое внимание.</p>
+<span class="diag-note">Результат не учитывается в основном прогрессе главы</span>
+</div></div>
+<div class="diag-list" id="diagList"></div>
+<div class="diag-actions">
+<button class="diag-btn primary" id="diagFinish" type="button">Завершить вводный тест</button>
+<button class="diag-btn" id="diagReset" type="button">Пройти заново</button>
+<button class="diag-btn theory" id="diagTheory" type="button">Перейти к теории</button>
+</div>
+<div aria-live="polite" class="diag-result" id="diagResult" role="status"></div>
+</section>
+<section class="section" id="transport-theory"><h2>Теория</h2><div class="callout"><strong>Два способа описать транспорт:</strong> <em>by bus / by train / by taxi</em> = способ передвижения; <em>on the bus / on the train</em> и <em>in a taxi / in a car</em> = нахождение внутри конкретного транспорта. <br/><strong>Посадка:</strong> get on/off a bus, train, plane; get into/out of a car or taxi.</div><p class="intro">В английском языке выбор предлога зависит от того, говорим ли мы о способе передвижения или о физическом положении пассажира.</p>
+<div class="transport-pair"><div class="transport-panel"><h3>Способ передвижения</h3><div class="transport-list"><p><strong>by car / by bus / by bicycle</strong> — по дороге</p><p><strong>by boat / by ship</strong> — по воде</p><p><strong>by train</strong> — по железной дороге</p><p><strong>by plane</strong> — по воздуху</p><p><strong>on foot</strong> — пешком</p></div></div><div class="transport-panel"><h3>Положение в транспорте</h3><div class="transport-list"><p><strong>in</strong> the car / a van / a taxi / a lorry</p><p><strong>on</strong> the bus / a bicycle / a ship / a ferry</p><p><strong>on</strong> the train / the 6.45 train</p><p><strong>on</strong> the plane / a jet</p></div></div></div>
+<div class="contrast"><div class="contrast-card"><strong>Небольшой закрытый транспорт</strong><p><em>in a car, in a taxi</em></p></div><div class="contrast-card"><strong>Велосипед и общественный транспорт</strong><p><em>on a bicycle, on a bus, on a train</em></p></div></div>
+<h3>Посадка и выход</h3><table class="theory-table"><thead><tr><th>Машина или такси</th><th>Автобус, поезд, самолёт, велосипед</th></tr></thead><tbody><tr><td><strong>get in(to)</strong> a car / taxi<br/><strong>get out of</strong> a car / taxi</td><td><strong>get on</strong> a bus / train / plane / bicycle<br/><strong>get off</strong> a bus / train / plane / bicycle</td></tr></tbody></table>
+<div class="theory-grid" style="margin-top:14px"><div class="theory-card"><h3>Примеры</h3><p>He got <strong>into</strong> the car and drove off.</p><p>Mr Ward got <strong>into</strong> his lorry.</p><button class="audio-btn" data-speak="He got into the car and drove off. Mister Ward got into his lorry.">🔊 Прослушать</button></div><div class="theory-card"><h3>Примеры</h3><p>He jumped <strong>onto</strong> the old bus.</p><p>She was carried <strong>out of</strong> the ambulance.</p><p>The car was travelling <strong>at</strong> fifty kilometres an hour.</p><button class="audio-btn" data-speak="He jumped onto the old bus. She was carried out of the ambulance. The car was travelling at fifty kilometres an hour.">🔊 Прослушать</button></div></div></section>
+<section class="section" id="transport-ex21"><div class="exercise-head"><div><h2>Транспорт: способ или конкретное средство?</h2><p class="intro">Заполните пропуски предлогами из рамки. Вводите ответы самостоятельно.</p></div><div class="exercise-actions"><button class="small-btn" id="show21">Показать ответы</button></div></div><div class="word-bank"><span>by</span><span>in</span><span>on</span><span>at</span></div><div class="item-list" id="ex21"></div></section>
+<section class="section" id="transport-ex22"><div class="exercise-head"><div><h2>Посадка и поездка: on, in, into, off</h2><p class="intro">Вставьте подходящие предлоги.</p></div><div class="exercise-actions"><button class="small-btn" id="show22">Показать ответы</button></div></div><div class="item-list" id="ex22"></div></section>
+<div class="bottom-nav"><a href="05_revision_place.html">← Раздел 05</a><a href="07_time.html">Раздел 07 →</a></div><div class="footer">Прогресс хранится в браузере. Для переноса на другое устройство используйте экспорт.</div></div></main><div class="toast" id="toast"></div>
+<script>
+const STORAGE_KEY='englishPrepositionsCourseV1';const UNIT_ID="06-transport";
+const DEFAULT={version:1,currentUnit:UNIT_ID,units:{[UNIT_ID]:{answers:{},translations:{},models:{},notes:'',scrollY:0,updatedAt:null}}};
+function clone(o){return JSON.parse(JSON.stringify(o))}function merge(a,b){if(!b||typeof b!=='object')return a;Object.keys(b).forEach(k=>{if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k]))a[k]=merge(a[k]||{},b[k]);else a[k]=b[k]});return a}
+let state;try{state=merge(clone(DEFAULT),JSON.parse(safeStorage.getItem(STORAGE_KEY)||'{}'))}catch(e){state=clone(DEFAULT)}if(!state.units[UNIT_ID])state.units[UNIT_ID]=clone(DEFAULT.units[UNIT_ID]);state.currentUnit=UNIT_ID;const unit=()=>state.units[UNIT_ID];
+function norm(s){return String(s||'').trim().toLowerCase().replace(/[’]/g,"'").replace(/\s+/g,' ')}function save(){unit().updatedAt=new Date().toISOString();safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));updateProgress()}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}function escapeAttr(s){return escapeHtml(s).replace(/"/g,'&quot;')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2200)}
+function setupShell(){const notes=document.getElementById('notes');notes.value=unit().notes||'';notes.addEventListener('input',()=>{unit().notes=notes.value;save()});const btn=document.getElementById('menuBtn'),ov=document.getElementById('overlay');const open=x=>{document.body.classList.toggle('menu-open',x);btn.setAttribute('aria-expanded',String(x))};btn.addEventListener('click',()=>open(!document.body.classList.contains('menu-open')));ov.addEventListener('click',()=>open(false));document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false)});document.querySelectorAll('.course-nav a[data-disabled=true],.bottom-nav a[data-disabled=true]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();toast('Этот раздел ещё не создан.')}));document.getElementById('exportBtn').onclick=()=>{const b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='english-prepositions-progress.json';a.click();URL.revokeObjectURL(u)};const inp=document.getElementById('importFile');document.getElementById('importBtn').onclick=()=>inp.click();inp.onchange=async()=>{try{state=merge(clone(DEFAULT),JSON.parse(await inp.files[0].text()));safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));location.reload()}catch(e){toast('Не удалось импортировать файл.')}};document.getElementById('resetBtn').onclick=()=>{if(confirm('Сбросить все ответы и заметки этого раздела?')){state.units[UNIT_ID]=clone(DEFAULT.units[UNIT_ID]);safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));location.reload()}};document.addEventListener('click',e=>{const b=e.target.closest('[data-speak]');if(!b)return;if(!('speechSynthesis' in window))return toast('Озвучивание не поддерживается этим браузером.');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(b.dataset.speak);u.lang='en-GB';u.rate=.92;speechSynthesis.speak(u)});let st;window.addEventListener('scroll',()=>{clearTimeout(st);st=setTimeout(()=>{unit().scrollY=window.scrollY;save()},180)},{passive:true});setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'auto'}),0)}
+</script><script>
+const EX21=[{"id":"t21-1","template":"Do you enjoy travelling {{0}} train on long journeys?","answers":[["by"]]},{"id":"t21-2","template":"Mia usually goes to college {{0}} bike or {{1}} foot.","answers":[["by"],["on"]]},{"id":"t21-3","template":"The aircraft was travelling {{0}} 550 miles an hour.","answers":[["at"]]},{"id":"t21-4","template":"How long does it take to get from Chicago to Seattle {{0}} plane?","answers":[["by"]]},{"id":"t21-5","template":"Get {{0}} the train now; the doors are closing.","answers":[["on"]]},{"id":"t21-6","template":"Last summer we travelled from Berlin to Warsaw {{0}} train.","answers":[["by"]]},{"id":"t21-7","template":"I rarely used my car; I preferred to go {{0}} bike.","answers":[["by"]]},{"id":"t21-8","template":"I saw Mia this morning; she was {{0}} a bus that passed the library.","answers":[["on"]]},{"id":"t21-9","template":"It was raining, so I came home {{0}} a taxi.","answers":[["in"]],"comment":"In a taxi = находиться внутри конкретного такси. By taxi = способ передвижения без артикля."},{"id":"t21-10","template":"At last our bus arrived and we got {{0}} it.","answers":[["on"]],"comment":"Get on a bus/train/plane; get into a car/taxi."},{"id":"t21-11","template":"We have to get {{0}} the train at the next station.","answers":[["off"]],"comment":"Get off a bus/train/plane; get out of a car/taxi."},{"id":"t21-12","template":"Let me help you get these boxes {{0}} the car.","answers":[["into"]]}];const EX22=[{"id":"t22-1","template":"After my ankle injury I had to travel {{0}} bus because getting {{1}} a car was difficult.","answers":[["by"],["into"]]},{"id":"t22-2","template":"We took a short trip along the Danube {{0}} a river boat called Aurora.","answers":[["on"]],"comment":"С конкретным судном говорим on a river boat / on the Aurora. By boat или by riverboat обозначает способ передвижения вообще и употребляется без артикля."},{"id":"t22-3","template":"It takes forty minutes to get there {{0}} my bike and twenty-five minutes {{1}} the bus.","answers":[["on"],["on"]]},{"id":"t22-4","template":"I have travelled {{0}} plane many times, but I have never been {{1}} a seaplane.","answers":[["by"],["on"]],"comment":"By plane = способ передвижения; on a seaplane = на конкретном воздушном судне."},{"id":"t22-5","template":"For me, the most relaxing way to travel is {{0}} ship; I would love to spend a week {{1}} a cruise ship.","answers":[["by"],["on"]],"comment":"By ship = способ передвижения, без артикля. On a cruise ship = находиться на конкретном судне."},{"id":"t22-6","template":"This experimental aircraft can fly {{0}} supersonic speed.","answers":[["at"]]},{"id":"t22-7","template":"The tram was so crowded that we could hardly get {{0}} it.","answers":[["on","onto"]],"comment":"Get on a tram — самый обычный вариант; get onto возможно, если подчёркивается само движение на транспорт."},{"id":"t22-8","template":"I followed them {{0}} my car and saw them get {{1}} the bus near a café.","answers":[["in"],["off"]],"comment":"In my car = внутри конкретной машины; by car = способ передвижения без my/the/a. С bus/train/plane стандартно get off; с car/taxi — get out of."},{"id":"t22-9","template":"Nora went {{0}} plane because she did not want to spend a week {{1}} a ferry.","answers":[["by"],["on"]]},{"id":"t22-10","template":"The passengers {{0}} the plane were asked to remain seated.","answers":[["on","in"]],"comment":"Passengers on the plane — стандартно для путешествия; in the plane возможно при буквальном акценте на внутреннем пространстве."},{"id":"t22-11","template":"Mr Nolan stepped {{0}} the train and headed for the exit.","answers":[["off"]]},{"id":"t22-12","template":"We drove to the terminal {{0}} a taxi.","answers":[["in"]]}];const ALL=[...EX21,...EX22];
+function makeSentence(item){let s=escapeHtml(item.template);item.answers.forEach((a,i)=>{const v=(unit().answers[item.id]||[])[i]||'';s=s.replace('{{'+i+'}}',`<input class="blank" data-item="${item.id}" data-blank="${i}" value="${escapeAttr(v)}" aria-label="Пропуск ${i+1}">`)});return s}
+function filled(item){const v=unit().answers[item.id]||[];return item.answers.every((_,i)=>norm(v[i]).length>0)}function correct(item){const v=unit().answers[item.id]||[];return item.answers.every((arr,i)=>arr.map(norm).includes(norm(v[i])))}
+function fullSentence(item){let s=item.template;item.answers.forEach((a,i)=>s=s.replace('{{'+i+'}}',a[0]));return s}
+function render(target,items){const c=document.getElementById(target);c.innerHTML=items.map((x,i)=>`<article class="item-card"><div class="item-row"><span class="item-no">${i+1}</span><div class="item-main"><div class="sentence">${makeSentence(x)}</div><div class="item-actions"><button class="check-btn" data-check="${x.id}">Проверить</button><button class="audio-btn" data-speak="${escapeAttr(fullSentence(x))}">🔊</button></div><div class="feedback" id="fb-${x.id}"></div></div></div></article>`).join('');c.querySelectorAll('.blank').forEach(inp=>inp.addEventListener('input',()=>{const id=inp.dataset.item,n=Number(inp.dataset.blank);if(!unit().answers[id])unit().answers[id]=[];unit().answers[id][n]=inp.value;save()}));c.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.check)))}
+function findItem(id){return ALL.find(x=>x.id===id)}function show(id){const x=findItem(id),fb=document.getElementById('fb-'+id);if(!filled(x)){fb.className='feedback show bad';fb.textContent='Сначала заполните все пропуски.';return}if(correct(x)){fb.className='feedback show good';fb.innerHTML='<strong>Верно.</strong> '+(x.comment||'')}else{fb.className='feedback show bad';fb.innerHTML='<strong>Пока неверно.</strong> Правильный ответ: '+x.answers.map(a=>a.join(' / ')).join(' · ')+(x.comment?'<br>'+x.comment:'')}}
+function showGroup(items){items.forEach(x=>{unit().answers[x.id]=x.answers.map(a=>a[0])});save();render('ex21',EX21);render('ex22',EX22);toast('Ответы показаны.')}document.getElementById('show21').onclick=()=>showGroup(EX21);document.getElementById('show22').onclick=()=>showGroup(EX22);
+function updateProgress(){const done=ALL.filter(filled).length,p=Math.round(done/ALL.length*100);document.getElementById('progressText').textContent=p+'%';document.getElementById('progressFill').style.width=p+'%'}render('ex21',EX21);render('ex22',EX22);setupShell();save();
+</script>
+<script>
+(()=>{
+ const KEY='englishPrepositionsDiagnosticsV1';
+ const UNIT="06-transport";
+ const QUESTIONS=[{"id": "q1", "topic": "by + транспорт", "q": "We travelled to Kraków ___ train.", "options": ["by", "on", "in"], "answer": 0, "ex": "Способ передвижения без артикля: <strong>by train</strong>."}, {"id": "q2", "topic": "on + общественный транспорт", "q": "There were forty passengers ___ the bus.", "options": ["at", "in", "on"], "answer": 2, "ex": "С крупным общественным транспортом обычно употребляется <strong>on</strong>."}, {"id": "q3", "topic": "in + небольшой транспорт", "q": "I left my phone ___ the taxi.", "options": ["in", "on", "at"], "answer": 0, "ex": "С автомобилем или такси употребляется <strong>in</strong>."}, {"id": "q4", "topic": "место транспорта", "q": "We met ___ the railway station.", "options": ["at", "on", "by"], "answer": 0, "ex": "Станция рассматривается как место или точка встречи: <strong>at the station</strong>."}, {"id": "q5", "topic": "get on / get in", "q": "Hurry up and get ___ the train.", "options": ["in", "on", "into"], "answer": 1, "ex": "С поездом употребляется фразовый глагол <strong>get on</strong>."}, {"id": "q6", "topic": "get off / get out of", "q": "She paid the driver and got ___ the car.", "options": ["off", "out of", "from"], "answer": 1, "ex": "Из автомобиля выходят: <strong>get out of the car</strong>."}];
+ let store={units:{}};
+ try{store=JSON.parse(safeStorage.getItem(KEY)||'{"units":{}}')}catch(e){}
+ if(!store.units)store.units={};
+ let d=store.units[UNIT]||{answers:{},completed:false,score:0};
+ const list=document.getElementById('diagList'),finish=document.getElementById('diagFinish'),
+ reset=document.getElementById('diagReset'),theory=document.getElementById('diagTheory'),
+ result=document.getElementById('diagResult');
+ const save=()=>{store.units[UNIT]=d;safeStorage.setItem(KEY,JSON.stringify(store))};
+ function render(){
+   list.innerHTML=QUESTIONS.map((q,i)=>`<fieldset class="diag-question" id="diag-${q.id}">
+     <legend>${i+1}. ${q.q}</legend>
+     <div class="diag-options">${q.options.map((o,n)=>`<label class="diag-option"><input type="radio" name="diag-${q.id}" value="${n}" ${Number(d.answers[q.id])===n?'checked':''}><span>${o}</span></label>`).join('')}</div>
+     <div class="diag-feedback" id="diag-fb-${q.id}"></div>
+   </fieldset>`).join('');
+   list.querySelectorAll('input[type=radio]').forEach(inp=>inp.addEventListener('change',()=>{
+     const id=inp.name.replace('diag-','');d.answers[id]=Number(inp.value);d.completed=false;save();clearFeedback();
+   }));
+   if(d.completed)showResults(false);
+ }
+ function clearFeedback(){
+   document.querySelectorAll('.diag-question').forEach(x=>x.classList.remove('diag-correct','diag-wrong'));
+   document.querySelectorAll('.diag-feedback').forEach(x=>{x.classList.remove('show');x.innerHTML=''});
+   result.classList.remove('show');result.innerHTML='';theory.style.display='none';
+ }
+ function showResults(scroll=true){
+   const unanswered=QUESTIONS.filter(q=>!Number.isInteger(d.answers[q.id]));
+   if(unanswered.length){result.className='diag-result show';result.innerHTML=`Сначала ответьте на все вопросы. Осталось: <strong>${unanswered.length}</strong>.`;if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+   let score=0;const weak=[];
+   QUESTIONS.forEach(q=>{
+     const ok=Number(d.answers[q.id])===q.answer;if(ok)score++;else weak.push(q.topic);
+     const box=document.getElementById('diag-'+q.id),fb=document.getElementById('diag-fb-'+q.id);
+     box.classList.remove('diag-correct','diag-wrong');box.classList.add(ok?'diag-correct':'diag-wrong');
+     fb.classList.add('show');fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${q.ex}`;
+   });
+   d.completed=true;d.score=score;save();
+   const unique=[...new Set(weak)];
+   let advice=unique.length?`<p>Обратите особое внимание на:</p><ul class="diag-topics">${unique.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p>Базовые различия уже усвоены. Используйте теорию для систематизации и закрепления.</p>';
+   result.className='diag-result show';result.innerHTML=`<strong>Результат: ${score} из ${QUESTIONS.length}</strong>${advice}`;
+   theory.style.display='inline-flex';if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ finish.addEventListener('click',()=>showResults(true));
+ reset.addEventListener('click',()=>{d={answers:{},completed:false,score:0};save();render();clearFeedback();window.scrollTo({top:document.getElementById('intro-test').offsetTop-20,behavior:'smooth'})});
+ theory.addEventListener('click',()=>{const next=document.getElementById('intro-test').nextElementSibling;if(next)next.scrollIntoView({behavior:'smooth',block:'start'})});
+ render();
+})();
+</script>
+<button aria-label="Вернуться наверх" class="back-top" id="backTop" type="button">↑</button>
+<script>
+(()=>{
+  const b=document.getElementById('backTop');if(!b)return;
+  const sync=()=>b.classList.toggle('show',window.scrollY>700);
+  window.addEventListener('scroll',sync,{passive:true});sync();
+  b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+  if(!location.hash) requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'}));
+});
+</script>
+</body></html>

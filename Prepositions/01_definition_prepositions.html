@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<script>
+window.safeStorage=(()=>{
+  try{
+    const s=window.localStorage,t='__prepositions_storage_test__';
+    s.setItem(t,'1');s.removeItem(t);window.courseStorageAvailable=true;return s;
+  }catch(e){
+    window.courseStorageAvailable=false;
+    const memory={};
+    return{
+      getItem:k=>Object.prototype.hasOwnProperty.call(memory,k)?memory[k]:null,
+      setItem:(k,v)=>{memory[k]=String(v)},
+      removeItem:k=>{delete memory[k]},
+      clear:()=>{Object.keys(memory).forEach(k=>delete memory[k])}
+    };
+  }
+})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#12324a" name="theme-color"/>
+<title>Предлоги английского языка — 01. Определение</title>
+<style>
+    :root{
+      --navy:#12324a;
+      --navy-2:#1d4763;
+      --teal:#2f7c74;
+      --teal-soft:#e9f5f2;
+      --gold:#d9a441;
+      --ink:#24313d;
+      --muted:#667786;
+      --paper:#ffffff;
+      --bg:#f4f7fa;
+      --line:#dbe4eb;
+      --good:#176b4d;
+      --good-bg:#e9f7f0;
+      --bad:#9f3030;
+      --bad-bg:#fff0f0;
+      --warn:#7a5a11;
+      --warn-bg:#fff8df;
+      --shadow:0 16px 42px rgba(18,50,74,.11);
+      --radius:18px;
+      --sidebar:310px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f8fafc 0%,var(--bg) 100%);
+      line-height:1.55;
+    }
+    button,select,textarea,input{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit}
+
+    .skip-link{
+      position:fixed;left:12px;top:-60px;z-index:9999;
+      background:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--shadow)
+    }
+    .skip-link:focus{top:12px}
+
+    .menu-toggle{
+      display:none;
+      position:fixed;
+      top:max(12px, env(safe-area-inset-top));
+      left:max(12px, env(safe-area-inset-left));
+      z-index:1200;
+      border:0;
+      border-radius:14px;
+      padding:11px 14px;
+      background:var(--navy);
+      color:#fff;
+      box-shadow:0 8px 26px rgba(18,50,74,.25);
+      font-weight:800;
+      gap:8px;
+      align-items:center;
+    }
+
+    .sidebar{
+      position:fixed;
+      inset:0 auto 0 0;
+      width:var(--sidebar);
+      background:linear-gradient(180deg,var(--navy) 0%,#0e2a3f 100%);
+      color:#eaf3f7;
+      padding:28px 22px calc(24px + env(safe-area-inset-bottom));
+      overflow-y:auto;
+      z-index:1100;
+      box-shadow:10px 0 30px rgba(18,50,74,.12);
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;margin-bottom:22px
+    }
+    .brand-mark{
+      width:46px;height:46px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--teal),#4ea69d);
+      color:#fff;font-weight:900;letter-spacing:.5px;
+      box-shadow:0 8px 18px rgba(0,0,0,.16)
+    }
+    .brand-title{font-size:1.05rem;font-weight:900;line-height:1.15}
+    .brand-sub{font-size:.82rem;color:#bed0dc;margin-top:3px}
+
+    .course-progress{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:18px;
+    }
+    .progress-head{display:flex;justify-content:space-between;gap:10px;font-size:.9rem;font-weight:800}
+    .progress-track{height:9px;background:rgba(255,255,255,.14);border-radius:99px;margin-top:10px;overflow:hidden}
+    .progress-fill{height:100%;width:0;background:linear-gradient(90deg,#6fd3c7,#f2c46d);border-radius:99px;transition:width .25s ease}
+    .progress-note{font-size:.78rem;color:#c8d7e0;margin-top:8px}
+
+    .nav-title{
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      font-size:.72rem;
+      color:#9eb7c7;
+      font-weight:900;
+      margin:16px 8px 8px;
+    }
+    .course-nav{display:grid;gap:6px}
+    .course-nav a{
+      display:flex;align-items:flex-start;gap:9px;
+      text-decoration:none;
+      padding:10px 11px;
+      border-radius:12px;
+      color:#dce8ef;
+      transition:.18s ease;
+      border:1px solid transparent;
+      font-size:.9rem;
+    }
+    .course-nav a:hover{background:rgba(255,255,255,.07)}
+    .course-nav a.active{
+      background:rgba(111,211,199,.13);
+      color:#fff;
+      border-color:rgba(111,211,199,.36);
+      font-weight:800;
+    }
+    .course-nav a[]{opacity:.58}
+    .num{
+      min-width:28px;height:28px;border-radius:9px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.09);
+      font-size:.76rem;font-weight:900;
+    }
+    .active .num{background:var(--teal);color:white}
+    .soon{display:block;font-size:.7rem;color:#9fb4c1;margin-top:2px}
+
+    .sidebar-tools{
+      margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12)
+    }
+    .notes-label{font-size:.78rem;font-weight:900;color:#d7e5ec;display:block;margin-bottom:7px}
+    .notes{
+      width:100%;min-height:110px;resize:vertical;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.08);
+      color:#fff;border-radius:12px;padding:11px;
+      outline:none;
+    }
+    .notes::placeholder{color:#aac0ce}
+    .notes:focus{border-color:#7bd8cd;box-shadow:0 0 0 3px rgba(123,216,205,.14)}
+    .tool-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    .tool-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.07);
+      color:#eff7fa;border-radius:10px;padding:9px 8px;font-size:.78rem;font-weight:800
+    }
+    .tool-btn:hover{background:rgba(255,255,255,.12)}
+    .reset-btn{width:100%;margin-top:8px;border-color:rgba(255,175,175,.25);color:#ffd8d8}
+
+    .page{
+      margin-left:var(--sidebar);
+      min-height:100vh;
+      padding:44px clamp(20px,4vw,64px) 80px;
+    }
+    .content{max-width:980px;margin:0 auto}
+
+    .hero{
+      position:relative;
+      background:linear-gradient(135deg,#ffffff 0%,#f2f8f8 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:34px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-bottom:26px;
+    }
+    .hero::after{
+      content:"";position:absolute;right:-70px;top:-90px;width:240px;height:240px;border-radius:50%;
+      background:radial-gradient(circle at 40% 40%,rgba(47,124,116,.22),rgba(47,124,116,0));
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      color:var(--teal);font-weight:900;text-transform:uppercase;letter-spacing:.12em;font-size:.76rem
+    }
+    .hero h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.02;margin:10px 0 12px;color:var(--navy)}
+    .english-term{display:block;margin-top:8px;font-size:.32em;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:900}
+    .hero p{max-width:750px;color:var(--muted);font-size:1.03rem;margin:0}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .pill{padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.82rem;font-weight:800;color:var(--navy-2)}
+
+    .section{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:0 8px 26px rgba(18,50,74,.06);
+      margin:20px 0;
+    }
+    .section h2{margin:0 0 8px;color:var(--navy);font-size:1.55rem}
+    .section h3{color:var(--navy-2);margin-top:24px}
+    .section-intro{color:var(--muted);margin:0 0 20px}
+
+    .callout{
+      border-left:5px solid var(--teal);
+      background:var(--teal-soft);
+      padding:16px 18px;
+      border-radius:12px;
+      margin:18px 0;
+    }
+    .callout strong{color:var(--navy)}
+    .callout.warn{border-left-color:var(--gold);background:var(--warn-bg)}
+
+    .category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}
+    .category-card{
+      border:1px solid var(--line);border-radius:15px;padding:16px;background:#fbfdfe
+    }
+    .category-card b{display:block;color:var(--navy);margin-bottom:6px}
+    .category-card span{font-size:.9rem;color:var(--muted)}
+
+    .comparison{
+      width:100%;border-collapse:separate;border-spacing:0;margin-top:14px;overflow:hidden;
+      border:1px solid var(--line);border-radius:14px
+    }
+    .comparison th,.comparison td{padding:13px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}
+    .comparison th:last-child,.comparison td:last-child{border-right:0}
+    .comparison tr:last-child td{border-bottom:0}
+    .comparison th{background:#eef4f7;color:var(--navy);text-align:left}
+
+    .example-list{display:grid;gap:12px;margin-top:16px}
+    .example-row{
+      display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto;
+      gap:14px;align-items:center;
+      border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:#fbfdfe
+    }
+    .eng{font-weight:750;color:var(--ink)}
+    .rus{color:var(--muted);font-size:.92rem}
+    .speak-btn{
+      width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--navy);font-size:1rem
+    }
+    .speak-btn:hover{background:var(--teal-soft);border-color:#a7d9d1}
+
+    .exercise-card{
+      border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;background:#fcfdfe
+    }
+    .exercise-card.done{border-color:#96cfb8;background:#fbfffd}
+    .q-top{display:flex;gap:12px;align-items:flex-start}
+    .q-num{
+      min-width:34px;height:34px;border-radius:10px;background:#eaf0f4;color:var(--navy);display:grid;place-items:center;font-weight:900
+    }
+    .q-main{flex:1}
+    .sentence{font-size:1.03rem;font-weight:750;margin-bottom:10px}
+    select{
+      min-width:115px;border:1px solid #bccbd5;border-radius:10px;padding:8px 34px 8px 10px;background:#fff;color:var(--ink);font-weight:800
+    }
+    select:focus, textarea.student-answer:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(47,124,116,.14)}
+    .feedback{display:none;margin-top:12px;border-radius:11px;padding:11px 13px;font-size:.91rem}
+    .feedback.show{display:block}
+    .feedback.good{background:var(--good-bg);color:var(--good);border:1px solid #b9e1cf}
+    .feedback.bad{background:var(--bad-bg);color:var(--bad);border:1px solid #efc1c1}
+    .feedback.neutral{background:#eef5f8;color:#37576b;border:1px solid #cedde5}
+
+    .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+    .choice-btn{
+      border:1px solid #c8d5dd;background:#fff;border-radius:11px;padding:10px 12px;text-align:left;font-weight:800;color:var(--navy-2)
+    }
+    .choice-btn:hover{background:#f2f7f8}
+    .choice-btn.selected{border-color:var(--teal);background:var(--teal-soft)}
+    .choice-btn.correct{border-color:#6eb99a;background:var(--good-bg);color:var(--good)}
+    .choice-btn.wrong{border-color:#d78787;background:var(--bad-bg);color:var(--bad)}
+
+    .translation-item{border:1px solid var(--line);border-radius:15px;padding:16px;margin:12px 0;background:#fbfdfe}
+    .translation-item label{display:block;font-weight:800;margin-bottom:8px}
+    .student-answer{width:100%;min-height:76px;resize:vertical;border:1px solid #c4d1d9;border-radius:11px;padding:11px;background:#fff}
+    .answer-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+    .action-btn{
+      border:0;border-radius:10px;padding:9px 12px;font-weight:850;background:var(--navy);color:#fff
+    }
+    .action-btn.secondary{background:#eaf0f4;color:var(--navy)}
+    .model-answer{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--warn-bg);border:1px solid #ecd996;color:#5d4c1f}
+    .model-answer.show{display:block}
+
+    .unit-summary{
+      display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+      background:linear-gradient(135deg,var(--navy),var(--navy-2));
+      color:#fff;border-radius:20px;padding:24px;margin-top:24px
+    }
+    .unit-summary h2{color:#fff;margin:0 0 6px}
+    .unit-summary p{margin:0;color:#d8e6ee}
+    .score-circle{
+      width:112px;height:112px;border-radius:50%;display:grid;place-items:center;text-align:center;
+      background:conic-gradient(#72d1c7 var(--score-angle,0deg),rgba(255,255,255,.13) 0);
+      position:relative
+    }
+    .score-circle::before{content:"";position:absolute;inset:10px;border-radius:50%;background:var(--navy)}
+    .score-inner{position:relative;z-index:1;font-weight:900;font-size:1.35rem}
+    .score-inner small{display:block;font-size:.68rem;color:#bad0dc;font-weight:800}
+
+    .footer-note{text-align:center;color:#7b8995;font-size:.82rem;margin-top:26px}
+
+    .toast{
+      position:fixed;right:18px;bottom:18px;z-index:1500;
+      background:#173c55;color:#fff;padding:12px 15px;border-radius:12px;box-shadow:var(--shadow);
+      opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s ease;font-size:.88rem
+    }
+    .toast.show{opacity:1;transform:translateY(0)}
+
+    .overlay{display:none}
+
+    @media (max-width:980px){
+      .category-grid{grid-template-columns:1fr}
+      .example-row{grid-template-columns:1fr auto}
+      .example-row .rus{grid-column:1 / -1}
+    }
+
+    @media (max-width:820px){
+      body.menu-open{overflow:hidden}
+      .menu-toggle{display:flex}
+      .sidebar{
+        width:min(88vw,340px);
+        transform:translateX(-105%);
+        transition:transform .24s ease;
+        padding-top:calc(74px + env(safe-area-inset-top));
+      }
+      body.menu-open .sidebar{transform:translateX(0)}
+      .overlay{display:block;position:fixed;inset:0;background:rgba(8,24,36,.45);z-index:1000;opacity:0;pointer-events:none;transition:.22s ease}
+      body.menu-open .overlay{opacity:1;pointer-events:auto}
+      .page{margin-left:0;padding:86px 14px 60px}
+      .hero{padding:25px 21px;border-radius:22px}
+      .section{padding:21px 17px}
+      .comparison{font-size:.9rem}
+      .comparison th,.comparison td{padding:10px}
+      .choice-grid{grid-template-columns:1fr}
+      .unit-summary{grid-template-columns:1fr;text-align:center}
+      .score-circle{margin:auto}
+    }
+
+    @media (max-width:540px){
+      .hero h1{font-size:2.2rem}
+      .hero-meta{gap:7px}
+      .pill{font-size:.75rem;padding:7px 9px}
+      .q-top{gap:9px}
+      .q-num{min-width:30px;height:30px}
+      select{width:100%;margin-top:8px}
+      .sentence select{display:block}
+      .example-row{grid-template-columns:1fr auto}
+      .section h2{font-size:1.35rem}
+      .tool-row{grid-template-columns:1fr}
+      .page{padding-left:max(12px, env(safe-area-inset-left));padding-right:max(12px, env(safe-area-inset-right))}
+    }
+
+    @media print{
+      .sidebar,.menu-toggle,.overlay,.toast,.speak-btn,.tool-row,.reset-btn{display:none!important}
+      .page{margin:0;padding:0}
+      .section,.hero{box-shadow:none;break-inside:avoid}
+    }
+  
+.diag-card{margin-top:24px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid var(--line,#d8e3ec);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(20,53,84,.055)}
+.diag-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.diag-card h2{margin:0 0 7px;color:var(--navy,#17395d);font-size:1.5rem}
+.diag-intro{margin:0;color:var(--muted,#627184);max-width:850px}
+.diag-note{display:inline-flex;margin-top:12px;padding:6px 10px;border-radius:999px;background:var(--goldSoft,#fff7df);color:#815b16;font-size:.8rem;font-weight:850}
+.diag-list{display:grid;gap:12px;margin-top:18px}
+.diag-question{border:1px solid var(--line,#d8e3ec);border-radius:14px;padding:15px;background:#fff}
+.diag-question legend{font-weight:850;color:var(--ink,#172434);padding:0 4px}
+.diag-options{display:grid;gap:8px;margin-top:11px}
+.diag-option{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;border:1px solid #dce6ee;border-radius:10px;background:#fbfdff;cursor:pointer}
+.diag-option:hover{border-color:#a9c7dd;background:#f5f9fc}
+.diag-option input{margin-top:3px;accent-color:var(--blue,#2f73b7)}
+.diag-question.diag-correct{border-color:#8dccaa;background:var(--goodBg,#eaf8f1)}
+.diag-question.diag-wrong{border-color:#e6aba8;background:var(--badBg,#fff0ef)}
+.diag-feedback{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.78)}
+.diag-feedback.show{display:block}
+.diag-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
+.diag-btn{border:1px solid var(--line,#d8e3ec);border-radius:11px;padding:10px 14px;background:#fff;color:var(--navy,#17395d);font-weight:850}
+.diag-btn.primary{background:var(--navy,#17395d);border-color:var(--navy,#17395d);color:#fff}
+.diag-btn.theory{display:none;background:var(--teal,#2b8176);border-color:var(--teal,#2b8176);color:#fff}
+.diag-result{display:none;margin-top:17px;padding:15px 17px;border-radius:14px;background:var(--blueSoft,#eaf3fb);color:var(--navy,#17395d)}
+.diag-result.show{display:block}
+.diag-result strong{font-size:1.12rem}
+.diag-topics{margin:8px 0 0;padding-left:20px}
+@media(max-width:760px){.diag-card{padding:19px 15px}.diag-head{display:block}.diag-actions{display:grid;grid-template-columns:1fr}.diag-btn{width:100%;min-height:44px}}
+
+
+/* Финальная проверка совместимости и мобильной вёрстки */
+img{max-width:100%;height:auto}
+.hero,.section,.item-card,.translation-card,.picture-card,.theory-card{min-width:0}
+.sentence,.ru-text,.example,.expr-en,.expr-ru,.intro{overflow-wrap:anywhere}
+button{touch-action:manipulation}
+.back-top{
+  position:fixed;right:14px;bottom:max(14px,env(safe-area-inset-bottom));z-index:850;
+  width:46px;height:46px;border:1px solid rgba(255,255,255,.35);border-radius:14px;
+  background:var(--navy,#17395d);color:#fff;font-weight:950;font-size:1.1rem;
+  box-shadow:0 10px 28px rgba(16,47,80,.22);opacity:0;transform:translateY(12px);
+  pointer-events:none;transition:.2s
+}
+.back-top.show{opacity:.94;transform:none;pointer-events:auto}
+@media(max-width:760px){
+  .diag-option{min-height:44px;align-items:center}
+  .audio-btn,.check-btn,.small-btn,.model-btn,.tool-btn,.diag-btn{min-height:44px}
+  input[type=radio],input[type=checkbox]{width:20px;height:20px;flex:none}
+  .theory-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .back-top{right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+
+/* === Final unified sidebar === */
+.sidebar{
+  background:#123b55 !important;
+  color:#edf6fb !important;
+  border-right:0 !important;
+  box-shadow:10px 0 30px rgba(12,39,58,.12) !important;
+}
+.sidebar .brand{border-bottom-color:rgba(255,255,255,.12)!important}
+.sidebar .brand strong,.sidebar .brand-title{color:#fff!important}
+.sidebar .brand small,.sidebar .brand-sub{color:#c5d8e4!important}
+.sidebar .brand-mark{background:#319487!important;color:#fff!important}
+.sidebar .progress-box,.sidebar .course-progress,.sidebar .progress-card{
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.14)!important;
+  color:#fff!important
+}
+.sidebar .progress-head{color:#fff!important}
+.sidebar .progress-track{background:rgba(255,255,255,.16)!important}
+.sidebar .progress-note{color:#cfdee7!important}
+.sidebar .nav-title{color:#a9c0cf!important}
+.sidebar .course-nav a,.sidebar .nav a{
+  color:#e3eef4!important;
+  border-color:transparent!important;
+  background:transparent!important
+}
+.sidebar .course-nav a:hover,.sidebar .nav a:hover{background:rgba(255,255,255,.075)!important}
+.sidebar .course-nav a.active,.sidebar .nav a.active{
+  background:rgba(62,181,166,.17)!important;
+  border:1px solid rgba(82,205,188,.45)!important;
+  color:#fff!important
+}
+.sidebar .nav-num,.sidebar .num{
+  color:#eaf6f8!important;
+  background:rgba(255,255,255,.10)!important
+}
+.sidebar a.active .nav-num,.sidebar a.active .num{background:#319487!important;color:#fff!important}
+.sidebar .side-tools,.sidebar .sidebar-tools,.sidebar .tools{
+  border-top-color:rgba(255,255,255,.12)!important
+}
+.sidebar .side-tools label,.sidebar .notes-label,.sidebar .tools label{color:#dbe8ef!important}
+.sidebar textarea{
+  color:#fff!important;background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar textarea::placeholder{color:#b5cad7!important}
+.sidebar .tool-btn{
+  color:#eef7fb!important;background:rgba(255,255,255,.075)!important;
+  border-color:rgba(255,255,255,.18)!important
+}
+.sidebar .tool-btn:hover{background:rgba(255,255,255,.13)!important}
+.sidebar .tool-btn.reset,.sidebar .tool-btn.danger{color:#ffd3d0!important;border-color:rgba(255,180,176,.28)!important}
+.sidebar .subnav,.sidebar .course-subnav{
+  margin:3px 0 9px 35px!important;padding:2px 0 2px 9px!important;
+  border-left:2px solid rgba(116,214,200,.34)!important
+}
+.sidebar .subnav a,.sidebar .course-subnav a{
+  display:block!important;padding:5px 7px!important;margin:1px 0!important;
+  font-size:.77rem!important;line-height:1.28!important;color:#bed4df!important;
+  border:0!important;border-radius:8px!important
+}
+.sidebar .subnav a:hover,.sidebar .course-subnav a:hover{
+  color:#fff!important;background:rgba(255,255,255,.07)!important
+}
+.ru-hint{color:#865b13;font-weight:800}
+.nb-box{
+  margin:18px 0 0;padding:17px 18px;border:1px solid #b9d9ee;border-left:5px solid #327eb9;
+  border-radius:14px;background:#eef7ff;color:#26455f
+}
+.nb-box h3{margin:0 0 9px!important;color:#153d62!important}
+.nb-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.nb-grid>div{padding:12px;border-radius:11px;background:rgba(255,255,255,.72)}
+.nb-grid p{margin:5px 0}
+@media(max-width:720px){.nb-grid{grid-template-columns:1fr}}
+
+
+.learning-path{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(82,114,137,.16)}
+.learning-step{padding:6px 9px;border-radius:9px;background:#f3f7fa;color:#486276;font-size:.78rem;font-weight:800}
+@media(max-width:600px){.learning-path{display:grid;grid-template-columns:1fr 1fr}.learning-step{font-size:.76rem}}
+</style>
+<script>
+try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+window.addEventListener('pageshow',()=>requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'})));
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержанию</a>
+<button aria-controls="sidebar" aria-expanded="false" class="menu-toggle" id="menuToggle">☰ <span>Разделы</span></button>
+<div aria-hidden="true" class="overlay" id="overlay"></div>
+<aside aria-label="Навигация по курсу" class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-mark">ПР</div>
+<div>
+<div class="brand-title">Предлоги английского языка</div>
+<div class="brand-sub">Интерактивный курс для русскоязычных студентов</div>
+</div>
+</div>
+<div class="course-progress">
+<div class="progress-head"><span>Раздел 01</span><span id="progressPercent">0%</span></div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-note">Ответы и заметки сохраняются автоматически в браузере.</div>
+</div>
+<div class="nav-title">Все разделы</div>
+<nav class="course-nav">
+<a class="active" href="01_definition_prepositions.html"><span class="num">01</span><span>Определение предлога</span></a><div class="course-subnav"><a href="#intro-test">Вводный тест</a><a href="#definition">1. Что такое предлог</a><a href="#prep-adverb">2. Предлог или наречие</a><a href="#multiword">3. Составные предлоги</a><a href="#contrast">4. Перевод предлогов</a><a href="#exercise-1">Практика и повторение</a></div>
+<a href="02_place.html"><span class="num">02</span><span>Предлоги места</span></a>
+<a href="03_direction.html"><span class="num">03</span><span>Направление и движение</span></a>
+<a href="04_confused.html"><span class="num">04</span><span>Предлоги, которые часто путают</span></a>
+<a href="05_revision_place.html"><span class="num">05</span><span>Повторение: место и направление</span></a>
+<a href="06_transport.html"><span class="num">06</span><span>Предлоги и транспорт</span></a>
+<a href="07_time.html"><span class="num">07</span><span>Предлоги времени</span></a>
+<a href="08_abstract_relations.html"><span class="num">08</span><span>Абстрактные отношения</span></a>
+<a href="09_composite.html"><span class="num">09</span><span>Составные предлоги</span></a>
+<a href="10_revision.html"><span class="num">10</span><span>Общее повторение</span></a>
+<a href="11_set_expressions.html"><span class="num">11</span><span>Устойчивые выражения</span></a>
+<a href="12_tests.html"><span class="num">12</span><span>Итоговые тесты</span></a>
+</nav>
+<div class="sidebar-tools">
+<label class="notes-label" for="notes">Личные заметки</label>
+<textarea class="notes" id="notes" placeholder="Например: повторить разницу между at и on..."></textarea>
+<div class="tool-row">
+<button class="tool-btn" id="exportBtn" type="button">Экспорт</button>
+<button class="tool-btn" id="importBtn" type="button">Импорт</button>
+</div>
+<button class="tool-btn reset-btn" id="resetBtn" type="button">Сбросить раздел</button>
+<input accept="application/json" hidden="" id="importFile" type="file"/>
+</div>
+</aside>
+<main class="page" id="main">
+<div class="content">
+<header class="hero">
+<div class="eyebrow">Раздел 01 · Основы</div>
+<h1>Предлог <span class="english-term">The Preposition</span></h1>
+<p>Что такое предлог, чем он отличается от наречия и почему английские предлоги нельзя механически переводить с русского языка.</p>
+<div class="hero-meta">
+<span class="pill">Уровень A2–B1</span>
+<span class="pill">20–30 минут</span>
+<span class="pill">Автосохранение</span>
+<span class="pill">Интерактивные примеры</span>
+</div>
+<div class="learning-path"><span class="learning-step">Диагностика</span><span class="learning-step">Теория</span><span class="learning-step">Контраст</span><span class="learning-step">Практика</span><span class="learning-step">Повторение</span></div></header>
+<section aria-labelledby="diag-title" class="diag-card" id="intro-test">
+<div class="diag-head"><div>
+<h2 id="diag-title">Вводный тест: что вы уже знаете о предлогах?</h2>
+<p class="diag-intro">Ответьте до чтения теории. После завершения вы увидите объяснения и темы, которым стоит уделить особое внимание.</p>
+<span class="diag-note">Результат не учитывается в основном прогрессе главы</span>
+</div></div>
+<div class="diag-list" id="diagList"></div>
+<div class="diag-actions">
+<button class="diag-btn primary" id="diagFinish" type="button">Завершить вводный тест</button>
+<button class="diag-btn" id="diagReset" type="button">Пройти заново</button>
+<button class="diag-btn theory" id="diagTheory" type="button">Перейти к теории</button>
+</div>
+<div aria-live="polite" class="diag-result" id="diagResult" role="status"></div>
+</section>
+<section class="section" id="definition">
+<h2>Что такое предлог</h2>
+<p class="section-intro">Предлог показывает, как предметы, люди, места, события или действия связаны друг с другом.</p>
+<p><strong>Предлоги</strong> — это служебные слова, которые выражают отношения <strong>места</strong>, <strong>времени</strong>, <strong>направления</strong> и другие, более абстрактные связи. Обычно предлог соединяет существительное или местоимение с другой частью предложения.</p>
+<div class="category-grid">
+<div class="category-card"><b>Место и направление</b><span>under, next to, towards, through</span></div>
+<div class="category-card"><b>Время</b><span>after, before, at, for, during</span></div>
+<div class="category-card"><b>Абстрактные отношения</b><span>by, with, because of, about</span></div>
+</div>
+<div class="callout">
+<strong>Главное правило:</strong> после предлога обычно стоит существительное, местоимение или словосочетание: <em>under the bridge</em>, <em>with her</em>, <em>after the lesson</em>.
+        </div>
+</section>
+<section class="section" id="prep-adverb">
+<h2>Предлог или наречие?</h2>
+<p class="section-intro">Одно и то же короткое слово может выступать и как предлог, и как наречие. Разница определяется структурой предложения.</p>
+<table class="comparison">
+<thead>
+<tr><th>Предлог</th><th>Наречие</th></tr>
+</thead>
+<tbody>
+<tr><td>Eva walked <strong>up the stairs</strong>.</td><td>Eva looked <strong>up</strong>.</td></tr>
+<tr><td><strong>Before the meeting</strong>, Daniel called me.</td><td>I had seen that document <strong>before</strong>.</td></tr>
+<tr><td>We went out <strong>after dinner</strong>.</td><td>I never saw him <strong>after</strong>.</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<strong>Как проверить:</strong> если после слова есть объект, это обычно предлог. Если объект не нужен, слово чаще является наречием.
+        </div>
+</section>
+<section class="section" id="multiword">
+<h2>Составные предлоги</h2>
+<p>Некоторые предлоги состоят из нескольких слов:</p>
+<div class="example-list">
+<div class="example-row"><div class="eng">in front of the museum</div><div class="rus">перед музеем</div><button aria-label="Прослушать" class="speak-btn" data-speak="in front of the museum" type="button">🔊</button></div>
+<div class="example-row"><div class="eng">in between two buildings</div><div class="rus">между двумя зданиями</div><button aria-label="Прослушать" class="speak-btn" data-speak="in between two buildings" type="button">🔊</button></div>
+<div class="example-row"><div class="eng">on top of the cupboard</div><div class="rus">на шкафу, на верхней поверхности шкафа</div><button aria-label="Прослушать" class="speak-btn" data-speak="on top of the cupboard" type="button">🔊</button></div>
+</div>
+</section>
+<section class="section" id="contrast">
+<h2>Почему нельзя переводить предлоги слово в слово</h2>
+<p class="section-intro">Русский и английский языки по-разному выражают одни и те же отношения. Поэтому один русский предлог может соответствовать разным английским предлогам.</p>
+<div class="example-list">
+<div class="example-row"><div class="eng">The desk is <strong>at</strong> the window.</div><div class="rus">Стол у окна.</div><button aria-label="Прослушать" class="speak-btn" data-speak="The desk is at the window." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">The lesson starts <strong>at</strong> eight.</div><div class="rus">Занятие начинается в восемь.</div><button aria-label="Прослушать" class="speak-btn" data-speak="The lesson starts at eight." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">Marta works <strong>at</strong> a factory.</div><div class="rus">Марта работает на заводе.</div><button aria-label="Прослушать" class="speak-btn" data-speak="Marta works at a factory." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">They laughed <strong>at</strong> him.</div><div class="rus">Они смеялись над ним.</div><button aria-label="Прослушать" class="speak-btn" data-speak="They laughed at him." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">The keys are <strong>on</strong> the table.</div><div class="rus">Ключи на столе.</div><button aria-label="Прослушать" class="speak-btn" data-speak="The keys are on the table." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">I am interested <strong>in</strong> architecture.</div><div class="rus">Я интересуюсь архитектурой.</div><button aria-label="Прослушать" class="speak-btn" data-speak="I am interested in architecture." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">We are going <strong>to</strong> the south.</div><div class="rus">Мы едем на юг.</div><button aria-label="Прослушать" class="speak-btn" data-speak="We are going to the south." type="button">🔊</button></div>
+<div class="example-row"><div class="eng">I am going there <strong>for</strong> four days.</div><div class="rus">Я еду туда на четыре дня.</div><button aria-label="Прослушать" class="speak-btn" data-speak="I am going there for four days." type="button">🔊</button></div>
+</div>
+</section>
+<section class="section" id="exercise-1">
+<h2>Быстрый выбор: какой предлог подходит?</h2>
+<p class="section-intro">Выберите вариант. После ответа появится комментарий, объясняющий выбор.</p>
+<div id="selectExercises"></div>
+</section>
+<section class="section" id="exercise-2">
+<h2>Проверка структуры: предлог или наречие?</h2>
+<p class="section-intro">Определите функцию выделенного слова в каждом предложении.</p>
+<div id="typeExercises"></div>
+</section>
+<section class="section" id="exercise-3">
+<h2>Скажите и переведите</h2>
+<p class="section-intro">Ваш текст сохраняется автоматически. Образец ответа можно открыть после самостоятельной попытки.</p>
+<div class="translation-item" data-translation="t1">
+<label for="t1">1. Урок начинается в девять часов.</label>
+<textarea class="student-answer" data-save="translation.t1" id="t1" placeholder="Введите перевод..."></textarea>
+<div class="answer-actions"><button class="action-btn secondary show-model" data-target="m1" type="button">Показать образец</button><button class="action-btn speak-model" data-speak="The lesson starts at nine o'clock." type="button">🔊 Прослушать</button></div>
+<div class="model-answer" id="m1">The lesson starts <strong>at</strong> nine o’clock.</div>
+</div>
+<div class="translation-item" data-translation="t2">
+<label for="t2">2. Книга лежит на письменном столе.</label>
+<textarea class="student-answer" data-save="translation.t2" id="t2" placeholder="Введите перевод..."></textarea>
+<div class="answer-actions"><button class="action-btn secondary show-model" data-target="m2" type="button">Показать образец</button><button class="action-btn speak-model" data-speak="The book is on the desk." type="button">🔊 Прослушать</button></div>
+<div class="model-answer" id="m2">The book is <strong>on</strong> the desk.</div>
+</div>
+<div class="translation-item" data-translation="t3">
+<label for="t3">3. Я интересуюсь современной архитектурой.</label>
+<textarea class="student-answer" data-save="translation.t3" id="t3" placeholder="Введите перевод..."></textarea>
+<div class="answer-actions"><button class="action-btn secondary show-model" data-target="m3" type="button">Показать образец</button><button class="action-btn speak-model" data-speak="I am interested in modern architecture." type="button">🔊 Прослушать</button></div>
+<div class="model-answer" id="m3">I am interested <strong>in</strong> modern architecture.</div>
+</div>
+<div class="translation-item" data-translation="t4">
+<label for="t4">4. Мы едем в Варшаву на четыре дня.</label>
+<textarea class="student-answer" data-save="translation.t4" id="t4" placeholder="Введите перевод..."></textarea>
+<div class="answer-actions"><button class="action-btn secondary show-model" data-target="m4" type="button">Показать образец</button><button class="action-btn speak-model" data-speak="We are going to Warsaw for four days." type="button">🔊 Прослушать</button></div>
+<div class="model-answer" id="m4">We are going <strong>to</strong> Warsaw <strong>for</strong> four days.</div>
+</div>
+</section>
+<section class="section" id="mini-test">
+<h2>Мини-повторение</h2>
+<p class="section-intro">Выберите один ответ. Результат учитывается в общем прогрессе раздела.</p>
+<div id="miniTest"></div>
+</section>
+<section class="unit-summary">
+<div>
+<h2>Ваш результат</h2>
+<p id="summaryText">Выполните задания, чтобы увидеть прогресс.</p>
+</div>
+<div class="score-circle" id="scoreCircle">
+<div class="score-inner"><span id="scoreValue">0%</span><small>раздел пройден</small></div>
+</div>
+</section>
+<p class="footer-note">Данные сохраняются локально в браузере. Для переноса на другое устройство используйте экспорт и импорт.</p>
+</div>
+</main>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<script>
+    (() => {
+      const STORAGE_KEY = 'englishPrepositionsCourseV1';
+      const UNIT_ID = '01-definition';
+
+      const defaultState = {
+        version: 1,
+        currentUnit: UNIT_ID,
+        units: {
+          [UNIT_ID]: {
+            selects: {},
+            types: {},
+            test: {},
+            translation: {},
+            notes: '',
+            modelShown: {},
+            updatedAt: null
+          }
+        }
+      };
+
+      const deepMerge = (target, source) => {
+        for (const key of Object.keys(source || {})) {
+          if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+            target[key] = deepMerge(target[key] || {}, source[key]);
+          } else target[key] = source[key];
+        }
+        return target;
+      };
+
+      function loadState(){
+        try {
+          const raw = safeStorage.getItem(STORAGE_KEY);
+          return raw ? deepMerge(structuredClone(defaultState), JSON.parse(raw)) : structuredClone(defaultState);
+        } catch (e) {
+          return structuredClone(defaultState);
+        }
+      }
+
+      let state = loadState();
+      const unit = () => state.units[UNIT_ID];
+
+      function saveState(show=false){
+        unit().updatedAt = new Date().toISOString();
+        safeStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        updateProgress();
+        if(show) toast('Сохранено');
+      }
+
+      const selectData = [
+        {
+          id:'s1',
+          sentence:'The desk is ___ the window.',
+          options:['at','on','in'],
+          correct:'at',
+          comments:{
+            at:'Верно. At показывает положение у определённой точки: at the window.',
+            on:'On означает положение на поверхности. Стол не находится на поверхности окна.',
+            in:'In означает положение внутри пространства. Стол не находится внутри окна.'
+          }
+        },
+        {
+          id:'s2',
+          sentence:'The lecture begins ___ ten o’clock.',
+          options:['on','at','for'],
+          correct:'at',
+          comments:{
+            at:'Верно. Для точного времени используется at: at ten o’clock.',
+            on:'On употребляется с днями и датами: on Monday, on 12 May.',
+            for:'For показывает продолжительность: for two hours.'
+          }
+        },
+        {
+          id:'s3',
+          sentence:'Nora works ___ a research centre.',
+          options:['at','to','for'],
+          correct:'at',
+          comments:{
+            at:'Верно. At может обозначать место работы или учреждение.',
+            to:'To выражает направление: go to the centre.',
+            for:'For возможно в значении «на организацию», но здесь упражнение проверяет местонахождение.'
+          }
+        },
+        {
+          id:'s4',
+          sentence:'The children laughed ___ the actor’s hat.',
+          options:['with','at','on'],
+          correct:'at',
+          comments:{
+            at:'Верно. Laugh at somebody/something означает «смеяться над кем-либо или чем-либо».',
+            with:'Laugh with somebody означает смеяться вместе с кем-либо, а не над объектом.',
+            on:'С глаголом laugh предлог on здесь не употребляется.'
+          }
+        },
+        {
+          id:'s5',
+          sentence:'The documents are ___ the table.',
+          options:['on','at','to'],
+          correct:'on',
+          comments:{
+            on:'Верно. Документы находятся на поверхности стола.',
+            at:'At обозначало бы положение у стола: at the table.',
+            to:'To выражает направление движения.'
+          }
+        },
+        {
+          id:'s6',
+          sentence:'I am disappointed ___ Mark.',
+          options:['with','on','to'],
+          correct:'with',
+          comments:{
+            with:'Верно. Disappointed with somebody означает «разочарован кем-либо».',
+            on:'On в этом сочетании не употребляется.',
+            to:'To в этом сочетании не употребляется.'
+          }
+        },
+        {
+          id:'s7',
+          sentence:'We are travelling ___ Prague tomorrow.',
+          options:['for','to','at'],
+          correct:'to',
+          comments:{
+            to:'Верно. To показывает направление к месту назначения.',
+            for:'For может обозначать цель или продолжительность, но не направление к городу.',
+            at:'At показывает положение, а не движение.'
+          }
+        },
+        {
+          id:'s8',
+          sentence:'They are staying there ___ five days.',
+          options:['during','for','at'],
+          correct:'for',
+          comments:{
+            for:'Верно. For используется перед периодом времени: for five days.',
+            during:'During требует существительного-события: during the holiday, during the lesson.',
+            at:'At не используется для обозначения продолжительности.'
+          }
+        }
+      ];
+
+      const typeData = [
+        {id:'p1', sentence:'Mila walked down the hill.', answer:'preposition', explanation:'После down есть объект the hill, поэтому down является предлогом.'},
+        {id:'p2', sentence:'Please sit down.', answer:'adverb', explanation:'После down нет объекта, поэтому down является наречием.'},
+        {id:'p3', sentence:'We met before lunch.', answer:'preposition', explanation:'После before стоит существительное lunch, следовательно, это предлог.'},
+        {id:'p4', sentence:'I had seen this film before.', answer:'adverb', explanation:'Before не имеет объекта и относится к действию had seen.'},
+        {id:'p5', sentence:'They went out after dinner.', answer:'preposition', explanation:'После after стоит объект dinner.'},
+        {id:'p6', sentence:'She never called after.', answer:'adverb', explanation:'После after нет объекта; слово употреблено самостоятельно.'}
+      ];
+
+      const testData = [
+        {id:'m1', q:'В каком предложении выделенное слово является предлогом?', options:['Look up!','She walked up the stairs.','I have seen it before.'], correct:1, explanation:'В выражении up the stairs после up стоит объект.'},
+        {id:'m2', q:'Выберите грамматически правильное предложение.', options:['The keys are at the table.','The keys are on the table.','The keys are to the table.'], correct:1, explanation:'On используется для положения на поверхности.'},
+        {id:'m3', q:'Выберите правильный перевод: «Я еду туда на неделю».', options:['I am going there at a week.','I am going there for a week.','I am going there on a week.'], correct:1, explanation:'For вводит период времени.'},
+        {id:'m4', q:'Какой вариант выражает направление движения?', options:['at the station','to the station','on the station'], correct:1, explanation:'To выражает движение к месту назначения.'},
+        {id:'m5', q:'Выберите правильное устойчивое сочетание.', options:['interested on something','interested in something','interested at something'], correct:1, explanation:'Устойчивое сочетание: interested in something.'}
+      ];
+
+      function renderSelects(){
+        const box = document.getElementById('selectExercises');
+        box.innerHTML = selectData.map((item,i)=>{
+          const saved = unit().selects[item.id] || '';
+          return `<article class="exercise-card" data-select-card="${item.id}">
+            <div class="q-top">
+              <div class="q-num">${i+1}</div>
+              <div class="q-main">
+                <div class="sentence">${item.sentence.replace('___', `<select data-select-id="${item.id}" aria-label="Выберите предлог">
+                  <option value="">— выбрать —</option>
+                  ${item.options.map(o=>`<option value="${o}" ${saved===o?'selected':''}>${o}</option>`).join('')}
+                </select>`)}</div>
+                <div class="feedback" id="fb-${item.id}"></div>
+              </div>
+            </div>
+          </article>`;
+        }).join('');
+
+        box.querySelectorAll('select[data-select-id]').forEach(sel=>{
+          sel.addEventListener('change',()=>{
+            unit().selects[sel.dataset.selectId]=sel.value;
+            showSelectFeedback(sel.dataset.selectId);
+            saveState();
+          });
+          if(sel.value) showSelectFeedback(sel.dataset.selectId);
+        });
+      }
+
+      function showSelectFeedback(id){
+        const item = selectData.find(x=>x.id===id);
+        const value = unit().selects[id];
+        const fb = document.getElementById(`fb-${id}`);
+        const card = document.querySelector(`[data-select-card="${id}"]`);
+        if(!value){fb.className='feedback';fb.textContent='';card.classList.remove('done');return}
+        const ok = value===item.correct;
+        fb.className=`feedback show ${ok?'good':'bad'}`;
+        fb.innerHTML=`<strong>${ok?'Верно.':'Пока неверно.'}</strong> ${item.comments[value]}`;
+        card.classList.toggle('done',ok);
+      }
+
+      function renderTypes(){
+        const box=document.getElementById('typeExercises');
+        box.innerHTML=typeData.map((item,i)=>{
+          const saved=unit().types[item.id];
+          return `<article class="exercise-card" data-type-card="${item.id}">
+            <div class="q-top">
+              <div class="q-num">${i+1}</div>
+              <div class="q-main">
+                <div class="sentence">${item.sentence}</div>
+                <div class="choice-grid">
+                  <button type="button" class="choice-btn ${saved==='preposition'?'selected':''}" data-type-id="${item.id}" data-value="preposition">Предлог</button>
+                  <button type="button" class="choice-btn ${saved==='adverb'?'selected':''}" data-type-id="${item.id}" data-value="adverb">Наречие</button>
+                </div>
+                <div class="feedback" id="typefb-${item.id}"></div>
+              </div>
+            </div>
+          </article>`
+        }).join('');
+
+        box.querySelectorAll('[data-type-id]').forEach(btn=>{
+          btn.addEventListener('click',()=>{
+            unit().types[btn.dataset.typeId]=btn.dataset.value;
+            showTypeFeedback(btn.dataset.typeId);
+            saveState();
+          });
+        });
+        typeData.forEach(x=>{if(unit().types[x.id]) showTypeFeedback(x.id)});
+      }
+
+      function showTypeFeedback(id){
+        const item=typeData.find(x=>x.id===id);
+        const value=unit().types[id];
+        const card=document.querySelector(`[data-type-card="${id}"]`);
+        const fb=document.getElementById(`typefb-${id}`);
+        card.querySelectorAll('[data-type-id]').forEach(btn=>{
+          btn.classList.remove('selected','correct','wrong');
+          if(btn.dataset.value===value) btn.classList.add('selected');
+          if(value && btn.dataset.value===item.answer) btn.classList.add('correct');
+          if(value && btn.dataset.value===value && value!==item.answer) btn.classList.add('wrong');
+        });
+        const ok=value===item.answer;
+        fb.className=`feedback show ${ok?'good':'bad'}`;
+        fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${item.explanation}`;
+        card.classList.toggle('done',ok);
+      }
+
+      function renderTest(){
+        const box=document.getElementById('miniTest');
+        box.innerHTML=testData.map((item,i)=>{
+          const saved=unit().test[item.id];
+          return `<article class="exercise-card" data-test-card="${item.id}">
+            <div class="q-top"><div class="q-num">${i+1}</div><div class="q-main">
+              <div class="sentence">${item.q}</div>
+              <div class="choice-grid">
+                ${item.options.map((o,idx)=>`<button type="button" class="choice-btn ${saved===idx?'selected':''}" data-test-id="${item.id}" data-index="${idx}">${o}</button>`).join('')}
+              </div>
+              <div class="feedback" id="testfb-${item.id}"></div>
+            </div></div>
+          </article>`
+        }).join('');
+
+        box.querySelectorAll('[data-test-id]').forEach(btn=>{
+          btn.addEventListener('click',()=>{
+            unit().test[btn.dataset.testId]=Number(btn.dataset.index);
+            showTestFeedback(btn.dataset.testId);
+            saveState();
+          });
+        });
+        testData.forEach(x=>{if(Number.isInteger(unit().test[x.id])) showTestFeedback(x.id)});
+      }
+
+      function showTestFeedback(id){
+        const item=testData.find(x=>x.id===id);
+        const value=unit().test[id];
+        const card=document.querySelector(`[data-test-card="${id}"]`);
+        const fb=document.getElementById(`testfb-${id}`);
+        card.querySelectorAll('[data-test-id]').forEach(btn=>{
+          btn.classList.remove('selected','correct','wrong');
+          const idx=Number(btn.dataset.index);
+          if(idx===value) btn.classList.add('selected');
+          if(Number.isInteger(value) && idx===item.correct) btn.classList.add('correct');
+          if(Number.isInteger(value) && idx===value && value!==item.correct) btn.classList.add('wrong');
+        });
+        const ok=value===item.correct;
+        fb.className=`feedback show ${ok?'good':'bad'}`;
+        fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${item.explanation}`;
+        card.classList.toggle('done',ok);
+      }
+
+      function setupTranslations(){
+        document.querySelectorAll('[data-save^="translation."]').forEach(area=>{
+          const key=area.dataset.save.split('.')[1];
+          area.value=unit().translation[key]||'';
+          area.addEventListener('input',()=>{
+            unit().translation[key]=area.value;
+            saveState();
+          });
+        });
+
+        document.querySelectorAll('.show-model').forEach(btn=>{
+          const target=btn.dataset.target;
+          const el=document.getElementById(target);
+          if(unit().modelShown[target]) el.classList.add('show');
+          btn.addEventListener('click',()=>{
+            el.classList.toggle('show');
+            unit().modelShown[target]=el.classList.contains('show');
+            saveState();
+          });
+        });
+      }
+
+      function scoreCounts(){
+        let completed=0, correct=0;
+        const total=selectData.length+typeData.length+testData.length+4;
+
+        selectData.forEach(x=>{
+          if(unit().selects[x.id]) completed++;
+          if(unit().selects[x.id]===x.correct) correct++;
+        });
+        typeData.forEach(x=>{
+          if(unit().types[x.id]) completed++;
+          if(unit().types[x.id]===x.answer) correct++;
+        });
+        testData.forEach(x=>{
+          if(Number.isInteger(unit().test[x.id])) completed++;
+          if(unit().test[x.id]===x.correct) correct++;
+        });
+        ['t1','t2','t3','t4'].forEach(k=>{if((unit().translation[k]||'').trim().length>2) completed++});
+        return {total,completed,correct};
+      }
+
+      function updateProgress(){
+        const {total,completed,correct}=scoreCounts();
+        const percent=Math.round((completed/total)*100);
+        document.getElementById('progressPercent').textContent=`${percent}%`;
+        document.getElementById('progressFill').style.width=`${percent}%`;
+        document.getElementById('scoreValue').textContent=`${percent}%`;
+        document.getElementById('scoreCircle').style.setProperty('--score-angle',`${percent*3.6}deg`);
+        const summary=document.getElementById('summaryText');
+        if(completed===0) summary.textContent='Выполните задания, чтобы увидеть прогресс.';
+        else summary.textContent=`Заполнено ${completed} из ${total} заданий. Правильных проверяемых ответов: ${correct}.`;
+      }
+
+      function setupSpeech(){
+        document.addEventListener('click',e=>{
+          const btn=e.target.closest('[data-speak]');
+          if(!btn) return;
+          const text=btn.dataset.speak;
+          if(!('speechSynthesis' in window)) return toast('Озвучивание не поддерживается этим браузером.');
+          speechSynthesis.cancel();
+          const utter=new SpeechSynthesisUtterance(text);
+          utter.lang='en-GB';utter.rate=.92;
+          speechSynthesis.speak(utter);
+        });
+      }
+
+      function setupMenu(){
+        const toggle=document.getElementById('menuToggle');
+        const overlay=document.getElementById('overlay');
+        const setOpen=(open)=>{
+          document.body.classList.toggle('menu-open',open);
+          toggle.setAttribute('aria-expanded',String(open));
+        };
+        toggle.addEventListener('click',()=>setOpen(!document.body.classList.contains('menu-open')));
+        overlay.addEventListener('click',()=>setOpen(false));
+        document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false)});
+        
+
+        document.getElementById('exportBtn').addEventListener('click',()=>{
+          const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+          const url=URL.createObjectURL(blob);
+          const a=document.createElement('a');
+          a.href=url;a.download='english-prepositions-progress.json';a.click();
+          URL.revokeObjectURL(url);toast('Файл прогресса создан.');
+        });
+
+        const input=document.getElementById('importFile');
+        document.getElementById('importBtn').addEventListener('click',()=>input.click());
+        input.addEventListener('change',async()=>{
+          const file=input.files[0];if(!file)return;
+          try{
+            const imported=JSON.parse(await file.text());
+            state=deepMerge(structuredClone(defaultState),imported);
+            safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+            location.reload();
+          }catch(e){toast('Не удалось импортировать файл.');}
+        });
+
+        document.getElementById('resetBtn').addEventListener('click',()=>{
+          if(!confirm('Сбросить все ответы и заметки этого раздела?')) return;
+          state.units[UNIT_ID]=structuredClone(defaultState.units[UNIT_ID]);
+          safeStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+          location.reload();
+        });
+      }
+
+      function setupTools(){
+        const notes=document.getElementById('notes');
+        if(!notes) return;
+        notes.value=unit().notes||'';
+        notes.addEventListener('input',()=>{
+          unit().notes=notes.value;
+          saveState();
+        });
+      }
+
+      function toast(message){
+        const el=document.getElementById('toast');
+        el.textContent=message;el.classList.add('show');
+        clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2200);
+      }
+
+      renderSelects();
+      renderTypes();
+      renderTest();
+      setupTranslations();
+      setupSpeech();
+      setupMenu();
+      setupTools();
+      updateProgress();
+    })();
+  </script>
+<script>
+(()=>{
+ const KEY='englishPrepositionsDiagnosticsV1';
+ const UNIT="01-definition";
+ const QUESTIONS=[{"id": "q1", "topic": "предлог и наречие", "q": "Какое выделенное слово является предлогом: The cat is <strong>under</strong> the table?", "options": ["under", "cat", "is"], "answer": 0, "ex": "Предлог <strong>under</strong> связывает существительное <em>table</em> с остальной частью предложения."}, {"id": "q2", "topic": "предлог и наречие", "q": "В предложении <em>He went upstairs</em> слово <strong>upstairs</strong> является...", "options": ["предлогом", "наречием", "союзом"], "answer": 1, "ex": "После <em>upstairs</em> нет зависимого существительного, поэтому это наречие."}, {"id": "q3", "topic": "управление", "q": "They laughed ___ the joke.", "options": ["at", "on", "to"], "answer": 0, "ex": "Устойчивое сочетание: <strong>laugh at</strong> something."}, {"id": "q4", "topic": "составные предлоги", "q": "Какое сочетание является составным предлогом?", "options": ["because of", "very quickly", "will go"], "answer": 0, "ex": "<strong>Because of</strong> состоит из двух слов и вводит причину."}, {"id": "q5", "topic": "несовпадение с русским", "q": "I’m interested ___ architecture.", "options": ["in", "on", "at"], "answer": 0, "ex": "Устойчивое сочетание: <strong>interested in</strong> something."}];
+ let store={units:{}};
+ try{store=JSON.parse(safeStorage.getItem(KEY)||'{"units":{}}')}catch(e){}
+ if(!store.units)store.units={};
+ let d=store.units[UNIT]||{answers:{},completed:false,score:0};
+ const list=document.getElementById('diagList'),finish=document.getElementById('diagFinish'),
+ reset=document.getElementById('diagReset'),theory=document.getElementById('diagTheory'),
+ result=document.getElementById('diagResult');
+ const save=()=>{store.units[UNIT]=d;safeStorage.setItem(KEY,JSON.stringify(store))};
+ function render(){
+   list.innerHTML=QUESTIONS.map((q,i)=>`<fieldset class="diag-question" id="diag-${q.id}">
+     <legend>${i+1}. ${q.q}</legend>
+     <div class="diag-options">${q.options.map((o,n)=>`<label class="diag-option"><input type="radio" name="diag-${q.id}" value="${n}" ${Number(d.answers[q.id])===n?'checked':''}><span>${o}</span></label>`).join('')}</div>
+     <div class="diag-feedback" id="diag-fb-${q.id}"></div>
+   </fieldset>`).join('');
+   list.querySelectorAll('input[type=radio]').forEach(inp=>inp.addEventListener('change',()=>{
+     const id=inp.name.replace('diag-','');d.answers[id]=Number(inp.value);d.completed=false;save();clearFeedback();
+   }));
+   if(d.completed)showResults(false);
+ }
+ function clearFeedback(){
+   document.querySelectorAll('.diag-question').forEach(x=>x.classList.remove('diag-correct','diag-wrong'));
+   document.querySelectorAll('.diag-feedback').forEach(x=>{x.classList.remove('show');x.innerHTML=''});
+   result.classList.remove('show');result.innerHTML='';theory.style.display='none';
+ }
+ function showResults(scroll=true){
+   const unanswered=QUESTIONS.filter(q=>!Number.isInteger(d.answers[q.id]));
+   if(unanswered.length){result.className='diag-result show';result.innerHTML=`Сначала ответьте на все вопросы. Осталось: <strong>${unanswered.length}</strong>.`;if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+   let score=0;const weak=[];
+   QUESTIONS.forEach(q=>{
+     const ok=Number(d.answers[q.id])===q.answer;if(ok)score++;else weak.push(q.topic);
+     const box=document.getElementById('diag-'+q.id),fb=document.getElementById('diag-fb-'+q.id);
+     box.classList.remove('diag-correct','diag-wrong');box.classList.add(ok?'diag-correct':'diag-wrong');
+     fb.classList.add('show');fb.innerHTML=`<strong>${ok?'Верно.':'Неверно.'}</strong> ${q.ex}`;
+   });
+   d.completed=true;d.score=score;save();
+   const unique=[...new Set(weak)];
+   let advice=unique.length?`<p>Обратите особое внимание на:</p><ul class="diag-topics">${unique.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p>Базовые различия уже усвоены. Используйте теорию для систематизации и закрепления.</p>';
+   result.className='diag-result show';result.innerHTML=`<strong>Результат: ${score} из ${QUESTIONS.length}</strong>${advice}`;
+   theory.style.display='inline-flex';if(scroll)result.scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ finish.addEventListener('click',()=>showResults(true));
+ reset.addEventListener('click',()=>{d={answers:{},completed:false,score:0};save();render();clearFeedback();window.scrollTo({top:document.getElementById('intro-test').offsetTop-20,behavior:'smooth'})});
+ theory.addEventListener('click',()=>{const next=document.getElementById('intro-test').nextElementSibling;if(next)next.scrollIntoView({behavior:'smooth',block:'start'})});
+ render();
+})();
+</script>
+<button aria-label="Вернуться наверх" class="back-top" id="backTop" type="button">↑</button>
+<script>
+(()=>{
+  const b=document.getElementById('backTop');if(!b)return;
+  const sync=()=>b.classList.toggle('show',window.scrollY>700);
+  window.addEventListener('scroll',sync,{passive:true});sync();
+  b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}
+  if(!location.hash) requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'}));
+});
+</script>
+</body>
+</html>
