@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6d5dfc">
+  <title>Pronunciation Bingo — all words</title>
+  <style>
+    :root{
+      --bg:#f6f4ff;
+      --ink:#17213d;
+      --muted:#667085;
+      --accent:#6d5dfc;
+      --line:#e6e1ff;
+      --shadow:0 12px 34px rgba(51,39,114,.12);
+      --safe-top:max(14px, env(safe-area-inset-top));
+      --safe-bottom:max(14px, env(safe-area-inset-bottom));
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%, #ebe7ff 0, transparent 31%),
+        radial-gradient(circle at 92% 10%, #ffe5f1 0, transparent 28%),
+        var(--bg);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+      padding-bottom:var(--safe-bottom);
+    }
+    button, select, input{font:inherit}
+    button{touch-action:manipulation}
+    .app{width:min(1240px,100%); margin:0 auto; padding:var(--safe-top) 14px 24px}
+
+    .hero{
+      background:linear-gradient(135deg,#211f54 0%,#6d5dfc 58%,#b06cff 100%);
+      color:#fff; border-radius:28px; padding:22px 20px 18px;
+      box-shadow:var(--shadow); overflow:hidden; position:relative;
+    }
+    .hero::after{
+      content:""; width:180px; height:180px; border-radius:50%;
+      position:absolute; right:-65px; top:-80px; background:rgba(255,255,255,.14);
+    }
+    .hero h1{font-size:clamp(28px,5vw,48px); line-height:1; margin:0 0 8px}
+    .hero p{margin:0; color:rgba(255,255,255,.88); font-size:15px; max-width:840px; line-height:1.45}
+
+    .tabs{
+      margin:14px 0; display:grid; grid-template-columns:1fr 1fr; gap:8px;
+      background:rgba(255,255,255,.72); backdrop-filter:blur(10px);
+      padding:7px; border:1px solid rgba(109,93,252,.13); border-radius:18px;
+      position:sticky; top:max(8px, env(safe-area-inset-top)); z-index:20;
+      box-shadow:0 7px 22px rgba(51,39,114,.08);
+    }
+    .tab{
+      border:0; border-radius:13px; min-height:46px;
+      color:#514b73; background:transparent; font-weight:800; cursor:pointer;
+    }
+    .tab.active{background:#fff; color:#6d5dfc; box-shadow:0 4px 12px rgba(72,57,160,.12)}
+    .panel{display:none}
+    .panel.active{display:block}
+
+    .toolbar{
+      background:rgba(255,255,255,.86); border:1px solid var(--line); border-radius:20px;
+      box-shadow:0 8px 24px rgba(51,39,114,.08);
+      padding:12px; margin-bottom:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .toolbar button,.toolbar select{
+      min-height:44px; border-radius:13px; border:1px solid #dcd6ff;
+      background:#fff; color:var(--ink); padding:0 14px; font-weight:750;
+    }
+    .toolbar .primary{background:#6d5dfc; color:#fff; border-color:#6d5dfc}
+    .toolbar .ghost{background:#f8f7ff}
+    .toolbar label{
+      display:flex; align-items:center; gap:8px; min-height:44px;
+      padding:0 4px; font-size:14px; font-weight:700; color:#4f4a69;
+    }
+    .toolbar input{width:20px; height:20px; accent-color:#6d5dfc}
+    .spacer{flex:1}
+
+    .progress-card{
+      display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center;
+      background:#fff; border:1px solid var(--line); border-radius:18px;
+      padding:13px 14px; margin-bottom:14px; box-shadow:0 7px 20px rgba(51,39,114,.07);
+    }
+    .progress-main{font-weight:850}
+    .progress-sub{color:var(--muted); font-size:13px; margin-top:3px}
+    .progress-ring{
+      width:60px; height:60px; border-radius:50%; display:grid; place-items:center;
+      background:conic-gradient(#6d5dfc var(--progress,0%),#ece9ff 0);
+      position:relative; font-weight:900;
+    }
+    .progress-ring::before{content:""; position:absolute; inset:6px; background:#fff; border-radius:50%}
+    .progress-ring span{position:relative; z-index:1; font-size:13px}
+
+    .board{
+      display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px;
+    }
+    .word-card{
+      border:0; padding:0; min-height:150px; border-radius:20px;
+      cursor:pointer; perspective:1000px; background:transparent; text-align:left; position:relative;
+    }
+    .word-card:focus-visible{outline:4px solid rgba(109,93,252,.35); outline-offset:3px}
+    .card-inner{
+      position:absolute; inset:0; border-radius:20px; transform-style:preserve-3d;
+      transition:transform .48s cubic-bezier(.2,.75,.2,1);
+    }
+    .word-card.revealed .card-inner{transform:rotateY(180deg)}
+    .card-face{
+      position:absolute; inset:0; border-radius:20px;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      overflow:hidden; box-shadow:0 10px 24px rgba(39,35,92,.11); border:1px solid rgba(255,255,255,.75);
+    }
+    .card-front{
+      display:flex; align-items:center; justify-content:center; text-align:center; padding:14px;
+      color:#1f2440; background:var(--card-bg,#fff);
+    }
+    .card-front::after{
+      content:"нажми"; position:absolute; bottom:9px; right:11px;
+      color:rgba(31,36,64,.48); font-size:11px; font-weight:850; letter-spacing:.03em; text-transform:uppercase;
+    }
+    .front-word{
+      font-size:clamp(19px,2.1vw,31px); font-weight:950; line-height:1.05; overflow-wrap:anywhere;
+    }
+    .card-back{
+      transform:rotateY(180deg); padding:12px; display:flex; flex-direction:column; justify-content:center;
+      background:#fff; border:2px solid var(--card-accent,#6d5dfc);
+    }
+    .back-word{font-weight:950; font-size:18px; color:#2e2a52; line-height:1.1}
+    .ipa{font-family:"Charis SIL","Times New Roman",serif; font-size:16px; color:#5b5674; margin-top:5px}
+    .ru-pron{font-size:17px; font-weight:950; color:#e62f83; margin-top:6px; line-height:1.1}
+    .note{font-size:11px; color:#747086; margin-top:5px; line-height:1.25}
+    .audio-btn{
+      width:42px; height:42px; border:0; border-radius:50%; background:var(--card-accent,#6d5dfc); color:#fff;
+      display:grid; place-items:center; position:absolute; right:9px; bottom:9px;
+      box-shadow:0 5px 12px rgba(51,39,114,.19); font-size:19px;
+    }
+    .audio-btn:active{transform:scale(.94)}
+    .word-card.line-complete .card-face{box-shadow:0 0 0 4px #ffd34d,0 10px 24px rgba(39,35,92,.11)}
+    .word-card.line-complete::after{
+      content:"★"; position:absolute; z-index:5; top:-7px; right:-5px; width:28px; height:28px; border-radius:50%;
+      background:#ffd34d; display:grid; place-items:center; color:#5b4300; font-size:16px; box-shadow:0 3px 8px rgba(86,63,0,.25);
+    }
+
+    .bingo-banner{
+      display:none; margin-top:16px; border-radius:22px; background:linear-gradient(135deg,#ffdd63,#ff8ab8);
+      padding:22px; text-align:center; color:#40213a; box-shadow:var(--shadow);
+    }
+    .bingo-banner.show{display:block; animation:pop .35s ease}
+    .bingo-banner strong{font-size:32px; display:block}
+    @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+
+    .theory-intro{
+      background:#fff; border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px;
+      box-shadow:0 7px 20px rgba(51,39,114,.06);
+    }
+    .theory-intro h2{margin:0 0 6px; font-size:22px}
+    .theory-intro p{margin:0; color:var(--muted); line-height:1.5}
+    .group-list{display:grid; gap:11px}
+    details{
+      background:#fff; border:1px solid var(--line); border-radius:18px; overflow:hidden;
+      box-shadow:0 7px 18px rgba(51,39,114,.055);
+    }
+    summary{
+      min-height:58px; display:flex; align-items:center; gap:11px; padding:12px 14px;
+      cursor:pointer; font-weight:900; list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    .group-number{
+      flex:0 0 34px; width:34px; height:34px; border-radius:12px; display:grid; place-items:center;
+      color:#fff; background:linear-gradient(135deg,#6d5dfc,#b06cff);
+    }
+    .group-summary-text{flex:1}
+    .group-summary-text small{display:block; color:var(--muted); font-weight:650; margin-top:2px}
+    .chevron{color:#8a84a3; font-size:20px; transition:transform .25s}
+    details[open] .chevron{transform:rotate(180deg)}
+    .theory-body{border-top:1px solid var(--line); padding:14px}
+    .rule{
+      background:#f8f7ff; border-left:4px solid #6d5dfc; border-radius:12px;
+      padding:11px 12px; color:#4e4965; line-height:1.45; margin-bottom:12px;
+    }
+    .theory-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px}
+    .theory-word{
+      border:1px solid #ebe7ff; border-radius:14px; padding:10px; display:grid;
+      grid-template-columns:1fr auto; gap:6px 8px; align-items:center; background:#fff;
+    }
+    .theory-word strong{font-size:17px}
+    .theory-word .small-ipa{font-family:"Times New Roman",serif; color:#6c6780}
+    .theory-word .small-ru{grid-column:1/2; color:#df2f80; font-weight:850; font-size:14px}
+    .mini-audio{
+      grid-row:1/3; grid-column:2/3; width:42px; height:42px; border:0; border-radius:50%;
+      color:#fff; background:#6d5dfc; font-size:18px;
+    }
+
+    .footer-note{text-align:center; color:#807b92; font-size:12px; padding:18px 8px 2px}
+
+    @media (max-width:900px){
+      .board{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .word-card{min-height:145px}
+    }
+    @media (max-width:580px){
+      .app{padding-left:10px; padding-right:10px}
+      .hero{border-radius:22px; padding:18px 15px}
+      .hero h1{font-size:31px}
+      .board{grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px}
+      .word-card{min-height:158px}
+      .front-word{font-size:23px}
+      .toolbar{display:grid; grid-template-columns:1fr 1fr}
+      .toolbar .spacer{display:none}
+      .toolbar label{grid-column:1/-1}
+      .theory-grid{grid-template-columns:1fr}
+      .tabs{top:max(6px, env(safe-area-inset-top))}
+    }
+    @media (max-width:360px){
+      .board{grid-template-columns:1fr}
+      .word-card{min-height:140px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important}
+      .card-inner{transition:none}
+    }
+  </style>
+</head>
+<body>
+<main class="app">
+  <section class="hero">
+    <h1>Pronunciation Bingo — all words</h1>
+    <p>Теперь на доске есть <strong>все слова из всех карточек</strong>. Нажимай на карточку, чтобы открыть её, и нажимай ещё раз, чтобы закрыть обратно. Внутри — IPA, русская подсказка и встроенная озвучка.</p>
+  </section>
+
+  <nav class="tabs" aria-label="Разделы">
+    <button class="tab active" data-tab="game" aria-selected="true">🎯 Бинго</button>
+    <button class="tab" data-tab="theory" aria-selected="false">📘 Теория</button>
+  </nav>
+
+  <section id="game" class="panel active">
+    <div class="toolbar">
+      <button class="primary" id="newBoard">Перемешать все слова</button>
+      <button class="ghost" id="resetBoard">Закрыть все карточки</button>
+      <label><input type="checkbox" id="autoplay" checked> Озвучивать при открытии</label>
+      <span class="spacer"></span>
+      <select id="voiceLocale" aria-label="Вариант произношения">
+        <option value="en-GB">🇬🇧 Британский голос</option>
+        <option value="en-US">🇺🇸 Американский голос</option>
+      </select>
+    </div>
+
+    <div class="progress-card">
+      <div>
+        <div class="progress-main"><span id="openedCount">0</span> из <span id="totalCount">0</span> карточек открыто</div>
+        <div class="progress-sub" id="progressSub"></div>
+      </div>
+      <div class="progress-ring" id="progressRing" style="--progress:0%">
+        <span id="progressPercent">0%</span>
+      </div>
+    </div>
+
+    <div class="board" id="board" aria-live="polite"></div>
+
+    <div class="bingo-banner" id="bingoBanner">
+      <strong>🎉 BINGO!</strong>
+      Ты открыл все карточки. Можно перемешать слова и пройти ещё раз.
+    </div>
+  </section>
+
+  <section id="theory" class="panel">
+    <div class="theory-intro">
+      <h2>Теория по группам</h2>
+      <p>Открой нужную группу, если хочешь быстро повторить правило, послушать слова и увидеть IPA отдельно от игрового поля.</p>
+    </div>
+    <div class="group-list" id="groupList"></div>
+  </section>
+
+  <div class="footer-note">Озвучка работает через встроенный голос браузера. На iPhone используется системный английский голос Safari.</div>
+</main>
+
+<script>
+const groups = [
+  {id:1,title:"AU: частое чтение /ɔː/",subtitle:"autumn, authentic, author",rule:"В этих словах сочетание au часто передаёт долгий звук /ɔː/. Однако следующие буквы и ударение меняют общее звучание слова.",words:[
+    ["autumn","/ˈɔːtəm/","О́-тэм","Конечная n не произносится."],
+    ["authentic","/ɔːˈθentɪk/","о-СЭ́Н-тик","Звук /θ/ произносится с языком между зубами."],
+    ["author","/ˈɔːθə/","О́-сэ","В британском варианте конечная r не звучит отдельно."],
+    ["audience","/ˈɔːdiəns/","О́-ди-энс","Три слышимых части: au-di-ence."],
+    ["automatic","/ˌɔːtəˈmætɪk/","о-тэ-МЭ́-тик","Главное ударение падает на mat."],
+    ["August","/ˈɔːɡəst/","О́-гест","Ударение на первом слоге."]
+  ]},
+  {id:2,title:"Начальная P не произносится",subtitle:"psychology, psychiatry, pneumatic",rule:"В начале сочетаний ps- и pn- буква p не произносится. Слово начинается со звука /s/ или /n/.",words:[
+    ["psychology","/saɪˈkɒlədʒi/","сай-КО́-лэ-джи",""],
+    ["psychiatry","/saɪˈkaɪətri/","сай-КА́Й-э-три",""],
+    ["psychiatrist","/saɪˈkaɪətrɪst/","сай-КА́Й-э-трист",""],
+    ["psychic","/ˈsaɪkɪk/","СА́Й-кик",""],
+    ["pneumatic","/njuːˈmætɪk/","нью-МЭ́-тик",""],
+    ["pneumonia","/njuːˈməʊniə/","нью-МО́У-ни-э",""]
+  ]},
+  {id:3,title:"Похожие написания — разные гласные",subtitle:"bear, beer, beard",rule:"Похожие буквенные сочетания ear, eer и air могут давать разные звуки. Сравнивай слова на слух, а не по внешнему виду.",words:[
+    ["bear","/beə/","БЭ́Э",""],
+    ["beer","/bɪə/","БИ́Э",""],
+    ["beard","/bɪəd/","БИ́ЭД",""],
+    ["hair","/heə/","ХЭ́Э",""],
+    ["hear","/hɪə/","ХИ́Э",""],
+    ["here","/hɪə/","ХИ́Э",""]
+  ]},
+  {id:4,title:"TH: глухой /θ/ и звонкий /ð/",subtitle:"breath — breathe",rule:"В существительных часто слышится глухой /θ/, а в родственных глаголах — звонкий /ð/. Оба звука произносятся с языком между зубами.",words:[
+    ["breath","/breθ/","БРЭ́[θ]","дыхание"],
+    ["breathe","/briːð/","БРИ́И[ð]","дышать"],
+    ["bath","/bɑːθ/","БА́А[θ]","ванна"],
+    ["bathe","/beɪð/","БЭ́Й[ð]","купаться"],
+    ["teeth","/tiːθ/","ТИ́И[θ]","зубы"],
+    ["teethe","/tiːð/","ТИ́И[ð]","резаться о зубах"]
+  ]},
+  {id:5,title:"quite, quit, quiet",subtitle:"один лишний звук меняет слово",rule:"Quite и quit состоят из одного слога. Quiet состоит из двух слогов: /ˈkwaɪ.ət/.",words:[
+    ["quite","/kwaɪt/","КВА́ЙТ","довольно, вполне"],
+    ["quit","/kwɪt/","КВИ́Т","бросить, прекратить"],
+    ["quiet","/ˈkwaɪət/","КВА́Й-эт","тихий"]
+  ]},
+  {id:6,title:"suit, sweet, suite",subtitle:"одно слово звучит иначе",rule:"Sweet и suite — омофоны: они произносятся одинаково /swiːt/. Suit произносится /suːt/.",words:[
+    ["suit","/suːt/","СУ́УТ","костюм; подходить"],
+    ["sweet","/swiːt/","СВИ́ИТ","сладкий"],
+    ["suite","/swiːt/","СВИ́ИТ","номер люкс; комплект"]
+  ]},
+  {id:7,title:"Неочевидное ударение",subtitle:"hotel, society, police",rule:"В этих словах русскоязычные учащиеся часто переносят ударение на первый слог. Следи за выделенной частью в русской подсказке и знаком ˈ в IPA.",words:[
+    ["hotel","/həʊˈtel/","хоу-ТЭ́Л",""],
+    ["society","/səˈsaɪəti/","сэ-СА́Й-э-ти",""],
+    ["police","/pəˈliːs/","пэ-ЛИ́ИС",""],
+    ["career","/kəˈrɪə/","кэ-РИ́Э",""],
+    ["event","/ɪˈvent/","и-ВЭ́НТ",""],
+    ["result","/rɪˈzʌlt/","ри-ЗА́ЛТ",""],
+    ["development","/dɪˈveləpmənt/","ди-ВЭ́-лэп-мэнт",""],
+    ["especially","/ɪˈspeʃəli/","и-СПЭ́-шэ-ли",""],
+    ["environment","/ɪnˈvaɪrənmənt/","ин-ВА́Й-рэн-мэнт",""],
+    ["opportunity","/ˌɒpəˈtjuːnəti/","о-пэ-ТЬЮ́У-нэ-ти",""]
+  ]},
+  {id:8,title:"Немые буквы в начале",subtitle:"knife, write, whole",rule:"В сочетаниях kn- и wr- первая буква не произносится. В whole буква w также не слышится.",words:[
+    ["knife","/naɪf/","НА́ЙФ",""],
+    ["knee","/niː/","НИ́И",""],
+    ["know","/nəʊ/","НО́У",""],
+    ["knowledge","/ˈnɒlɪdʒ/","НО́-лидж",""],
+    ["write","/raɪt/","РА́ЙТ",""],
+    ["wrong","/rɒŋ/","РО́Н",""],
+    ["wrist","/rɪst/","РИ́СТ",""],
+    ["whole","/həʊl/","ХО́УЛ",""]
+  ]},
+  {id:9,title:"OUGH: несколько вариантов чтения",subtitle:"though, through, tough",rule:"Сочетание ough не имеет одного стабильного произношения. Эти слова нужно запоминать как отдельные звуковые модели.",words:[
+    ["though","/ðəʊ/","ЗО́У",""],
+    ["thought","/θɔːt/","СО́ОТ",""],
+    ["through","/θruː/","СРУ́У",""],
+    ["tough","/tʌf/","ТА́Ф",""],
+    ["cough","/kɒf/","КО́Ф",""],
+    ["enough","/ɪˈnʌf/","и-НА́Ф",""],
+    ["thorough","/ˈθʌrə/","СА́-рэ",""],
+    ["rough","/rʌf/","РА́Ф",""]
+  ]},
+  {id:10,title:"EA: разные гласные",subtitle:"eat, head, great",rule:"Сочетание ea может передавать /iː/, /e/, /eɪ/, /ɑː/ и /ɜː/. Ориентируйся на знакомое слово, а не на буквы.",words:[
+    ["eat","/iːt/","И́ИТ",""],
+    ["head","/hed/","ХЭ́Д",""],
+    ["great","/ɡreɪt/","ГРЭ́ЙТ",""],
+    ["heart","/hɑːt/","ХА́АТ",""],
+    ["heard","/hɜːd/","ХЁ́ОД",""],
+    ["break","/breɪk/","БРЭ́ЙК",""],
+    ["bread","/bred/","БРЭ́Д",""]
+  ]},
+  {id:11,title:"Короткий и долгий гласный",subtitle:"ship — sheep",rule:"Длина и качество гласного различают слова. Не просто растягивай звук: положение языка также меняется.",words:[
+    ["ship","/ʃɪp/","ШИ́П",""],
+    ["sheep","/ʃiːp/","ШИ́ИП",""],
+    ["live","/lɪv/","ЛИ́В","жить"],
+    ["leave","/liːv/","ЛИ́ИВ","уходить"],
+    ["full","/fʊl/","ФУ́Л",""],
+    ["fool","/fuːl/","ФУ́УЛ",""],
+    ["pull","/pʊl/","ПУ́Л",""],
+    ["pool","/puːl/","ПУ́УЛ",""]
+  ]},
+  {id:12,title:"Немые буквы внутри и в конце",subtitle:"island, listen, receipt",rule:"Некоторые буквы сохраняются в написании, но не произносятся. Слушай слово целиком и не пытайся озвучить каждую букву.",words:[
+    ["island","/ˈaɪlənd/","А́Й-лэнд","Буква s не произносится."],
+    ["listen","/ˈlɪsən/","ЛИ́С-эн","Буква t не произносится."],
+    ["castle","/ˈkɑːsəl/","КА́А-сэл","Буква t не произносится."],
+    ["often","/ˈɒfən/","О́Ф-эн","Вариант /ˈɒftən/ также встречается."],
+    ["debt","/det/","ДЭ́Т","Буква b не произносится."],
+    ["doubt","/daʊt/","ДА́УТ","Буква b не произносится."],
+    ["receipt","/rɪˈsiːt/","ри-СИ́ИТ","Буква p не произносится."],
+    ["honest","/ˈɒnɪst/","О́-нист","Буква h не произносится."]
+  ]}
+];
+
+const palette = [
+  ["#ffe3ee","#e62f83"],["#e5f4ff","#1976c9"],["#fff0cc","#d78200"],["#e9e4ff","#6d5dfc"],
+  ["#dcf8ee","#17855f"],["#ffe9df","#d4562e"],["#edf2ff","#495bbd"],["#f3e4ff","#9b42d1"]
+];
+
+const allWords = groups.flatMap(group =>
+  group.words.map((w, idx) => ({
+    groupId:group.id, groupTitle:group.title,
+    word:w[0], ipa:w[1], ru:w[2], note:w[3] || "",
+    key:`${group.id}-${idx}-${w[0]}`
+  }))
+);
+
+const BOARD_SIZE = allWords.length;
+const FULL_LINES = Math.floor(BOARD_SIZE / 5);
+const REMAINDER = BOARD_SIZE % 5;
+
+let currentBoard = [];
+let revealed = new Set();
+let voices = [];
+
+const boardEl = document.getElementById("board");
+const openedCountEl = document.getElementById("openedCount");
+const totalCountEl = document.getElementById("totalCount");
+const progressSub = document.getElementById("progressSub");
+const progressRing = document.getElementById("progressRing");
+const progressPercent = document.getElementById("progressPercent");
+const bingoBanner = document.getElementById("bingoBanner");
+const autoplay = document.getElementById("autoplay");
+const localeSelect = document.getElementById("voiceLocale");
+
+totalCountEl.textContent = BOARD_SIZE;
+progressSub.textContent = REMAINDER
+  ? `Каждые пять карточек составляют линию бинго. Полных линий: ${FULL_LINES}. Последняя строка содержит ещё ${REMAINDER} карточки.`
+  : `Каждые пять карточек составляют линию бинго. Всего полных линий: ${FULL_LINES}.`;
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function newBoard(){
+  currentBoard = shuffle(allWords);
+  revealed = new Set();
+  saveState();
+  renderBoard();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function resetBoard(){
+  revealed.clear();
+  saveState();
+  renderBoard();
+}
+
+function saveState(){
+  localStorage.setItem("pronunciationBingoStateAll", JSON.stringify({
+    board: currentBoard.map(x=>x.key),
+    revealed:[...revealed],
+    autoplay:autoplay.checked,
+    locale:localeSelect.value
+  }));
+}
+
+function loadState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("pronunciationBingoStateAll") || "null");
+    if(!saved) return false;
+    const byKey = new Map(allWords.map(x=>[x.key,x]));
+    const board = (saved.board||[]).map(k=>byKey.get(k)).filter(Boolean);
+    if(board.length !== BOARD_SIZE) return false;
+    currentBoard = board;
+    revealed = new Set((saved.revealed||[]).filter(k=>byKey.has(k)));
+    autoplay.checked = saved.autoplay !== false;
+    localeSelect.value = saved.locale || "en-GB";
+    return true;
+  }catch(e){ return false; }
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function renderBoard(){
+  boardEl.innerHTML = "";
+  currentBoard.forEach((item,index)=>{
+    const color = palette[index % palette.length];
+    const card = document.createElement("button");
+    card.className = "word-card" + (revealed.has(item.key) ? " revealed" : "");
+    card.type = "button";
+    card.setAttribute("aria-label", `${item.word}. Открыть или закрыть произношение`);
+    card.dataset.key = item.key;
+    card.style.setProperty("--card-bg", color[0]);
+    card.style.setProperty("--card-accent", color[1]);
+    card.innerHTML = `
+      <span class="card-inner">
+        <span class="card-face card-front"><span class="front-word">${escapeHtml(item.word)}</span></span>
+        <span class="card-face card-back">
+          <span class="back-word">${escapeHtml(item.word)}</span>
+          <span class="ipa">${escapeHtml(item.ipa)}</span>
+          <span class="ru-pron">${escapeHtml(item.ru)}</span>
+          ${item.note ? `<span class="note">${escapeHtml(item.note)}</span>` : ""}
+          <span class="audio-btn" role="button" aria-label="Прослушать ${escapeHtml(item.word)}">🔊</span>
+        </span>
+      </span>`;
+
+    card.addEventListener("click",(e)=>{
+      const audioHit = e.target.closest(".audio-btn");
+      if(audioHit){
+        e.stopPropagation();
+        speak(item.word);
+        return;
+      }
+
+      if(revealed.has(item.key)){
+        revealed.delete(item.key);
+        card.classList.remove("revealed");
+      }else{
+        revealed.add(item.key);
+        card.classList.add("revealed");
+        if(autoplay.checked) setTimeout(()=>speak(item.word), 220);
+      }
+      updateProgress();
+      saveState();
+    });
+
+    boardEl.appendChild(card);
+  });
+  updateProgress();
+}
+
+function updateProgress(){
+  const count = revealed.size;
+  const pct = Math.round(count / BOARD_SIZE * 100);
+  openedCountEl.textContent = count;
+  progressPercent.textContent = pct + "%";
+  progressRing.style.setProperty("--progress", pct + "%");
+  bingoBanner.classList.toggle("show", count === BOARD_SIZE);
+
+  const cards = [...boardEl.children];
+  cards.forEach(c=>c.classList.remove("line-complete"));
+  for(let row=0; row<FULL_LINES; row++){
+    const slice = currentBoard.slice(row*5, row*5+5);
+    if(slice.length === 5 && slice.every(x=>revealed.has(x.key))){
+      for(let i=row*5; i<row*5+5; i++) cards[i]?.classList.add("line-complete");
+    }
+  }
+}
+
+function loadVoices(){ voices = speechSynthesis.getVoices(); }
+if("speechSynthesis" in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+function speak(text){
+  if(!("speechSynthesis" in window)){
+    alert("В этом браузере недоступна встроенная озвучка.");
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  const requested = localeSelect.value;
+  utterance.lang = requested;
+  const exact = voices.find(v=>v.lang===requested);
+  const regional = voices.find(v=>v.lang && v.lang.toLowerCase().startsWith(requested.slice(0,2).toLowerCase()));
+  if(exact || regional) utterance.voice = exact || regional;
+  utterance.rate = .82;
+  utterance.pitch = 1;
+  speechSynthesis.speak(utterance);
+}
+
+function renderTheory(){
+  const list = document.getElementById("groupList");
+  list.innerHTML = groups.map(group => `
+    <details>
+      <summary>
+        <span class="group-number">${group.id}</span>
+        <span class="group-summary-text">${escapeHtml(group.title)}<small>${escapeHtml(group.subtitle)}</small></span>
+        <span class="chevron">⌄</span>
+      </summary>
+      <div class="theory-body">
+        <div class="rule">${escapeHtml(group.rule)}</div>
+        <div class="theory-grid">
+          ${group.words.map(w=>`
+            <div class="theory-word">
+              <strong>${escapeHtml(w[0])}</strong>
+              <span class="small-ipa">${escapeHtml(w[1])}</span>
+              <span class="small-ru">${escapeHtml(w[2])}${w[3] ? ` · ${escapeHtml(w[3])}` : ""}</span>
+              <button class="mini-audio" type="button" data-word="${escapeHtml(w[0])}" aria-label="Прослушать ${escapeHtml(w[0])}">🔊</button>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </details>
+  `).join("");
+
+  list.addEventListener("click",(e)=>{
+    const btn = e.target.closest(".mini-audio");
+    if(btn) speak(btn.dataset.word);
+  });
+}
+
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(t=>{
+      const active = t === tab;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active", p.id === tab.dataset.tab));
+  });
+});
+
+document.getElementById("newBoard").addEventListener("click", newBoard);
+document.getElementById("resetBoard").addEventListener("click", resetBoard);
+autoplay.addEventListener("change", saveState);
+localeSelect.addEventListener("change", saveState);
+
+renderTheory();
+if(!loadState()) newBoard();
+else renderBoard();
+</script>
+</body>
+</html>
