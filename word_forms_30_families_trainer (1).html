@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Word Form Gym — 30 Families</title>
+<style>
+  :root {
+    --bg:#08111f;
+    --panel:#0f1b2e;
+    --panel2:#13233a;
+    --text:#eef5ff;
+    --muted:#9fb0c9;
+    --line:rgba(255,255,255,.09);
+    --good:#65d6a6;
+    --bad:#ff8a95;
+    --warning:#ffd166;
+    --shadow:0 18px 60px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; min-height:100vh; color:var(--text);
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(85,89,255,.24), transparent 34%),
+      radial-gradient(circle at 90% 15%, rgba(255,65,155,.16), transparent 28%),
+      linear-gradient(180deg,#07101d,#08111f 45%,#07101a);
+  }
+  button,input{font:inherit}
+  button{cursor:pointer}
+  .wrap{width:min(1180px,calc(100% - 30px));margin:0 auto;padding:28px 0 60px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.02em}
+  .logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#7c67ff,#18c7c8);box-shadow:0 10px 35px rgba(80,100,255,.3)}
+  .ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.03);padding:10px 14px;border-radius:12px}
+  .ghost:hover{background:rgba(255,255,255,.07)}
+  .hero{
+    position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:34px;
+    background:linear-gradient(135deg,rgba(32,46,79,.96),rgba(14,29,50,.94));
+    box-shadow:var(--shadow);margin-bottom:22px;
+  }
+  .hero:after{content:"";position:absolute;width:380px;height:380px;border-radius:50%;right:-150px;top:-210px;background:radial-gradient(circle,#5b8cff88,transparent 67%)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;font-weight:800;color:#9fc8ff}
+  h1{font-size:clamp(2rem,6vw,4.5rem);line-height:.96;margin:12px 0 16px;max-width:850px}
+  .hero p{max-width:820px;color:#cad7ea;font-size:1.05rem;line-height:1.65;margin:0}
+  .rules{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .pill{border:1px solid var(--line);background:rgba(255,255,255,.055);padding:9px 12px;border-radius:999px;color:#dce8f8;font-size:.9rem}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 24px}
+  .stat{padding:17px;border-radius:18px;border:1px solid var(--line);background:rgba(15,27,46,.75)}
+  .stat b{display:block;font-size:1.65rem;margin-bottom:3px}
+  .stat span{color:var(--muted);font-size:.87rem}
+  .toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:10px 0 16px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap}
+  .filter{padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted)}
+  .filter.active{background:#eef5ff;color:#07101d;border-color:#eef5ff;font-weight:800}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{
+    position:relative;border:1px solid var(--line);border-radius:20px;padding:19px;
+    min-height:170px;background:linear-gradient(155deg,rgba(19,35,58,.96),rgba(11,22,39,.97));
+    transition:.2s transform,.2s border-color,.2s background;overflow:hidden;
+  }
+  .card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 55%,white 8%)}
+  .card:before{content:"";position:absolute;inset:0 auto auto 0;width:100%;height:4px;background:var(--accent)}
+  .cardtop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .num{color:var(--muted);font-size:.8rem;font-weight:700}
+  .root{font-size:1.55rem;font-weight:850;margin:7px 0 5px}
+  .mini{color:var(--muted);font-size:.88rem;line-height:1.4;min-height:40px}
+  .covered{display:flex;align-items:center;gap:7px;font-size:.82rem;color:#cfe0f4;user-select:none}
+  .covered input{width:18px;height:18px;accent-color:var(--accent)}
+  .scoreline{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+  .tag{font-size:.76rem;border:1px solid var(--line);padding:5px 8px;border-radius:999px;color:#b9cbe1}
+  .cardbtn{position:absolute;inset:0;background:transparent;border:0;width:100%;height:100%;z-index:1}
+  .covered,.covered input{position:relative;z-index:2}
+  .view{display:none}
+  .view.active{display:block}
+  .back{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px}
+  .familyHead{border-radius:26px;border:1px solid var(--line);padding:28px;background:linear-gradient(145deg,rgba(20,37,61,.96),rgba(9,21,38,.98));box-shadow:var(--shadow)}
+  .familyTitle{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .familyTitle h2{font-size:clamp(2.2rem,8vw,4.7rem);margin:4px 0 6px}
+  .forms{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+  .formbox{
+    position:relative;
+    padding:18px 16px;
+    border-radius:18px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)),
+      linear-gradient(145deg, rgba(18,32,54,.96), rgba(9,20,36,.98));
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.08),
+      0 10px 24px rgba(0,0,0,.18);
+    overflow:hidden;
+}
+.formbox:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:18px;
+    padding:1.5px;
+    background:linear-gradient(135deg, rgba(118,161,255,.95), rgba(121,95,255,.72), rgba(0,217,255,.7));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+            mask-composite:exclude;
+    pointer-events:none;
+}
+.formbox:after{
+    content:"";
+    position:absolute;
+    inset:auto -30px -30px auto;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(105,147,255,.14), transparent 68%);
+    pointer-events:none;
+}
+  .formbox b{display:block;font-size:1.08rem;margin-bottom:5px;text-shadow:0 1px 0 rgba(0,0,0,.28)}
+  .pos{font-size:.73rem;text-transform:uppercase;letter-spacing:.09em;color:#8eb8ff;font-weight:800}
+  .ru{margin-top:6px;color:#c3d2e5;font-size:.88rem}
+  .explain{line-height:1.65;color:#d7e3f2;background:rgba(255,255,255,.035);border-left:4px solid var(--accent);padding:16px 17px;border-radius:12px}
+  .signals{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .signal{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#07111f;border:1px solid var(--line);padding:8px 10px;border-radius:10px;color:#cfe3ff;font-size:.83rem}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .primary{border:0;border-radius:13px;padding:13px 18px;font-weight:850;background:linear-gradient(135deg,var(--accent),#62d7ff);color:#05111f;box-shadow:0 8px 28px color-mix(in srgb,var(--accent) 30%,transparent)}
+  .quiz{margin-top:18px;border:1px solid var(--line);border-radius:24px;padding:24px;background:rgba(10,22,39,.92);box-shadow:var(--shadow)}
+  .quizMeta{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-size:.88rem}
+  .timerrow{display:flex;align-items:center;gap:12px;margin:16px 0 22px}
+  .timerbar{flex:1;height:10px;background:#18273d;border-radius:99px;overflow:hidden}
+  .timerfill{height:100%;width:100%;background:linear-gradient(90deg,#60d5b3,#ffd166,#ff7f91);transform-origin:left center}
+  .time{font-variant-numeric:tabular-nums;font-weight:900;min-width:54px;text-align:right}
+  .sentence{font-size:clamp(1.35rem,4vw,2rem);line-height:1.35;font-weight:760;margin:14px 0 20px}
+  .options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .option{text-align:left;padding:14px 15px;border-radius:14px;border:1px solid var(--line);background:#12223a;color:var(--text);font-weight:750}
+  .option:hover:not(:disabled){background:#172a46}
+  .option.correct{border-color:var(--good);background:rgba(101,214,166,.12)}
+  .option.wrong{border-color:var(--bad);background:rgba(255,138,149,.11)}
+  .option:disabled{cursor:default}
+  .feedback{min-height:58px;margin-top:14px;padding:12px 14px;border-radius:13px;background:rgba(255,255,255,.03);color:#cbd9ea;line-height:1.45}
+  .feedback strong.good{color:var(--good)} .feedback strong.bad{color:var(--bad)}
+  .nextrow{display:flex;justify-content:flex-end;margin-top:12px}
+  .next{padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:#edf5ff;color:#07101d;font-weight:900}
+  .next[disabled]{opacity:.35;cursor:default}
+  .result{text-align:center;padding:26px 10px}
+  .result .big{font-size:clamp(3rem,12vw,6rem);font-weight:950;letter-spacing:-.04em}
+  .result p{color:var(--muted);line-height:1.6}
+  .resultCards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:700px;margin:18px auto}
+  .resultCard{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:14px}
+  .resultCard b{display:block;font-size:1.4rem}
+  .note{color:#aebfd4;font-size:.88rem}
+  .footerNote{margin-top:28px;color:#8295ad;font-size:.82rem;line-height:1.5}
+  @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.forms{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){
+    .wrap{width:min(100% - 20px,1180px);padding-top:16px}
+    .hero{padding:24px 20px;border-radius:22px} .grid{grid-template-columns:1fr} .forms{grid-template-columns:1fr}
+    .options{grid-template-columns:1fr} .quiz{padding:18px 15px} .familyHead{padding:21px 17px}
+    .topbar{align-items:flex-start} .brand small{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><div class="logo">W</div><div>Word Form Gym<br><small style="color:var(--muted);font-weight:600">30 high-value word families</small></div></div>
+    <button class="ghost" id="homeBtn" style="display:none">← All families</button>
+  </div>
+
+  <main id="homeView" class="view active">
+    <section class="hero">
+      <div class="eyebrow">Vocabulary accuracy trainer</div>
+      <h1>Choose the right form. Before the timer wins.</h1>
+      <p>Изучи все 30 word families. В каждом разделе сначала прочитай объяснение, затем пройди 10 заданий. На каждое предложение даётся <b>10 секунд</b>. Результат и лучший результат сохраняются в этом браузере. Когда пройдёшь весь файл, ты увидишь общий балл. В следующий раз вернись к слабым темам и постарайся улучшить свой best score. Файл адаптирован для смартфонов, в том числе для <b>iPhone</b>.</p>
+      <div class="rules">
+        <div class="pill">10 questions per family</div>
+        <div class="pill">10 seconds per sentence</div>
+        <div class="pill">1 point for each correct answer</div>
+        <div class="pill">30 families = 300 possible points</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><b id="coveredStat">0/30</b><span>families covered</span></div>
+      <div class="stat"><b id="doneStat">0/30</b><span>quizzes completed</span></div>
+      <div class="stat"><b id="latestStat">0/300</b><span>latest total score</span></div>
+      <div class="stat"><b id="bestStat">0/300</b><span>best-score total</span></div>
+    </section>
+
+    <section id="completionBanner" style="display:none;margin:-10px 0 24px;padding:18px 20px;border:1px solid rgba(101,214,166,.35);border-radius:18px;background:rgba(101,214,166,.08);line-height:1.55"></section>
+
+    <div class="toolbar">
+      <div class="filters">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="todo">Not covered</button>
+        <button class="filter" data-filter="done">Covered</button>
+      </div>
+      <button class="ghost" id="resetBtn">Reset progress</button>
+    </div>
+    <section class="grid" id="familyGrid"></section>
+    <div class="footerNote">Progress is stored locally on this device. Clearing browser storage will remove saved scores. A small price for not requiring yet another account and password from a student.</div>
+  </main>
+
+  <main id="familyView" class="view">
+    <button class="ghost back" id="backBtn">← Back to all families</button>
+    <section class="familyHead" id="familyHead"></section>
+    <section class="quiz" id="quizBox" style="display:none"></section>
+  </main>
+</div>
+
+<script>
+const FAMILIES = [{"root": "develop", "forms": [["develop", "verb", "развивать(ся)"], ["development", "noun", "развитие"], ["developed", "adjective", "развитый"], ["developing", "adjective", "развивающийся"]], "note": "После modal verbs (can, should, must) и после to обычно нужен глагол develop. Development — существительное. Developed описывает уже развитый объект; developing — объект, который всё ещё развивается.", "signals": ["should / can / must + develop", "rapid / economic + development", "a developed country", "a developing economy"], "q": [["The city needs to ___ its public transport system.", "develop"], ["Rapid economic ___ can change living standards.", "development"], ["Germany has a highly ___ industrial sector.", "developed"], ["Many ___ countries are investing in infrastructure.", "developing"], ["The company plans to ___ a new training programme.", "develop"], ["Technological ___ has transformed communication.", "development"], ["This region is less ___ than the capital.", "developed"], ["A ___ market may offer strong growth opportunities.", "developing"], ["Children ___ language skills through regular practice.", "develop"], ["Sustainable ___ requires long-term planning.", "development"]]}, {"root": "improve", "forms": [["improve", "verb", "улучшать(ся)"], ["improvement", "noun", "улучшение"], ["improved", "adjective", "улучшенный / улучшившийся"], ["improving", "adjective", "улучшающийся"]], "note": "Improve — действие. Improvement — результат или процесс улучшения как существительное. Improved описывает то, что уже стало лучше; improving — то, что становится лучше сейчас.", "signals": ["can + improve", "a significant improvement", "improved results", "an improving situation"], "q": [["Regular feedback can ___ student performance.", "improve"], ["There has been a noticeable ___ in attendance.", "improvement"], ["The new method produced ___ results.", "improved"], ["An ___ economy can increase consumer confidence.", "improving"], ["We need to ___ the quality of the service.", "improve"], ["The latest figures show a clear ___.", "improvement"], ["The hospital introduced ___ safety procedures.", "improved"], ["The situation is gradually ___.", "improving"], ["Exercise may ___ concentration.", "improve"], ["Any further ___ will require additional funding.", "improvement"]]}, {"root": "achieve", "forms": [["achieve", "verb", "достигать"], ["achievement", "noun", "достижение"], ["achievable", "adjective", "достижимый"]], "note": "Achieve — достичь результата. Achievement — само достижение. Achievable — то, чего реально можно достичь.", "signals": ["to achieve a goal", "a major achievement", "an achievable target"], "q": [["Students need clear strategies to ___ their goals.", "achieve"], ["Winning the award was a major ___.", "achievement"], ["The target is ambitious but still ___.", "achievable"], ["The team managed to ___ a significant reduction in costs.", "achieve"], ["Academic ___ depends on sustained effort.", "achievement"], ["Set realistic and ___ objectives.", "achievable"], ["It is difficult to ___ lasting change without support.", "achieve"], ["Her greatest ___ was completing the project early.", "achievement"], ["A 5% increase appears ___.", "achievable"], ["The policy failed to ___ its main objective.", "achieve"]]}, {"root": "decide", "forms": [["decide", "verb", "решать"], ["decision", "noun", "решение"], ["decisive", "adjective", "решающий / решительный"], ["decisively", "adverb", "решительно"]], "note": "Decide — принять решение. Decision — существительное. Decisive описывает человека, фактор или момент; decisively показывает, как совершается действие.", "signals": ["decide to do", "make a decision", "a decisive factor", "act decisively"], "q": [["We must ___ whether the plan is practical.", "decide"], ["The final ___ will be announced tomorrow.", "decision"], ["Cost was the ___ factor in their choice.", "decisive"], ["The manager acted ___ when the problem appeared.", "decisively"], ["Students should ___ which evidence is most relevant.", "decide"], ["It was a difficult ___ to make.", "decision"], ["Her intervention proved ___.", "decisive"], ["The government responded ___ to the crisis.", "decisively"], ["They cannot ___ what to do.", "decide"], ["A poor ___ at this stage could be expensive.", "decision"]]}, {"root": "succeed", "forms": [["succeed", "verb", "добиваться успеха"], ["success", "noun", "успех"], ["successful", "adjective", "успешный"], ["successfully", "adverb", "успешно"]], "note": "Succeed — добиться успеха. Success — успех как существительное. Successful описывает человека, проект или действие; successfully описывает способ выполнения действия.", "signals": ["succeed in doing", "a great success", "a successful project", "complete successfully"], "q": [["Small firms can ___ if they identify a clear market.", "succeed"], ["The campaign was a considerable ___.", "success"], ["The company launched a highly ___ product.", "successful"], ["The operation was completed ___.", "successfully"], ["Students are more likely to ___ with regular practice.", "succeed"], ["Long-term ___ requires discipline.", "success"], ["She became a ___ entrepreneur.", "successful"], ["The two teams worked together ___.", "successfully"], ["Not every new business will ___.", "succeed"], ["The event's ___ depended on careful planning.", "success"]]}, {"root": "compete", "forms": [["compete", "verb", "конкурировать"], ["competition", "noun", "конкуренция / соревнование"], ["competitor", "noun", "конкурент / участник"], ["competitive", "adjective", "конкурентоспособный"], ["competitively", "adverb", "конкурентно"]], "note": "Compete — конкурировать. Competition — конкуренция или соревнование. Competitor — участник или соперник. Competitive — конкурентоспособный; competitively — конкурентным образом.", "signals": ["compete with", "intense competition", "a major competitor", "competitive prices"], "q": [["Local firms must ___ with international brands.", "compete"], ["There is intense ___ in the technology sector.", "competition"], ["The company is our largest ___.", "competitor"], ["Businesses need ___ prices to attract customers.", "competitive"], ["The product is priced ___.", "competitively"], ["Small retailers often struggle to ___.", "compete"], ["Healthy ___ can encourage innovation.", "competition"], ["Each ___ must follow the same rules.", "competitor"], ["The labour market has become increasingly ___.", "competitive"], ["The firm cannot survive unless it operates ___.", "competitively"]]}, {"root": "protect", "forms": [["protect", "verb", "защищать"], ["protection", "noun", "защита"], ["protective", "adjective", "защитный"], ["protected", "adjective", "охраняемый / защищённый"]], "note": "Protect — действие «защищать». Protection — защита как понятие. Protective — предназначенный для защиты. Protected — уже находящийся под защитой.", "signals": ["protect people from", "environmental protection", "protective equipment", "a protected area"], "q": [["Laws should ___ consumers from fraud.", "protect"], ["Environmental ___ is a global concern.", "protection"], ["Workers must wear ___ clothing.", "protective"], ["The forest is a legally ___ area.", "protected"], ["Vaccination can ___ vulnerable groups.", "protect"], ["Data ___ has become increasingly important.", "protection"], ["The helmet provides a ___ layer.", "protective"], ["Several species are now ___.", "protected"], ["The policy aims to ___ personal information.", "protect"], ["Greater legal ___ may be necessary.", "protection"]]}, {"root": "communicate", "forms": [["communicate", "verb", "общаться / сообщать"], ["communication", "noun", "общение / коммуникация"], ["communicative", "adjective", "коммуникабельный / связанный с общением"]], "note": "Communicate — передавать информацию или общаться. Communication — сам процесс или система общения. Communicative — связанный со способностью общаться.", "signals": ["communicate clearly", "effective communication", "communicative skills"], "q": [["Leaders must ___ their expectations clearly.", "communicate"], ["Effective ___ reduces misunderstanding.", "communication"], ["The course develops students' ___ skills.", "communicative"], ["Doctors need to ___ complex information simply.", "communicate"], ["Poor ___ can damage teamwork.", "communication"], ["The activity has a strongly ___ purpose.", "communicative"], ["People now ___ through multiple digital platforms.", "communicate"], ["Clear written ___ is essential in many jobs.", "communication"], ["Young learners benefit from ___ activities.", "communicative"], ["Managers should ___ changes before they are introduced.", "communicate"]]}, {"root": "educate", "forms": [["educate", "verb", "обучать"], ["education", "noun", "образование"], ["educational", "adjective", "образовательный"], ["educated", "adjective", "образованный"]], "note": "Educate — обучать человека. Education — система или процесс образования. Educational — связанный с обучением. Educated — получивший хорошее образование.", "signals": ["educate children", "higher education", "educational resources", "a well-educated person"], "q": [["Schools should ___ students about online safety.", "educate"], ["Access to quality ___ remains unequal.", "education"], ["The museum provides useful ___ materials.", "educational"], ["She is a highly ___ professional.", "educated"], ["Public campaigns can ___ people about health risks.", "educate"], ["University ___ can be expensive.", "education"], ["The programme has both social and ___ value.", "educational"], ["An ___ workforce can support economic growth.", "educated"], ["Parents also ___ children outside school.", "educate"], ["Investment in ___ may generate long-term benefits.", "education"]]}, {"root": "employ", "forms": [["employ", "verb", "нанимать / применять"], ["employment", "noun", "занятость"], ["employer", "noun", "работодатель"], ["employee", "noun", "работник"], ["unemployed", "adjective", "безработный"], ["employable", "adjective", "пригодный к трудоустройству"]], "note": "Employ — нанимать или использовать. Employment — занятость. Employer нанимает, employee работает. Unemployed — безработный; employable — обладающий навыками, позволяющими найти работу.", "signals": ["employ staff", "full-time employment", "an employer / an employee", "unemployed people"], "q": [["The company plans to ___ twenty new engineers.", "employ"], ["Youth ___ is a major policy concern.", "employment"], ["Every ___ must provide a safe workplace.", "employer"], ["Each ___ receives annual training.", "employee"], ["Many graduates remain ___ for several months.", "unemployed"], ["Practical skills can make applicants more ___.", "employable"], ["Large firms often ___ specialist consultants.", "employ"], ["Stable ___ can improve financial security.", "employment"], ["The ___ is responsible for paying salaries.", "employer"], ["Training helps workers remain ___.", "employable"]]}, {"root": "govern", "forms": [["govern", "verb", "управлять"], ["government", "noun", "правительство"], ["governance", "noun", "управление / система управления"], ["governmental", "adjective", "правительственный"]], "note": "Govern — управлять страной или организацией. Government — правительство как орган власти. Governance — качество и система управления. Governmental — относящийся к правительству.", "signals": ["govern a country", "the government", "good governance", "governmental policy"], "q": [["Elected officials are expected to ___ responsibly.", "govern"], ["The ___ announced a new transport policy.", "government"], ["Good ___ can reduce corruption.", "governance"], ["The report examines several ___ agencies.", "governmental"], ["It is difficult to ___ effectively without public trust.", "govern"], ["Local ___ has increased spending on housing.", "government"], ["Corporate ___ affects investor confidence.", "governance"], ["The programme receives ___ funding.", "governmental"], ["Different institutions ___ different areas of public life.", "govern"], ["Transparent ___ is essential for accountability.", "governance"]]}, {"root": "differ", "forms": [["differ", "verb", "различаться"], ["difference", "noun", "разница"], ["different", "adjective", "разный / отличающийся"], ["differently", "adverb", "по-разному"]], "note": "Differ — различаться. Difference — различие как существительное. Different описывает объект. Differently показывает, что действие выполняется иным способом.", "signals": ["differ from", "a significant difference", "different approaches", "behave differently"], "q": [["The two methods ___ in several important ways.", "differ"], ["There is a clear ___ between price and value.", "difference"], ["Students may prefer ___ learning styles.", "different"], ["People respond ___ to pressure.", "differently"], ["Results often ___ from one region to another.", "differ"], ["The main ___ concerns the cost.", "difference"], ["The study examined three ___ age groups.", "different"], ["The same message can be interpreted ___.", "differently"], ["Opinions ___ considerably on this issue.", "differ"], ["Even a small ___ may affect the outcome.", "difference"]]}, {"root": "perform", "forms": [["perform", "verb", "выполнять / выступать"], ["performance", "noun", "результат / выполнение / выступление"], ["performer", "noun", "исполнитель"]], "note": "Perform — выполнять задачу или выступать. Performance — качество выполнения, результат или выступление. Performer — тот, кто выступает.", "signals": ["perform a task", "academic performance", "a talented performer"], "q": [["Employees must ___ several tasks under pressure.", "perform"], ["Student ___ improved after the intervention.", "performance"], ["The singer is an experienced ___.", "performer"], ["Modern computers can ___ complex calculations.", "perform"], ["The team delivered a strong ___.", "performance"], ["Every ___ was given ten minutes on stage.", "performer"], ["The machine is designed to ___ reliably.", "perform"], ["Poor sleep can reduce cognitive ___.", "performance"], ["The theatre invited a well-known ___.", "performer"], ["Schools often monitor academic ___.", "performance"]]}, {"root": "organise", "forms": [["organise", "verb", "организовывать"], ["organisation", "noun", "организация"], ["organised", "adjective", "организованный"], ["organisational", "adjective", "организационный"]], "note": "Organise — организовать процесс. Organisation — организация как учреждение или процесс. Organised — хорошо организованный. Organisational — относящийся к устройству организации.", "signals": ["organise an event", "an international organisation", "well organised", "organisational culture"], "q": [["Volunteers will ___ the event.", "organise"], ["The charity is an international ___.", "organisation"], ["The conference was extremely well ___.", "organised"], ["The company introduced major ___ changes.", "organisational"], ["Students should ___ their notes by topic.", "organise"], ["The ___ employs more than 500 people.", "organisation"], ["A well-___ schedule reduces wasted time.", "organised"], ["Leadership affects ___ culture.", "organisational"], ["We need to ___ the data more clearly.", "organise"], ["The new ___ provides legal support.", "organisation"]]}, {"root": "inform", "forms": [["inform", "verb", "информировать"], ["information", "noun", "информация"], ["informative", "adjective", "информативный"], ["informed", "adjective", "осведомлённый"]], "note": "Inform — сообщить информацию. Information — неисчисляемое существительное. Informative — содержащий полезную информацию. Informed — обладающий информацией.", "signals": ["inform somebody about", "useful information", "an informative article", "an informed decision"], "q": [["Please ___ students about the timetable change.", "inform"], ["The website provides useful ___.", "information"], ["The lecture was concise but highly ___.", "informative"], ["Consumers should make an ___ choice.", "informed"], ["The report will ___ policymakers about current risks.", "inform"], ["Reliable ___ is essential for decision-making.", "information"], ["The documentary was both entertaining and ___.", "informative"], ["An ___ public is harder to mislead.", "informed"], ["Schools must ___ parents of serious incidents.", "inform"], ["We need more ___ before reaching a conclusion.", "information"]]}, {"root": "respond", "forms": [["respond", "verb", "реагировать / отвечать"], ["response", "noun", "ответ / реакция"], ["responsive", "adjective", "быстро реагирующий / отзывчивый"]], "note": "Respond — ответить или отреагировать. Response — ответ или реакция как существительное. Responsive — способный быстро и адекватно реагировать.", "signals": ["respond to", "a positive response", "a responsive service"], "q": [["Companies must ___ quickly to customer complaints.", "respond"], ["The proposal received a positive ___.", "response"], ["A good support team should be ___.", "responsive"], ["People ___ differently to criticism.", "respond"], ["The emergency ___ was delayed.", "response"], ["The website uses a ___ design.", "responsive"], ["Governments need to ___ to changing conditions.", "respond"], ["His immediate ___ was surprisingly calm.", "response"], ["Effective institutions are ___ to public needs.", "responsive"], ["Participants were asked to ___ honestly.", "respond"]]}, {"root": "participate", "forms": [["participate", "verb", "участвовать"], ["participation", "noun", "участие"], ["participant", "noun", "участник"]], "note": "Participate — участвовать. Participation — участие как процесс. Participant — человек, который участвует.", "signals": ["participate in", "active participation", "each participant"], "q": [["All students are encouraged to ___ in the discussion.", "participate"], ["Classroom ___ can improve confidence.", "participation"], ["Each ___ completed a questionnaire.", "participant"], ["Citizens should ___ in local elections.", "participate"], ["The study measured levels of social ___.", "participation"], ["Every ___ received the same instructions.", "participant"], ["Employees may ___ voluntarily.", "participate"], ["Low ___ reduced the value of the survey.", "participation"], ["One ___ withdrew before the final stage.", "participant"], ["Young people often ___ in online communities.", "participate"]]}, {"root": "compare", "forms": [["compare", "verb", "сравнивать"], ["comparison", "noun", "сравнение"], ["comparable", "adjective", "сопоставимый"], ["comparatively", "adverb", "сравнительно"]], "note": "Compare — сравнивать. Comparison — сравнение. Comparable — достаточно похожий для сравнения. Comparatively — сравнительно, относительно.", "signals": ["compare A with B", "in comparison with", "comparable results", "comparatively low"], "q": [["Researchers ___ the two groups carefully.", "compare"], ["The chart provides a useful ___.", "comparison"], ["The two studies produced broadly ___ results.", "comparable"], ["Housing costs are ___ low in this region.", "comparatively"], ["It is difficult to ___ countries with very different populations.", "compare"], ["In ___ with last year, sales increased.", "comparison"], ["The samples must be of ___ size.", "comparable"], ["The treatment is ___ inexpensive.", "comparatively"], ["Students should ___ both viewpoints.", "compare"], ["A direct ___ may be misleading.", "comparison"]]}, {"root": "describe", "forms": [["describe", "verb", "описывать"], ["description", "noun", "описание"], ["descriptive", "adjective", "описательный"]], "note": "Describe — описать что-либо. Description — описание как существительное. Descriptive — содержащий описание или относящийся к описанию.", "signals": ["describe a process", "a detailed description", "descriptive language"], "q": [["Please ___ the main trend shown in the graph.", "describe"], ["The report includes a detailed ___.", "description"], ["The writer uses vivid ___ language.", "descriptive"], ["Students should ___ what happened objectively.", "describe"], ["The job ___ lists the main responsibilities.", "description"], ["This section is mainly ___ rather than analytical.", "descriptive"], ["The witness could not clearly ___ the suspect.", "describe"], ["A brief ___ is sufficient here.", "description"], ["Avoid purely ___ writing in an argumentative essay.", "descriptive"], ["The article can ___ several possible causes.", "describe"]]}, {"root": "analyse", "forms": [["analyse", "verb", "анализировать"], ["analysis", "noun", "анализ"], ["analytical", "adjective", "аналитический"], ["analytically", "adverb", "аналитически"]], "note": "Analyse — анализировать. Analysis — анализ как существительное. Analytical — связанный с логическим анализом. Analytically — аналитическим способом.", "signals": ["analyse data", "detailed analysis", "analytical skills", "think analytically"], "q": [["Researchers will ___ the data statistically.", "analyse"], ["The report provides a detailed ___.", "analysis"], ["Employers increasingly value ___ skills.", "analytical"], ["Students should learn to think ___.", "analytically"], ["We need to ___ the causes, not only the symptoms.", "analyse"], ["Further ___ is required.", "analysis"], ["The task requires an ___ approach.", "analytical"], ["The problem can be examined ___.", "analytically"], ["Scientists ___ evidence before drawing conclusions.", "analyse"], ["Her ___ revealed several weaknesses.", "analysis"]]}, {"root": "conclude", "forms": [["conclude", "verb", "делать вывод / завершать"], ["conclusion", "noun", "вывод / заключение"], ["conclusive", "adjective", "убедительный / окончательный"], ["conclusively", "adverb", "окончательно / убедительно"]], "note": "Conclude — сделать вывод или закончить. Conclusion — вывод. Conclusive — доказательство настолько сильное, что практически закрывает вопрос. Conclusively — окончательно, убедительно.", "signals": ["conclude that", "reach a conclusion", "conclusive evidence", "prove conclusively"], "q": [["The researchers ___ that the treatment was effective.", "conclude"], ["We cannot reach a firm ___ yet.", "conclusion"], ["The evidence is not ___.", "conclusive"], ["The study does not prove the claim ___.", "conclusively"], ["It would be premature to ___ that the policy failed.", "conclude"], ["The final ___ should follow from the evidence.", "conclusion"], ["No ___ explanation has been found.", "conclusive"], ["The issue was ___ resolved by the new evidence.", "conclusively"], ["The report can ___ with three recommendations.", "conclude"], ["This ___ is based on limited data.", "conclusion"]]}, {"root": "require", "forms": [["require", "verb", "требовать"], ["requirement", "noun", "требование"], ["required", "adjective", "необходимый / требуемый"]], "note": "Require — требовать или нуждаться. Requirement — требование. Required — обязательный или необходимый.", "signals": ["require evidence", "a legal requirement", "the required level"], "q": [["Most professional roles ___ strong communication skills.", "require"], ["Experience is a basic ___ for the position.", "requirement"], ["Applicants must reach the ___ standard.", "required"], ["Some tasks ___ specialist knowledge.", "require"], ["There is no legal ___ to disclose this information.", "requirement"], ["Please submit all ___ documents.", "required"], ["The repair will ___ additional materials.", "require"], ["Language proficiency is an entry ___.", "requirement"], ["Students completed the ___ reading.", "required"], ["Complex problems often ___ flexible solutions.", "require"]]}, {"root": "depend", "forms": [["depend", "verb", "зависеть"], ["dependence", "noun", "зависимость"], ["dependent", "adjective", "зависимый"], ["independent", "adjective", "независимый"], ["independently", "adverb", "независимо / самостоятельно"]], "note": "Depend — зависеть. Dependence — зависимость. Dependent — зависимый. Independent — независимый; independently — самостоятельно. Здесь полезно видеть не только форму, но и приставку in-, которая меняет значение на противоположное.", "signals": ["depend on", "dependence on", "be dependent on", "an independent study", "work independently"], "q": [["Success may ___ on consistent practice.", "depend"], ["Heavy ___ on one supplier can be risky.", "dependence"], ["Young children are ___ on adults.", "dependent"], ["The researchers conducted an ___ review.", "independent"], ["Students completed the task ___.", "independently"], ["Prices often ___ on demand.", "depend"], ["Energy ___ can influence foreign policy.", "dependence"], ["The organisation claims to be politically ___.", "independent"], ["Some patients remain ___ on regular support.", "dependent"], ["She can now work ___.", "independently"]]}, {"root": "encourage", "forms": [["encourage", "verb", "поощрять"], ["encouragement", "noun", "поддержка / поощрение"], ["encouraging", "adjective", "обнадёживающий"], ["encouraged", "adjective", "воодушевлённый"]], "note": "Encourage — поощрять или мотивировать. Encouragement — поддержка. Encouraging описывает то, что внушает надежду; encouraged — человека, который почувствовал поддержку.", "signals": ["encourage people to", "words of encouragement", "encouraging results", "feel encouraged"], "q": [["Teachers should ___ students to ask questions.", "encourage"], ["A little ___ can increase confidence.", "encouragement"], ["The latest results are ___.", "encouraging"], ["She felt ___ by the positive feedback.", "encouraged"], ["Governments can ___ investment through tax incentives.", "encourage"], ["Children often need reassurance and ___.", "encouragement"], ["The early signs are highly ___.", "encouraging"], ["Participants were ___ to continue.", "encouraged"], ["Good managers ___ initiative.", "encourage"], ["His teacher's ___ helped him persist.", "encouragement"]]}, {"root": "create", "forms": [["create", "verb", "создавать"], ["creation", "noun", "создание"], ["creative", "adjective", "творческий"], ["creatively", "adverb", "творчески"], ["creator", "noun", "создатель"]], "note": "Create — создавать. Creation — процесс или результат создания. Creative — творческий. Creatively — творчески. Creator — создатель.", "signals": ["create opportunities", "the creation of jobs", "a creative solution", "think creatively"], "q": [["New industries can ___ employment opportunities.", "create"], ["The policy led to the ___ of new jobs.", "creation"], ["We need a more ___ solution.", "creative"], ["Students were asked to think ___.", "creatively"], ["The ___ of the platform later founded a new company.", "creator"], ["Good design can ___ a strong first impression.", "create"], ["Job ___ is a common policy objective.", "creation"], ["Advertising often relies on ___ ideas.", "creative"], ["Teams solve unusual problems more ___ when they feel safe.", "creatively"], ["The artist was the original ___ of the character.", "creator"]]}, {"root": "produce", "forms": [["produce", "verb", "производить"], ["production", "noun", "производство"], ["productive", "adjective", "продуктивный"], ["productively", "adverb", "продуктивно"], ["producer", "noun", "производитель"]], "note": "Produce — производить или создавать результат. Production — производство. Productive — дающий хороший результат. Productively — продуктивно. Producer — производитель.", "signals": ["produce goods", "industrial production", "a productive meeting", "work productively"], "q": [["The factory can ___ 5,000 units a day.", "produce"], ["Industrial ___ fell last month.", "production"], ["The meeting was surprisingly ___.", "productive"], ["The two departments worked together ___.", "productively"], ["The country is a major oil ___.", "producer"], ["Plants ___ oxygen through photosynthesis.", "produce"], ["Food ___ depends heavily on water.", "production"], ["Regular breaks can make study sessions more ___.", "productive"], ["Employees need conditions that allow them to work ___.", "productively"], ["The company became the region's largest ___.", "producer"]]}, {"root": "solve", "forms": [["solve", "verb", "решать проблему"], ["solution", "noun", "решение проблемы"], ["solvable", "adjective", "разрешимый"]], "note": "Solve — решить проблему. Solution — решение как существительное. Solvable — проблема, которую возможно решить.", "signals": ["solve a problem", "find a solution", "a solvable problem"], "q": [["Technology alone cannot ___ every social problem.", "solve"], ["We need a practical ___.", "solution"], ["The issue is difficult but still ___.", "solvable"], ["Teams often ___ problems more effectively together.", "solve"], ["There is no simple ___ to traffic congestion.", "solution"], ["Most textbook exercises are designed to be ___.", "solvable"], ["The government must ___ the housing shortage.", "solve"], ["A long-term ___ will require investment.", "solution"], ["The puzzle looked impossible but was actually ___.", "solvable"], ["Better data may help us ___ the problem.", "solve"]]}, {"root": "reduce", "forms": [["reduce", "verb", "сокращать"], ["reduction", "noun", "сокращение"], ["reduced", "adjective", "сниженный / сокращённый"]], "note": "Reduce — сокращать или снижать. Reduction — снижение как существительное. Reduced — уже уменьшенный.", "signals": ["reduce costs", "a significant reduction", "reduced prices"], "q": [["The policy aims to ___ carbon emissions.", "reduce"], ["There was a significant ___ in accidents.", "reduction"], ["Students can buy tickets at a ___ price.", "reduced"], ["Exercise can ___ stress.", "reduce"], ["A further ___ in spending may be necessary.", "reduction"], ["The service is available at a ___ cost.", "reduced"], ["Companies try to ___ unnecessary expenses.", "reduce"], ["The treatment produced a 20% ___ in symptoms.", "reduction"], ["The shop offered ___ prices after the holiday.", "reduced"], ["Better insulation may ___ energy use.", "reduce"]]}, {"root": "contribute", "forms": [["contribute", "verb", "вносить вклад / способствовать"], ["contribution", "noun", "вклад"], ["contributor", "noun", "участник / автор, вносящий вклад"]], "note": "Contribute — вносить вклад или способствовать. Contribution — сам вклад. Contributor — человек или фактор, который вносит вклад.", "signals": ["contribute to", "make a contribution", "a major contributor"], "q": [["Transport emissions ___ to air pollution.", "contribute"], ["Volunteers made an important ___.", "contribution"], ["Road traffic is a major ___ to urban noise.", "contributor"], ["Many factors ___ to academic success.", "contribute"], ["Her main ___ was the statistical analysis.", "contribution"], ["Each ___ is listed at the end of the report.", "contributor"], ["Regular exercise can ___ to better health.", "contribute"], ["The company made a financial ___ to the project.", "contribution"], ["Agriculture is an important ___ to the local economy.", "contributor"], ["Social conditions may ___ to inequality.", "contribute"]]}, {"root": "apply", "forms": [["apply", "verb", "применять / подавать заявку"], ["application", "noun", "применение / заявка"], ["applicant", "noun", "кандидат"], ["applicable", "adjective", "применимый"]], "note": "Apply — применять правило или подавать заявку. Application — применение или заявление. Applicant — человек, который подаёт заявку. Applicable — применимый к конкретной ситуации.", "signals": ["apply for a job", "submit an application", "a successful applicant", "be applicable to"], "q": [["You can ___ for the position online.", "apply"], ["Please complete the ___ form.", "application"], ["Each ___ must provide two references.", "applicant"], ["The rule is not ___ in every case.", "applicable"], ["Students should ___ the theory to real examples.", "apply"], ["The deadline for ___ is Friday.", "application"], ["The strongest ___ was invited to interview.", "applicant"], ["These regulations are ___ to all employees.", "applicable"], ["Researchers can ___ the method to larger samples.", "apply"], ["Your ___ will be reviewed within ten days.", "application"]]}];
+const KEY = 'wordFormGym30_v1';
+let state = loadState();
+let current = null;
+let quiz = null;
+let raf = null;
+let filter = 'all';
+
+function emptyState(){
+  const s={};
+  FAMILIES.forEach(f=>s[f.root]={covered:false, attempts:0, latest:null, best:null, bestTime:null});
+  return s;
+}
+function loadState(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(KEY)||'null');
+    const base=emptyState();
+    if(raw) Object.keys(base).forEach(k=>Object.assign(base[k],raw[k]||{}));
+    return base;
+  }catch(e){return emptyState();}
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+function accent(i){return `hsl(${(222+i*23)%360} 78% 66%)`;}
+function posLabel(pos){
+  return {verb:'VERB',noun:'NOUN',adjective:'ADJECTIVE',adverb:'ADVERB'}[pos]||pos.toUpperCase();
+}
+function renderHome(){
+  document.getElementById('homeView').classList.add('active');
+  document.getElementById('familyView').classList.remove('active');
+  document.getElementById('homeBtn').style.display='none';
+  stopTimer();
+  updateStats();
+  const grid=document.getElementById('familyGrid');
+  grid.innerHTML='';
+  FAMILIES.forEach((f,i)=>{
+    const s=state[f.root];
+    if(filter==='todo' && s.covered) return;
+    if(filter==='done' && !s.covered) return;
+    const d=document.createElement('article');
+    d.className='card';
+    d.style.setProperty('--accent',accent(i));
+    const sample=f.forms.slice(0,4).map(x=>x[0]).join(' · ');
+    d.innerHTML=`
+      <button class="cardbtn" aria-label="Open ${esc(f.root)}"></button>
+      <div class="cardtop">
+        <div>
+          <div class="num">FAMILY ${String(i+1).padStart(2,'0')}</div>
+          <div class="root">${esc(f.root)}</div>
+        </div>
+        <label class="covered"><input type="checkbox" ${s.covered?'checked':''}> Covered</label>
+      </div>
+      <div class="mini">${esc(sample)}</div>
+      <div class="scoreline">
+        <span class="tag">Latest: ${s.latest===null?'—':s.latest+'/10'}</span>
+        <span class="tag">Best: ${s.best===null?'—':s.best+'/10'}</span>
+        <span class="tag">${s.attempts} attempt${s.attempts===1?'':'s'}</span>
+      </div>`;
+    d.querySelector('.cardbtn').onclick=()=>openFamily(i);
+    d.querySelector('input').onchange=e=>{state[f.root].covered=e.target.checked;save();renderHome();};
+    grid.appendChild(d);
+  });
+}
+function updateStats(){
+  let covered=0,done=0,latest=0,best=0;
+  FAMILIES.forEach(f=>{
+    const s=state[f.root];
+    if(s.covered) covered++;
+    if(s.attempts>0) done++;
+    if(s.latest!=null) latest+=s.latest;
+    if(s.best!=null) best+=s.best;
+  });
+  coveredStat.textContent=covered+'/30';
+  doneStat.textContent=done+'/30';
+  latestStat.textContent=latest+'/300';
+  bestStat.textContent=best+'/300';
+}
+function openFamily(i){
+  current=i; const f=FAMILIES[i], s=state[f.root];
+  document.getElementById('homeView').classList.remove('active');
+  document.getElementById('familyView').classList.add('active');
+  document.getElementById('homeBtn').style.display='inline-block';
+  document.getElementById('quizBox').style.display='none';
+  const head=document.getElementById('familyHead');
+  head.style.setProperty('--accent',accent(i));
+  head.innerHTML=`
+    <div class="familyTitle">
+      <div><div class="eyebrow">Word family ${i+1} of 30</div><h2>${esc(f.root)}</h2></div>
+      <label class="covered" style="font-size:.95rem"><input id="familyCovered" type="checkbox" ${s.covered?'checked':''}> Mark as covered</label>
+    </div>
+    <div class="forms">${f.forms.map(x=>`<div class="formbox"><div class="pos">${esc(posLabel(x[1]))}</div><b>${esc(x[0])}</b><div class="ru">${esc(x[2])}</div></div>`).join('')}</div>
+    <div class="explain"><b>Как различать формы</b><br>${esc(f.note)}</div>
+    <div class="explain" style="margin-top:12px;background:rgba(255,255,255,.03)">
+      <b>Быстрая подсказка</b><br>
+      Глагол обычно <b>короче</b> и часто стоит после <b>to</b> или после модальных глаголов:
+      <b>can / should / must + verb</b>. Если видишь <b>a / the / this</b>, часто нужен <b>noun</b>.
+      Если видишь <b>very / highly</b>, часто нужен <b>adjective</b>.
+    </div>
+    <div class="signals">${f.signals.map(x=>`<span class="signal">${esc(x)}</span>`).join('')}</div>
+    <div class="actions">
+      <button class="primary" id="startQuiz">Start 10-second challenge</button>
+      <span class="note">Latest: ${s.latest===null?'—':s.latest+'/10'} · Best: ${s.best===null?'—':s.best+'/10'} · Attempts: ${s.attempts}</span>
+    </div>`;
+  document.getElementById('familyCovered').onchange=e=>{state[f.root].covered=e.target.checked;save();};
+  document.getElementById('startQuiz').onclick=startQuiz;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function shuffled(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function startQuiz(){
+  const f=FAMILIES[current];
+  quiz={index:0,score:0,totalTime:0,answered:false,questions:shuffled(f.q.map(x=>({s:x[0],a:x[1]})))};
+  document.getElementById('quizBox').style.display='block';
+  showQuestion();
+  document.getElementById('quizBox').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function optionSet(f, correct){
+  const all=f.forms.map(x=>x[0]).filter(x=>x!==correct);
+  return shuffled([correct,...shuffled(all).slice(0,Math.min(3,all.length))]);
+}
+function formInfo(f,word){return f.forms.find(x=>x[0]===word)||[word,'',''];}
+function ruOf(f,word){
+  const info=formInfo(f,word);
+  return info[2]||'';
+}
+function showQuestion(){
+  stopTimer();
+  const f=FAMILIES[current], q=quiz.questions[quiz.index], box=document.getElementById('quizBox');
+  quiz.answered=false;
+  const opts=optionSet(f,q.a);
+  box.innerHTML=`
+    <div class="quizMeta"><b>${esc(f.root)} challenge</b><span>Question ${quiz.index+1} / 10 · Score ${quiz.score}</span></div>
+    <div class="timerrow"><div class="timerbar"><div class="timerfill" id="timerFill"></div></div><div class="time" id="timeText">10.0s</div></div>
+    <div class="sentence">${esc(q.s)}</div>
+    <div class="options">${opts.map((o,n)=>`<button class="option" data-word="${esc(o)}"><span style="opacity:.55;margin-right:8px">${n+1}</span>${esc(o)}</button>`).join('')}</div>
+    <div class="feedback" id="feedback">Choose the grammatically correct form. Meaning matters, but the grammatical slot comes first.</div>
+    <div class="nextrow"><button class="next" id="nextBtn" disabled>${quiz.index===9?'See result':'Next sentence →'}</button></div>`;
+  box.querySelectorAll('.option').forEach(btn=>btn.onclick=()=>answer(btn.dataset.word));
+  document.getElementById('nextBtn').onclick=nextQuestion;
+  beginTimer();
+}
+function beginTimer(){
+  const started=performance.now(), limit=10000;
+  quiz.started=started;
+  function tick(now){
+    if(quiz.answered)return;
+    const elapsed=now-started, left=Math.max(0,limit-elapsed);
+    const frac=left/limit;
+    const fill=document.getElementById('timerFill'), text=document.getElementById('timeText');
+    if(fill) fill.style.width=(frac*100)+'%';
+    if(text) text.textContent=(left/1000).toFixed(1)+'s';
+    if(left<=0){timeoutAnswer();return;}
+    raf=requestAnimationFrame(tick);
+  }
+  raf=requestAnimationFrame(tick);
+}
+function stopTimer(){if(raf) cancelAnimationFrame(raf);raf=null;}
+function answer(word){
+  if(quiz.answered)return;
+  quiz.answered=true; stopTimer();
+  const elapsed=Math.min(10,(performance.now()-quiz.started)/1000);
+  quiz.totalTime+=elapsed;
+  const f=FAMILIES[current], q=quiz.questions[quiz.index], correct=word===q.a;
+  if(correct)quiz.score++;
+  reveal(word,q.a,correct,elapsed,false);
+}
+function timeoutAnswer(){
+  if(quiz.answered)return;
+  quiz.answered=true; stopTimer(); quiz.totalTime+=10;
+  const q=quiz.questions[quiz.index];
+  reveal(null,q.a,false,10,true);
+}
+function reveal(chosen,correct,isCorrect,elapsed,timedOut){
+  const f=FAMILIES[current], info=formInfo(f,correct), buttons=[...document.querySelectorAll('.option')];
+  buttons.forEach(b=>{
+    b.disabled=true;
+    const ru=ruOf(f,b.dataset.word);
+    b.innerHTML = `<div>${b.innerHTML}</div><div style="margin-top:6px;font-size:.82rem;color:#b9cbe1;font-weight:600">${esc(ru)}</div>`;
+    if(b.dataset.word===correct)b.classList.add('correct');
+    if(chosen && b.dataset.word===chosen && chosen!==correct)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('feedback');
+  const prefix=timedOut?'<strong class="bad">Time is up.</strong>':isCorrect?'<strong class="good">Correct.</strong>':'<strong class="bad">Not quite.</strong>';
+  let chosenLine='';
+  if(chosen){
+    const chosenInfo=formInfo(f,chosen);
+    chosenLine=`<div style="margin-top:6px">Your answer: <b>${esc(chosen)}</b> <span style="color:var(--muted)">(${esc(posLabel(chosenInfo[1]))} · ${esc(ruOf(f,chosen))})</span></div>`;
+  }
+  fb.innerHTML=`${prefix} Correct form: <b>${esc(correct)}</b> <span style="color:var(--muted)">(${esc(posLabel(info[1]))} · ${esc(ruOf(f,correct))})</span>.${chosenLine}<div style="margin-top:6px">Response time: ${elapsed.toFixed(1)}s.</div>`;
+  document.getElementById('nextBtn').disabled=false;
+}
+function nextQuestion(){
+  if(!quiz.answered)return;
+  if(quiz.index>=9){finishQuiz();return;}
+  quiz.index++;
+  showQuestion(); // timer starts only after the student clicks Next
+}
+function finishQuiz(){
+  stopTimer();
+  const f=FAMILIES[current], s=state[f.root];
+  const avg=quiz.totalTime/10;
+  s.attempts++;
+  s.latest=quiz.score;
+  const improved=s.best===null || quiz.score>s.best || (quiz.score===s.best && (s.bestTime===null || avg<s.bestTime));
+  if(improved){s.best=quiz.score;s.bestTime=avg;}
+  s.covered=true;
+  save();
+  const box=document.getElementById('quizBox');
+  box.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">Challenge complete</div>
+      <div class="big">${quiz.score}/10</div>
+      <h3>${quiz.score>=9?'Excellent grammatical control.':quiz.score>=7?'Solid result. Now make it automatic.':quiz.score>=5?'Useful start. Review the forms and repeat.':'Review this family before repeating.'}</h3>
+      <p>Your result has been saved. Repeat this family later and try to beat your best score. A tie is improved if you answer faster on average.</p>
+      <div class="resultCards">
+        <div class="resultCard"><b>${s.latest}/10</b><span>Latest</span></div>
+        <div class="resultCard"><b>${s.best}/10</b><span>Best</span></div>
+        <div class="resultCard"><b>${avg.toFixed(1)}s</b><span>Avg. time</span></div>
+      </div>
+      <div class="actions" style="justify-content:center">
+        <button class="primary" id="againBtn">Try this family again</button>
+        <button class="ghost" id="allBtn">Back to all 30 families</button>
+      </div>
+    </div>`;
+  document.getElementById('againBtn').onclick=startQuiz;
+  document.getElementById('allBtn').onclick=renderHome;
+  document.getElementById('familyCovered').checked=true;
+}
+document.getElementById('backBtn').onclick=renderHome;
+document.getElementById('homeBtn').onclick=renderHome;
+document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{
+  filter=b.dataset.filter; document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));renderHome();
+});
+document.getElementById('resetBtn').onclick=()=>{
+  if(confirm('Reset all covered checkboxes and all saved scores?')){state=emptyState();save();renderHome();}
+};
+document.addEventListener('keydown',e=>{
+  if(!quiz || !document.getElementById('quizBox') || document.getElementById('quizBox').style.display==='none')return;
+  if(!quiz.answered && ['1','2','3','4','5'].includes(e.key)){
+    const b=document.querySelectorAll('.option')[Number(e.key)-1]; if(b)b.click();
+  } else if(quiz.answered && (e.key==='Enter' || e.key==='ArrowRight')){
+    const n=document.getElementById('nextBtn'); if(n && !n.disabled)n.click();
+  }
+});
+renderHome();
+</script>
+</body>
+</html>
