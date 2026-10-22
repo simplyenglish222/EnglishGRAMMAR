@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d1b">
+<title>Conditional Cube</title>
+<style>
+:root{--bg:#080d1b;--s:min(86vmin,720px)}*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}html,body{touch-action:none;margin:0;width:100%;height:100%;overflow:hidden}body{display:grid;place-items:center;background:radial-gradient(ellipse at 25% 35%,#182954 0%,transparent 43%),radial-gradient(ellipse at 78% 68%,#17344a 0%,transparent 36%),var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#f4f7ff}
+#sky{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}.scene{position:relative;z-index:1;width:var(--s);height:var(--s);perspective:1600px;touch-action:none;cursor:grab}.scene:active{cursor:grabbing}.cube{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform;pointer-events:none}@keyframes orbit{from{transform:rotateX(-22deg) rotateY(-25deg)}to{transform:rotateX(-22deg) rotateY(335deg)}}
+.face{position:absolute;inset:0;display:grid;place-items:center;padding:clamp(18px,3.4vw,42px);border:1px solid #ffffff82;backface-visibility:hidden;box-shadow:inset 0 0 70px #ffffff13,0 20px 60px #0008;overflow:hidden;pointer-events:none}.face:before{content:"";position:absolute;inset:13px;border:1px solid #ffffff29;pointer-events:none}.face:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,#ffffff14,transparent 46%,#00000028)}.f0{background:linear-gradient(145deg,#1a9b8c,#104d62)}.f1{background:linear-gradient(145deg,#3d73e8,#293891)}.f2{background:linear-gradient(145deg,#7a60d4,#403477)}.f3{background:linear-gradient(145deg,#ce597d,#75314e)}.f4{background:linear-gradient(145deg,#d28a35,#7d461d)}.f5{background:linear-gradient(145deg,#3799b5,#24517b)}.front{transform:translateZ(calc(var(--s)/2))}.right{transform:rotateY(90deg) translateZ(calc(var(--s)/2))}.back{transform:rotateY(180deg) translateZ(calc(var(--s)/2))}.left{transform:rotateY(-90deg) translateZ(calc(var(--s)/2))}.top{transform:rotateX(90deg) translateZ(calc(var(--s)/2))}.bottom{transform:rotateX(-90deg) translateZ(calc(var(--s)/2))}
+.face-inner{position:relative;z-index:1;width:100%;max-width:520px;height:100%;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.face-num{position:absolute;top:clamp(12px,2.2vw,25px);left:clamp(12px,2.2vw,25px);z-index:2;width:clamp(38px,6vw,62px);height:clamp(38px,6vw,62px);border:1px solid #ffffffa0;border-radius:50%;background:#ffffff24;display:grid;place-items:center;font-size:clamp(16px,2.6vw,25px);font-weight:900;box-shadow:0 0 25px #ffffff1c}.type-tag{font-size:clamp(11px,1.5vw,15px);font-weight:850;letter-spacing:.2em;text-transform:uppercase;opacity:.8;margin:0 0 12px}.face h2{font-size:clamp(28px,5vw,50px);line-height:1.02;letter-spacing:-.045em;margin:0 0 12px;font-weight:800}.face .mini{font-size:clamp(14px,2vw,20px);line-height:1.35;color:#ffffffd2;margin:0;max-width:24ch}.face-test{display:inline-flex;align-items:center;justify-content:center;margin-top:24px;min-width:152px;min-height:54px;padding:12px 27px;border:1px solid #ffffffad;border-radius:14px;background:linear-gradient(135deg,#ffffff30,#06111b44);box-shadow:0 8px 25px #0003,inset 0 1px #ffffff55;color:#fff;font:inherit;font-size:clamp(16px,2.2vw,22px);font-weight:950;letter-spacing:.2em;cursor:pointer;transition:transform .16s,background .16s,border-color .16s}.face-test.is-hover{background:linear-gradient(135deg,#ffffff4a,#06111b55);border-color:#fff}.face-test:focus-visible,.face-answer:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.face-question{width:100%;max-height:100%;min-height:0;display:flex;flex-direction:column;align-items:center;overflow:hidden;--fit:1}.face-question[hidden],.face-start[hidden]{display:none!important}.question-kicker{font-size:calc(clamp(10px,1.35vw,13px) * var(--fit));font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:#ffffffc8;margin:0 0 calc(11px * var(--fit))}.question-sentence{font-size:calc(clamp(17px,2.9vw,30px) * var(--fit));line-height:1.23;letter-spacing:-.025em;font-weight:750;margin:0 0 calc(8px * var(--fit))}.blank{display:inline-block;border-bottom:calc(2px * var(--fit)) solid #bcf5ff;min-width:calc(56px * var(--fit));text-align:center}.question-translation{font-size:calc(clamp(12px,1.75vw,17px) * var(--fit));line-height:1.3;color:#eff5ffd0;margin:0 0 calc(15px * var(--fit))}.choices{display:grid;grid-template-columns:1fr;gap:calc(7px * var(--fit));width:min(100%,410px)}.face-answer{font:inherit;text-align:center;color:#f6f8ff;background:#08172748;border:1px solid #ffffff58;border-radius:10px;padding:calc(9px * var(--fit)) calc(12px * var(--fit));min-height:calc(39px * var(--fit));font-size:calc(clamp(13px,1.8vw,18px) * var(--fit));font-weight:750;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}.face-answer.is-hover:not(:disabled){background:#ffffff22;border-color:#fff}.face-answer:disabled{cursor:default}.face-answer.correct{background:#0c4c43;border-color:#8ff0cd}.face-answer.wrong{background:#53263b;border-color:#ff9bb4}.face-feedback{min-height:calc(42px * var(--fit));margin:calc(10px * var(--fit)) 0 0;font-size:calc(clamp(11px,1.5vw,15px) * var(--fit));line-height:1.3;color:#f0f5ffd8}.face-feedback b{color:#a4f2d5}.face-feedback .error{color:#ffc0ca}.face-feedback .ru{display:block;color:#ffffffbc;margin-top:3px}@media(max-width:600px){:root{--s:min(92vw,82vh,680px)}.face{padding:15px}.face:before{inset:9px}.face-num{top:11px;left:11px;width:39px;height:39px;font-size:16px}.type-tag{font-size:10px;margin-bottom:8px}.face h2{font-size:clamp(24px,7vw,36px);margin-bottom:8px}.face .mini{font-size:clamp(12px,3.7vw,16px)}.face-test{min-width:124px;min-height:43px;margin-top:15px;padding:9px 20px;font-size:16px}.question-kicker{font-size:calc(9px * var(--fit));margin-bottom:calc(8px * var(--fit))}.question-sentence{font-size:calc(clamp(15px,4.5vw,22px) * var(--fit));margin-bottom:calc(5px * var(--fit))}.question-translation{font-size:calc(clamp(10px,3vw,13px) * var(--fit));margin-bottom:calc(9px * var(--fit))}.choices{gap:calc(5px * var(--fit))}.face-answer{font-size:calc(clamp(11px,3.2vw,15px) * var(--fit));padding:calc(7px * var(--fit)) calc(8px * var(--fit));min-height:calc(32px * var(--fit))}.face-feedback{font-size:calc(10px * var(--fit));min-height:calc(20px * var(--fit));margin-top:calc(5px * var(--fit))}}
+@media(max-height:520px){:root{--s:min(75vh,68vw,410px)}.face{padding:12px}.face-num{width:36px;height:36px;font-size:15px}.face h2{font-size:clamp(22px,5vh,36px)}.face-test{margin-top:12px;min-height:39px}.question-kicker{margin-bottom:calc(6px * var(--fit))}.question-sentence{font-size:calc(clamp(15px,4vh,22px) * var(--fit))}.question-translation{font-size:calc(11px * var(--fit));margin-bottom:calc(7px * var(--fit))}.choices{gap:calc(4px * var(--fit))}.face-answer{min-height:calc(29px * var(--fit));padding:calc(5px * var(--fit)) calc(8px * var(--fit))}.face-feedback{min-height:calc(20px * var(--fit));margin-top:calc(4px * var(--fit))}}
+@media(prefers-reduced-motion:reduce){.cube{animation:none;transition:none}.face-answer{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="scene" id="scene" aria-label="Interactive conditional cube">
+<div class="cube" id="cube">
+<div class="face f0 front" data-type="0" role="group" aria-label="Zero conditional"><span class="face-num">01</span><div class="face-inner"><div class="face-start"><p class="type-tag">Type 0</p><h2>Zero</h2><p class="mini">Facts and routines<br><b>If + present → present</b></p><button class="face-test" type="button">TEST</button></div><div class="face-question" hidden></div></div></div>
+<div class="face f1 right" data-type="1" role="group" aria-label="First conditional"><span class="face-num">02</span><div class="face-inner"><div class="face-start"><p class="type-tag">Type 1</p><h2>First</h2><p class="mini">Real future<br><b>If + present → will</b></p><button class="face-test" type="button">TEST</button></div><div class="face-question" hidden></div></div></div>
+<div class="face f2 back" data-type="2" role="group" aria-label="Second conditional"><span class="face-num">03</span><div class="face-inner"><div class="face-start"><p class="type-tag">Type 2</p><h2>Second</h2><p class="mini">Imagined now<br><b>If + past → would</b></p><button class="face-test" type="button">TEST</button></div><div class="face-question" hidden></div></div></div>
+<div class="face f3 left" data-type="3" role="group" aria-label="Third conditional"><span class="face-num">04</span><div class="face-inner"><div class="face-start"><p class="type-tag">Type 3</p><h2>Third</h2><p class="mini">Unreal past<br><b>If + past perfect → would have</b></p><button class="face-test" type="button">TEST</button></div><div class="face-question" hidden></div></div></div>
+<div class="face f4 top" data-type="4" role="group" aria-label="Mixed conditional: past condition, present result"><span class="face-num">05</span><div class="face-inner"><div class="face-start"><p class="type-tag">Mixed A</p><h2>Past → now</h2><p class="mini">Past condition<br>Present result</p><button class="face-test" type="button">TEST</button></div><div class="face-question" hidden></div></div></div>
+<div class="face f5 bottom" data-type="5" role="group" aria-label="Mixed conditional: present state, past result"><span class="face-num">06</span><div class="face-inner"><div class="face-start"><p class="type-tag">Mixed B</p><h2>Now → past</h2><p class="mini">Present state<br>Past result</p><button class="face-test" type="button">TEST</button></div><div class="face-question" hidden></div></div></div>
+</div></div>
+<script>
+const sky=document.getElementById('sky'),ctx=sky.getContext('2d'),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;let stars=[],sw=0,sh=0;
+function sizeSky(){const d=Math.min(devicePixelRatio||1,2);sw=innerWidth;sh=innerHeight;sky.width=sw*d;sky.height=sh*d;ctx.setTransform(d,0,0,d,0,0);stars=Array.from({length:Math.min(240,Math.round(sw*sh/4200))},()=>({x:Math.random()*sw,y:Math.random()*sh,r:.4+Math.random()*1.3,a:.3+Math.random()*.7,p:Math.random()*6.28,s:.4+Math.random()*1.4}));if(reduced)drawSky(0)}function drawSky(t){ctx.clearRect(0,0,sw,sh);for(const z of stars){const a=z.a*(reduced?1:.68+.32*Math.sin(t*.001*z.s+z.p));ctx.beginPath();ctx.arc(z.x,z.y,z.r,0,6.283);ctx.fillStyle=`rgba(220,236,255,${a})`;ctx.shadowBlur=z.r>1.2?8:0;ctx.shadowColor='#9bdcff';ctx.fill()}ctx.shadowBlur=0;if(!reduced)requestAnimationFrame(drawSky)}sizeSky();if(!reduced)requestAnimationFrame(drawSky);addEventListener('resize',sizeSky,{passive:true});
+const scene=document.getElementById('scene'),cube=document.getElementById('cube'),faces=[...document.querySelectorAll('.face[data-type]')],questions=[
+{type:0,s:'If you ___ water to 100°C, it boils.',ru:'Если нагреть воду до 100 °C, она закипает.',c:['heat','will heat','heated'],a:0,why:'Present Simple in both clauses: a general fact.',whyRu:'Общий факт: Present Simple в обеих частях.'},
+{type:0,s:'If ice ___, it turns into water.',ru:'Если лёд нагреть, он превращается в воду.',c:['will heat','heats','heated'],a:1,why:'A general truth: Present Simple after if and in the result.',whyRu:'Общая закономерность: Present Simple после if и в результате.'},
+{type:1,s:'If you’re working late tonight, I ___ dinner.',ru:'Если ты сегодня задержишься на работе, я принесу ужин.',c:['would bring','will bring','brought'],a:1,why:'Present Continuous after if; will + verb in the result.',whyRu:'После if — Present Continuous; в результате — will + глагол.'},
+{type:1,s:'If they ___ tomorrow, I’ll meet them at the station.',ru:'Если они приедут завтра, я встречу их на вокзале.',c:['arrive','arrived','had arrived'],a:0,why:'Present Simple can refer to a future condition.',whyRu:'Present Simple может обозначать условие о будущем.'},
+{type:2,s:'If I ___ more time, I’d learn Italian.',ru:'Если бы у меня было больше времени, я бы учил итальянский.',c:['have','had','had had'],a:1,why:'Past Simple form for an unreal situation now.',whyRu:'Форма Past Simple обозначает гипотетическую ситуацию сейчас.'},
+{type:2,s:'If I ___ the team, I’d be focusing on footwork.',ru:'Если бы я тренировал команду, я бы уделял внимание работе ног.',c:['coach','were coaching','had coached'],a:1,why:'Past Continuous describes an imagined situation in progress.',whyRu:'Past Continuous описывает воображаемую ситуацию, разворачивающуюся сейчас.'},
+{type:3,s:'If she ___ earlier, she’d have caught the train.',ru:'Если бы она вышла раньше, она бы успела на поезд.',c:['left','would leave','had left'],a:2,why:'Past Perfect in the condition; would have + V3 in the result.',whyRu:'Past Perfect в условии; would have + V3 в результате.'},
+{type:3,s:'If they ___ all night, they would have been exhausted.',ru:'Если бы они ехали всю ночь, они бы совершенно вымотались.',c:['were driving','had been driving','would be driving'],a:1,why:'Past Perfect Continuous shows an ongoing unreal past condition.',whyRu:'Past Perfect Continuous подчёркивает длительность нереального условия в прошлом.'},
+{type:4,s:'If I ___ better last night, I wouldn’t be tired now.',ru:'Если бы я лучше спал прошлой ночью, сейчас я бы не устал.',c:['slept','had slept','would have slept'],a:1,why:'Past condition, present result: Past Perfect → would + verb.',whyRu:'Условие в прошлом, результат сейчас: Past Perfect → would + глагол.'},
+{type:4,s:'If she ___ attention, she wouldn’t be confused now.',ru:'Если бы она была внимательнее, сейчас она не была бы в замешательстве.',c:['paid','had been paying','would pay'],a:1,why:'An ongoing past action links to a present result.',whyRu:'Длительное действие в прошлом связано с результатом сейчас.'},
+{type:5,s:'If he ___ so careless, he wouldn’t have lost his keys.',ru:'Если бы он не был таким невнимательным, он бы не потерял ключи.',c:['weren’t','hadn’t been','isn’t'],a:0,why:'Present state, past result: Past Simple → would have + V3.',whyRu:'Состояние сейчас, результат в прошлом: Past Simple → would have + V3.'},
+{type:5,s:'If he ___ more carefully, he wouldn’t have made that mistake.',ru:'Если бы он был внимательнее, он бы не совершил эту ошибку.',c:['worked','had worked','works'],a:0,why:'A general present trait affects a past result.',whyRu:'Общая черта в настоящем объясняет результат в прошлом.'}
+];
+let current=-1,answered=false,rx=-22,ry=-25;
+const complete=questions.map(()=>false);
+let idle=!reduced,tween=null,gesture=null,velocityX=0,velocityY=0,lastFrame=0,hovered=null;
+
+// One render loop owns the angles: input and the visible cube always use the same pose.
+function setPose(){
+  cube.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+  const size=scene.getBoundingClientRect().width, perspective=parseFloat(getComputedStyle(scene).perspective)||1600;
+  faces.forEach((f,i)=>{const normal=rotatePoint(FACE_NORMALS[i],rx,ry);f.inert=normal[2]*perspective<=size/2;});
+}
+function stopMotion(){idle=false;tween=null;velocityX=velocityY=0;}
+const FACE_NORMALS=[[0,0,1],[1,0,0],[0,0,-1],[-1,0,0],[0,-1,0],[0,1,0]];
+const FACE_POSES=[[0,0],[0,-90],[0,-180],[0,90],[-90,0],[90,0]];
+// Geometry is independent of DOM stacking order and back-face hit-testing quirks.
+function rotatePoint([x,y,z],pitch,yaw){
+  const a=pitch*Math.PI/180,b=yaw*Math.PI/180,cx=Math.cos(a),sx=Math.sin(a),cy=Math.cos(b),sy=Math.sin(b);
+  return [cy*x+sy*z,sx*sy*x+cx*y-sx*cy*z,-cx*sy*x+sx*y+cx*cy*z];
+}
+function inverseRotate([x,y,z],pitch,yaw){
+  const a=pitch*Math.PI/180,b=yaw*Math.PI/180,cx=Math.cos(a),sx=Math.sin(a),cy=Math.cos(b),sy=Math.sin(b);
+  return [cy*x+sx*sy*y-cx*sy*z,cx*y+sx*z,sy*x-sx*cy*y+cx*cy*z];
+}
+function rayFace(screenX,screenY,size,perspective,pitch,yaw){
+  const half=size/2,origin=inverseRotate([0,0,perspective],pitch,yaw),dir=inverseRotate([screenX,screenY,-perspective],pitch,yaw);
+  let nearest=null;
+  FACE_NORMALS.forEach((n,type)=>{
+    const denominator=n.reduce((sum,v,k)=>sum+v*dir[k],0);
+    if(denominator>=-1e-8)return;
+    const t=(half-n.reduce((sum,v,k)=>sum+v*origin[k],0))/denominator;
+    if(t<=0||(nearest&&t>=nearest.t))return;
+    const p=origin.map((v,k)=>v+t*dir[k]);
+    if(p.some(v=>Math.abs(v)>half+1e-6))return;
+    const [x,y,z]=p,uv=[[x+half,y+half],[half-z,y+half],[half-x,y+half],[z+half,y+half],[x+half,z+half],[x+half,half-z]][type];
+    nearest={type,u:uv[0],v:uv[1],t};
+  });
+  return nearest;
+}
+function pickSurface(clientX,clientY){
+  const r=scene.getBoundingClientRect(),p=parseFloat(getComputedStyle(scene).perspective)||1600;
+  return rayFace(clientX-r.left-r.width/2,clientY-r.top-r.height/2,r.width,p,rx,ry);
+}
+function localRect(element,face){
+  let x=0,y=0,node=element;
+  while(node&&node!==face){x+=node.offsetLeft;y+=node.offsetTop;node=node.offsetParent;if(node){x+=node.clientLeft;y+=node.clientTop;}}
+  return {x,y,width:element.offsetWidth,height:element.offsetHeight};
+}
+function contains(rect,u,v){return u>=rect.x&&u<=rect.x+rect.width&&v>=rect.y&&v<=rect.y+rect.height;}
+function actionAt(hit){
+  if(!hit)return null;
+  const face=faces[hit.type],start=face.querySelector('.face-start'),box=face.querySelector('.face-question');
+  if(!start.hidden){const button=face.querySelector('.face-test');return {kind:'test',type:hit.type,button:contains(localRect(button,face),hit.u,hit.v)?button:null};}
+  if(!box.hidden){
+    for(const button of box.querySelectorAll('.face-answer')){
+      if(contains(localRect(button,face),hit.u,hit.v))return button.disabled?{kind:'none',type:hit.type}:{kind:'answer',type:hit.type,button,box,index:+button.dataset.answer,question:+box.dataset.question};
+    }
+  }
+  return {kind:'test',type:hit.type};
+}
+function activate(action){
+  if(!action)return;
+  if(action.kind==='test')openQuestion(action.type);
+  else if(action.kind==='answer'&&current===action.question)checkAnswer(action.index,action.box,questions[action.question]);
+}
+function rotateTo(type){
+  const [x,y]=FACE_POSES[type],near=(angle,target)=>angle+((target-angle+180)%360+360)%360-180;
+  const toX=near(rx,x),toY=near(ry,y);
+  if(reduced){rx=toX;ry=toY;setPose();return;}
+  tween={fromX:rx,fromY:ry,toX,toY,start:performance.now()};
+}
+function resetFace(face){
+  face.querySelector('.face-start').hidden=false;
+  const box=face.querySelector('.face-question');box.hidden=true;box.style.setProperty('--fit','1');box.innerHTML='';
+}
+function openQuestion(type){
+  const face=faces[type];if(!face)return;
+  stopMotion();
+  let i=questions.findIndex((q,n)=>q.type===type&&!complete[n]);
+  if(i<0){questions.forEach((q,n)=>{if(q.type===type)complete[n]=false;});i=questions.findIndex(q=>q.type===type);}
+  current=i;answered=false;faces.forEach(resetFace);
+  face.querySelector('.face-start').hidden=true;
+  const box=face.querySelector('.face-question');box.hidden=false;box.dataset.question=String(i);
+  renderQuestion(box,questions[i]);fitQuestion(box);rotateTo(type);
+}
+function fitQuestion(box){
+  box.style.setProperty('--fit','1');
+  const face=box.closest('.face'),style=getComputedStyle(face);
+  const available=face.clientHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom);
+  let fit=1;
+  for(let n=0;n<45&&(box.scrollHeight>available||box.scrollWidth>box.clientWidth);n++){fit*=.96;box.style.setProperty('--fit',String(fit));}
+}
+let answerSlots=[];
+function shuffled(items){
+  const result=[...items];
+  for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}
+  return result;
+}
+function orderedOptions(q){
+  // Each three question openings use all three correct-answer positions once.
+  if(!answerSlots.length)answerSlots=shuffled([0,1,2]);
+  const position=answerSlots.pop(),order=shuffled(q.c.map((_,i)=>i).filter(i=>i!==q.a));
+  order.splice(position,0,q.a);
+  return order;
+}
+function renderQuestion(box,q){
+  const order=orderedOptions(q);
+  box.innerHTML=`<p class="question-kicker">Choose the correct form</p><p class="question-sentence">${q.s.replace('___','<span class="blank">_____</span>')}</p><p class="question-translation">${q.ru}</p><div class="choices">${order.map(i=>`<button class="face-answer" type="button" data-answer="${i}">${q.c[i]}</button>`).join('')}</div><p class="face-feedback" aria-live="polite"></p>`;
+}
+function checkAnswer(choice,box,q){
+  if(answered||current<0||+box.dataset.question!==current)return;
+  answered=true;complete[current]=true;current=-1;
+  box.querySelectorAll('.face-answer').forEach(b=>{const id=+b.dataset.answer;b.disabled=true;if(id===q.a)b.classList.add('correct');else if(id===choice)b.classList.add('wrong');});
+  box.querySelector('.face-feedback').innerHTML=choice===q.a?`<b>Correct.</b> ${q.why}<span class="ru">${q.whyRu}</span>`:`<span class="error">Not quite.</span> <b>${q.c[q.a]}</b> — ${q.why}<span class="ru">${q.whyRu}</span>`;
+  fitQuestion(box);
+}
+function clearHover(){if(hovered){hovered.classList.remove('is-hover');hovered=null;}}
+function pointerDown(e){
+  if(gesture||e.button!==0||e.isPrimary===false)return;
+  const hit=pickSurface(e.clientX,e.clientY);if(!hit)return;
+  const action=actionAt(hit);stopMotion();clearHover();e.preventDefault();
+  gesture={id:e.pointerId,startX:e.clientX,startY:e.clientY,x:e.clientX,y:e.clientY,time:e.timeStamp,moved:false,action};
+  scene.setPointerCapture(e.pointerId);
+}
+function pointerMove(e){
+  if(!gesture){
+    const hit=pickSurface(e.clientX,e.clientY),action=actionAt(hit);clearHover();
+    if(action?.button){hovered=action.button;hovered.classList.add('is-hover');}
+    document.body.style.cursor=scene.style.cursor=hit?(action?.button?'pointer':'grab'):'default';return;
+  }
+  if(e.pointerId!==gesture.id)return;
+  e.preventDefault();
+  const dx=e.clientX-gesture.x,dy=e.clientY-gesture.y,dt=Math.max(8,e.timeStamp-gesture.time);
+  if(Math.hypot(e.clientX-gesture.startX,e.clientY-gesture.startY)>5)gesture.moved=true;
+  if(gesture.moved){ry+=dx*.45;rx-=dy*.45;velocityX=dx*.45/dt;velocityY=-dy*.45/dt;setPose();document.body.style.cursor=scene.style.cursor='grabbing';}
+  gesture.x=e.clientX;gesture.y=e.clientY;gesture.time=e.timeStamp;
+}
+function pointerUp(e){
+  if(!gesture||e.pointerId!==gesture.id)return;
+  e.preventDefault();const finished=gesture;gesture=null;
+  if(scene.hasPointerCapture(e.pointerId))scene.releasePointerCapture(e.pointerId);
+  if(!finished.moved){velocityX=velocityY=0;activate(finished.action);}
+  else if(e.timeStamp-finished.time>100)velocityX=velocityY=0;
+  document.body.style.cursor=scene.style.cursor='grab';
+}
+function pointerCancel(e){
+  if(!gesture||e.pointerId!==gesture.id)return;
+  gesture=null;velocityX=velocityY=0;
+  if(scene.hasPointerCapture(e.pointerId))scene.releasePointerCapture(e.pointerId);
+}
+// A screen-space ray selects the visible surface; invisible DOM faces cannot steal clicks.
+document.addEventListener('pointerdown',pointerDown,{capture:true,passive:false});
+document.addEventListener('pointermove',pointerMove,{capture:true,passive:false});
+document.addEventListener('pointerup',pointerUp,{capture:true,passive:false});
+document.addEventListener('pointercancel',pointerCancel,{capture:true});
+scene.addEventListener('lostpointercapture',e=>{if(gesture?.id===e.pointerId){gesture=null;velocityX=velocityY=0;}});
+document.addEventListener('click',e=>{
+  const button=e.target.closest('.face-test,.face-answer');if(!button||e.detail!==0||button.disabled)return;
+  const face=button.closest('.face');
+  if(button.classList.contains('face-test'))openQuestion(+face.dataset.type);
+  else{const box=button.closest('.face-question'),q=questions[+box.dataset.question];if(q)checkAnswer(+button.dataset.answer,box,q);}
+});
+scene.addEventListener('selectstart',e=>e.preventDefault());scene.addEventListener('dragstart',e=>e.preventDefault());
+addEventListener('resize',()=>{setPose();faces.forEach(face=>{const box=face.querySelector('.face-question');if(!box.hidden)fitQuestion(box);});},{passive:true});
+function animate(t){
+  const dt=lastFrame?Math.min(t-lastFrame,40):0;lastFrame=t;
+  if(!gesture){
+    if(tween){
+      const f=Math.min(1,(t-tween.start)/460),ease=1-Math.pow(1-f,3);
+      rx=tween.fromX+(tween.toX-tween.fromX)*ease;ry=tween.fromY+(tween.toY-tween.fromY)*ease;
+      if(f===1)tween=null;
+    }else if(idle)ry+=dt*360/46000;
+    else if(Math.abs(velocityX)+Math.abs(velocityY)>.001){rx+=velocityY*dt;ry+=velocityX*dt;const decay=Math.pow(.93,dt/16.67);velocityX*=decay;velocityY*=decay;}
+    setPose();
+  }
+  requestAnimationFrame(animate);
+}
+setPose();requestAnimationFrame(animate);
+</script>
+</body>
+</html>
